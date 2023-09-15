@@ -1,4 +1,4 @@
-基于Keil AC6编译器的STM32F407模板工程
+基于Keil AC6编译器的STM32F407工程
 
 SYSTEM文件夹用于存放系统相关文件，例如UART，IIC
 
