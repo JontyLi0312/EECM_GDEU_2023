@@ -1,0 +1,12 @@
+.Objects/
+.vscode/
+*.o
+*.d
+*.dep
+*.axf
+*.lnp
+*.sct
+*.htm
+*.Jonty
+*.uvoptx
+*.map
