@@ -1,9 +1,9 @@
 
 # 2023广东省大学生工科实验综合大赛_全地形越障运送小车
 
-使用STM32F407ZGT6作为主控
+MCU: STM32F407ZGT6
 
-Keil工程，基于AC6
+Keil project，base on AC6
 
 ## Category
 
@@ -88,13 +88,7 @@ RX ->
 
 ### Hardware
 
-* key
-  [body]
-* LED
 * OLED
-* PID
-* PWM
-* Timer
 
 ### System
 
@@ -103,9 +97,11 @@ RX ->
 ### User
 
 * main
-  [body]
 
 ## Usage
+
+1. press start buttom
+2. 
 
 ## Contributor
 
