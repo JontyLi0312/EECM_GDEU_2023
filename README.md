@@ -1,4 +1,3 @@
-
 # 2023广东省大学生工科实验综合大赛_全地形越障运送小车
 
 MCU: STM32F407ZGT6
@@ -22,7 +21,7 @@ Keil project，base on AC6
 3. jy901s
 4. MP1584EN
 5. OLED
-6. button
+6. key
 
 ## Pins
 
@@ -60,23 +59,25 @@ PWM ->
 
 ### 2D Motorized Head Servo
 
-top servo PWM -> 
+top servo PWM ->
 
-buttom servo PWM -> 
+buttom servo PWM ->
 
 ### OLED
 
-SCL -> 
+SCL ->
 
-SDA -> 
+SDA ->
 
-### button
+### key
 
-button 1 -> 
+start key -> PA3
 
-button 2 -> 
+colour key 1 -> PA4
 
-button 3 -> 
+colour key 2 -> PA5
+
+colour key 3 -> PA6
 
 ### jy901s
 
