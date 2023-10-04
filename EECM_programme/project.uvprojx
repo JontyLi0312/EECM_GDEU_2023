@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\HARDWARE\OLED</IncludePath>
+              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\HARDWARE\OLED;.\HARDWARE\key</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -598,6 +598,11 @@
               <FileName>oled.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\OLED\oled.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\key\key.c</FilePath>
             </File>
           </Files>
         </Group>
