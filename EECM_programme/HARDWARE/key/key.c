@@ -1,11 +1,5 @@
 /***
  * @Author: Jonty ljt20030312@Outlook.com
- * @Date: 2023-10-04 17:29
- * @LastEditTime: 2023-10-06 15:32
- * @Description:
- */
-/***
- * @Author: Jonty ljt20030312@Outlook.com
  * @Date: 2023-10-04 14:41
  * @LastEditTime: 2023-10-04 15:14
  * @Description: 开始按钮，颜色选择按钮
