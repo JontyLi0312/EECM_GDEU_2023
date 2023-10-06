@@ -22,6 +22,7 @@ Keil project£¬base on AC6
 4. MP1584EN
 5. OLED
 6. key
+7. LED
 
 ## Pins
 
@@ -78,6 +79,14 @@ colour key 1 -> PA4
 colour key 2 -> PA5
 
 colour key 3 -> PA6
+
+### LED
+
+red led -> PB2
+
+blue led -> PB1
+
+green led -> PB0
 
 ### jy901s
 

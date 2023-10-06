@@ -1,7 +1,7 @@
-/***
+/*** 
  * @Author: Jonty ljt20030312@Outlook.com
- * @Date: 2023-08-28 18:47
- * @LastEditTime: 2023-09-14 17:57
+ * @Date: 2023-10-06 16:35
+ * @LastEditTime: 2023-10-06 16:36
  * @Description: EECM_main.c
  */
 
@@ -10,6 +10,7 @@
 #include "delay.h"
 #include "oled.h"
 #include "key.h"
+#include "led.h"
 
 int main(void)
 {
@@ -30,7 +31,7 @@ int main(void)
         while (start_flag)
         {
             OLED_Clear();
-            OLED_ShowString(0, 0, (unsigned char *)"Status: WORK", 8, 0);
+            OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 0);
             OLED_ShowString(0, 10, (unsigned char *)"Select Colour, PLZ", 8, 0);
             OLED_Refresh();
 
@@ -41,21 +42,20 @@ int main(void)
                 colour_flag = colour_key_get();
                 if (colour_flag != 0)
                 {
-                    uint8_t colour;
                     if (colour_flag == 1)
                     {
-                        colour = "red               ";
+                        set_red_led(1);
                     }
                     else if (colour_flag == 2)
                     {
-                        colour = "blue              ";
+                        set_blue_led(1);
                     }
                     else if (colour_flag == 3)
                     {
-                        colour = "green             ";
+                        set_green_led(1);
                     }
 
-                    OLED_ShowString(0, 10, colour, 8, 0);
+                    OLED_ShowString(0, 10, (unsigned char *)"Select Finish!    ", 8, 0);
                     OLED_Refresh();
                     delay_ms(1000);
                     break;
