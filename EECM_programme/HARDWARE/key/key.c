@@ -1,8 +1,14 @@
 /***
  * @Author: Jonty ljt20030312@Outlook.com
+ * @Date: 2023-10-04 17:29
+ * @LastEditTime: 2023-10-06 15:32
+ * @Description:
+ */
+/***
+ * @Author: Jonty ljt20030312@Outlook.com
  * @Date: 2023-10-04 14:41
  * @LastEditTime: 2023-10-04 15:14
- * @Description: 开始按钮，颜色选择按钮，暂停按钮
+ * @Description: 开始按钮，颜色选择按钮
  */
 #include "key.h"
 #include "delay.h"
@@ -86,7 +92,7 @@ uint8_t colour_key_get(void)
     }
     else
     {
-        colour_key_flag = 4;
+        colour_key_flag = 0;
     }
 
     return colour_key_flag;
