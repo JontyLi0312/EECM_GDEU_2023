@@ -42,15 +42,15 @@ int main(void)
                 if (colour_flag != 0)
                 {
                     uint8_t colour;
-                    if (colour_flag = 1)
+                    if (colour_flag == 1)
                     {
                         colour = "red               ";
                     }
-                    else if (colour_flag = 2)
+                    else if (colour_flag == 2)
                     {
                         colour = "blue              ";
                     }
-                    else if (colour_flag = 3)
+                    else if (colour_flag == 3)
                     {
                         colour = "green             ";
                     }
