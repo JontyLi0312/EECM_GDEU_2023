@@ -88,3 +88,5 @@ void motor4_speed(uint16_t speed)
 
     TIM_SetCompare4(TIM3, CCR);
 }
+
+// todo 减速电机前进后退停止模式控制
