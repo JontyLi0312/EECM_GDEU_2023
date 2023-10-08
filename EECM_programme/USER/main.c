@@ -50,20 +50,19 @@ int main(void)
                 {
                     if (colour_flag == 1)
                     {
-                        set_red_led(1);
+                        OLED_ShowString(0, 10, (unsigned char *)"SELECT : RED      ", 8, 1);
                     }
                     else if (colour_flag == 2)
                     {
-                        set_blue_led(1);
+                        OLED_ShowString(0, 10, (unsigned char *)"SELECT : BLUE     ", 8, 1);
                     }
                     else if (colour_flag == 3)
                     {
-                        set_green_led(1);
+                        OLED_ShowString(0, 10, (unsigned char *)"SELECT : GREEN    ", 8, 1);
                     }
 
-                    OLED_ShowString(0, 10, (unsigned char *)"Select Finish!    ", 8, 1);
                     OLED_Refresh();
-                    delay_ms(1000);
+
                     break;
                 }
             }
