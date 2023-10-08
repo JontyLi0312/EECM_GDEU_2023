@@ -1,3 +1,9 @@
+/**
+ * @file servo_apply.c
+ * @author coolersf (3328151400@qq.com)
+ * @brief 用于直接调用改变PWM以及初始化PWM的函数和最后实现倒珠子的功能
+ * @date 2023-10-08
+ */
 #include "servo_PWM.h"
 void Servo_PWM_Init(void)
 {
