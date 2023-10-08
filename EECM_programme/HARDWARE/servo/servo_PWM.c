@@ -1,4 +1,13 @@
+/**
+ * @file servo_PWM.c
+ * @author coolersf (3328151400@qq.com)
+ * @date 2023-10-08
+ * @Description: 用于控制舵机的PWM
+ */
 #include "servo_PWM.h"
+void Servo_PWM (void) ;
+void PWM_SetCompare_Level  (uint16_t Compare);
+void PWM_SetCompare_Vertical(uint16_t Compare);
 
 void Servo_PWM (void)
 {
@@ -25,16 +34,16 @@ void Servo_PWM (void)
 	TIM_TimeBaseInit(TIM4, &TIM4_PWM_initStructure);
 	
 	TIM_OCInitTypeDef TIM4_OC_initStructure;
-	TIM_OCStructInit(&TIM4_OC_initStructure);                           //
-	TIM4_OC_initStructure.TIM_OCMode = TIM_OCMode_PWM1;                 //
-	TIM4_OC_initStructure.TIM_OCPolarity = TIM_OCPolarity_High;         //
-	TIM4_OC_initStructure.TIM_OutputState = TIM_OutputState_Enable;     //
-	TIM4_OC_initStructure.TIM_Pulse = 0;		                            //
+	TIM_OCStructInit(&TIM4_OC_initStructure);                           //结构体赋初始值
+	TIM4_OC_initStructure.TIM_OCMode = TIM_OCMode_PWM1;                 //输出比较模式： PWM1模式
+	TIM4_OC_initStructure.TIM_OCPolarity = TIM_OCPolarity_High;         //极性选择
+	TIM4_OC_initStructure.TIM_OutputState = TIM_OutputState_Enable;     //输出电路使能
+	TIM4_OC_initStructure.TIM_Pulse = 0;		                        //CCR的值
 	
 	TIM_OC1Init(TIM4, &TIM4_OC_initStructure);
 	TIM_OC2Init(TIM4, &TIM4_OC_initStructure);
 	
-	TIM_Cmd(TIM4, ENABLE);                                            //
+	TIM_Cmd(TIM4, ENABLE);                                            //使能TIM4
 }
 
 void PWM_SetCompare_Level(uint16_t Compare)

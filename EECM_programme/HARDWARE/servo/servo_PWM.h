@@ -1,3 +1,9 @@
+/**
+ * @file servo_PWM.h
+ * @author coolersf (3328151400@qq.com)
+ * @brief 用于改变舵机的PWM
+ * @date 2023-10-08
+ */
 #ifndef __SERVO_PWM_H
 #define __SERVO_PWM_H
 #include "sys.h"
