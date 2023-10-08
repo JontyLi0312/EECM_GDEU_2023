@@ -34,8 +34,20 @@ void servo_PWM_init (void)
 	TIM_OC1Init(TIM4, &TIM4_OC_initStructure);
 	TIM_OC2Init(TIM4, &TIM4_OC_initStructure);
 	
-	TIM_Cmd(TIM4, ENABLE);                                            //Ê¹ÄÜTim2
+	TIM_Cmd(TIM4, ENABLE);                                            //
 }
+
+void PWM_SetCompare_Level(uint16_t Compare)
+{
+	TIM_SetCompare1(TIM4, Compare);    //Compare PB6
+}
+
+
+void PWM_SetCompare_Vertical(uint16_t Compare)
+{
+	TIM_SetCompare2(TIM4, Compare);    //Compare PB7
+}
+
 
 
 
