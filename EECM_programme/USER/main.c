@@ -28,9 +28,6 @@ int main(void)
     OLED_ShowString(0, 0, (unsigned char *)"Status: WAIT", 8, 1);
     OLED_Refresh();
 
-    // test
-    set_blue_led(1);
-
     while (1)
     {
         // 等待开始
