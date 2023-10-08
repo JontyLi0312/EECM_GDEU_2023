@@ -6,4 +6,7 @@ struct jy901s_angleData {
     float Pitch;
     float Yaw;
 };
+void Servo_Limit(void);
+int16_t Vertical(float Pitch,float Med_target);
+void Servo_accomplish();
 #endif
