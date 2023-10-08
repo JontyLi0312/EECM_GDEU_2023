@@ -1,11 +1,17 @@
+/**
+ * @file motor_PWM.c
+ * @author Jonty (ljt20030312@Outlook.com)
+ * @date 2023-10-08
+ * @brief 减速电机PWM波初始化
+ */
 #include "motor_PWM.h"
 
 void motor_PWM_init(void);
-void motor1_speed_control(uint16_t speed);
-void motor2_speed_control(uint16_t speed);
-void motor3_speed_control(uint16_t speed);
-void motor4_speed_control(uint16_t speed);
 
+/**
+ * @brief 减速电机PWM初始化
+ *
+ */
 void motor_PWM_init(void)
 {
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
@@ -21,6 +27,9 @@ void motor_PWM_init(void)
     GPIO_Init(GPIOC, &GPIO_motor_PWM_initStructure);
 
     GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_TIM3);
+    GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_TIM3);
+    GPIO_PinAFConfig(GPIOC, GPIO_PinSource8, GPIO_AF_TIM3);
+    GPIO_PinAFConfig(GPIOC, GPIO_PinSource9, GPIO_AF_TIM3);
 
     TIM_TimeBaseInitTypeDef TIM_motor_PWM_initSctucture;
     TIM_motor_PWM_initSctucture.TIM_Period = 1999;
@@ -38,24 +47,4 @@ void motor_PWM_init(void)
     TIM_OC1Init(TIM3, &TIM_OC_motor_PWM_initStructure);
 
     TIM_Cmd(TIM3, ENABLE);
-}
-
-void motor1_speed_control(uint16_t speed)
-{
-    TIM_SetCompare1(TIM3, speed);
-}
-
-void motor2_speed_control(uint16_t speed)
-{
-    TIM_SetCompare2(TIM3, speed);
-}
-
-void motor3_speed_control(uint16_t speed)
-{
-    TIM_SetCompare3(TIM3, speed);
-}
-
-void motor4_speed_control(uint16_t speed)
-{
-    TIM_SetCompare4(TIM3, speed);
 }

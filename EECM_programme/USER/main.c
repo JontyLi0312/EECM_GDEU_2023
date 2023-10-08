@@ -11,7 +11,7 @@
 #include "delay.h"
 #include "oled.h"
 #include "key.h"
-#include "led.h"
+#include "motor.h"
 
 int main(void)
 {
@@ -20,7 +20,7 @@ int main(void)
     delay_init(168);
     OLED_Init();
     key_init();
-    led_init();
+    motor_init();
 
     delay_ms(500);
 
@@ -70,3 +70,5 @@ int main(void)
         }
     }
 }
+
+// todo 减速电机前进后退控制
