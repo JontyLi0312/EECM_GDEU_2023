@@ -1,6 +1,6 @@
 #include "servo_PWM.h"
 
-void servo_PWM_init (void)
+void Servo_PWM (void)
 {
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
