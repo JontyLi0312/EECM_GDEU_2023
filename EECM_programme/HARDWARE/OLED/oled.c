@@ -484,8 +484,10 @@ void OLED_ShowChar(u8 x, u8 y, u8 chr, u8 size1, u8 mode)
  */
 void OLED_ShowString(u8 x, u8 y, u8 *chr, u8 size1, u8 mode)
 {
-	u8 judge = (*chr >= ' ') && (*chr <= '~'); // 判断是不是非法字符!
-	while (judge)
+	u8 judge_char;
+	judge_char = (*chr >= ' ') && (*chr <= '~');
+
+	while ((*chr >= ' ') && (*chr <= '~')) // 判断是不是非法字符!
 	{
 		OLED_ShowChar(x, y, *chr, size1, mode);
 		if (size1 == 8)
@@ -493,6 +495,8 @@ void OLED_ShowString(u8 x, u8 y, u8 *chr, u8 size1, u8 mode)
 		else
 			x += size1 / 2;
 		chr++;
+
+		judge_char = (*chr >= ' ') && (*chr <= '~');
 	}
 }
 
