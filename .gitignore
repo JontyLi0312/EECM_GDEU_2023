@@ -1,5 +1,6 @@
 .Objects/
 .vscode/
+.Listings/
 *.o
 *.d
 *.dep

@@ -33,7 +33,7 @@ void key_init(void)
     GPIO_InitTypeDef GPIO_startKey_initStructure;
     GPIO_startKey_initStructure.GPIO_Mode = GPIO_Mode_IN;
     GPIO_startKey_initStructure.GPIO_OType = GPIO_OType_PP;
-    GPIO_startKey_initStructure.GPIO_Pin = GPIO_Pin_3;
+    GPIO_startKey_initStructure.GPIO_Pin = GPIO_Pin_7;
     GPIO_startKey_initStructure.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_startKey_initStructure.GPIO_Speed = GPIO_Fast_Speed;
     GPIO_Init(GPIOA, &GPIO_startKey_initStructure);
@@ -101,10 +101,10 @@ u8 colour_key_get(void)
 u8 start_key_get(void)
 {
     u8 start_key_flag;
-    if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_3) == 0)
+    if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7) == 0)
     {
         delay_ms(20);
-        while (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_3) == 0)
+        while (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7) == 0)
             ;
         delay_ms(20);
 

@@ -184,6 +184,9 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -324,6 +327,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -336,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\key</IncludePath>
+              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\key;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\SYSTEM\usart2</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -349,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -585,6 +589,11 @@
               <FileType>1</FileType>
               <FilePath>.\SYSTEM\motor_PWM\motor_PWM.c</FilePath>
             </File>
+            <File>
+              <FileName>UART2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SYSTEM\usart2\UART2.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -604,6 +613,16 @@
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\motor\motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>jy901s.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\jy901s\jy901s.c</FilePath>
+            </File>
+            <File>
+              <FileName>wit_c_sdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\jy901s\wit_c_sdk\wit_c_sdk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -636,5 +655,14 @@
     <components/>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>project</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>
