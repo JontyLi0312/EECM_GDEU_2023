@@ -1,8 +1,8 @@
-# 2023¹ã¶«Ê¡´óÑ§Éú¹¤¿ÆÊµÑé×ÛºÏ´óÈü_È«µØÐÎÔ½ÕÏÔËËÍÐ¡³µ
+# 2023ï¿½ã¶«Ê¡ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ÛºÏ´ï¿½ï¿½ï¿½_È«ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½
 
 MCU: STM32F407ZGT6
 
-Keil project£¬base on AC6
+Keil projectï¿½ï¿½base on AC6
 
 ## Category
 
@@ -60,9 +60,9 @@ PWM ->
 
 ### 2D Motorized Head Servo
 
-top servo PWM ->
+top servo PWM -> PB7
 
-buttom servo PWM ->
+buttom servo PWM -> PB6
 
 ### OLED
 
