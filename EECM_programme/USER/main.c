@@ -12,6 +12,7 @@
 #include "oled.h"
 #include "key.h"
 #include "motor.h"
+#include "jy901s.h"
 
 int main(void)
 {
@@ -21,8 +22,9 @@ int main(void)
     OLED_Init();
     key_init();
     motor_init();
+    jy901s_init();
 
-    delay_ms(500);
+    jy901s_angleData g_angleDatas;
 
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char *)"Status: WAIT", 8, 1);
