@@ -32,7 +32,11 @@ encoder A ->
 
 encoder B ->
 
-PWM ->
+PWM -> PC6
+
+IN1 -> PC0
+
+IN2 -> PC1
 
 ### DC gerat motor 2
 
@@ -40,7 +44,11 @@ encoder A ->
 
 encoder B ->
 
-PWM ->
+PWM -> PC7
+
+IN1 -> PC2
+
+IN2 -> PC3
 
 ### DC gerat motor 3
 
@@ -48,7 +56,11 @@ encoder A ->
 
 encoder B ->
 
-PWM ->
+PWM -> PC8
+
+IN1 -> PC4
+
+IN2 -> PC5
 
 ### DC gerat motor 4
 
@@ -56,7 +68,11 @@ encoder A ->
 
 encoder B ->
 
-PWM ->
+PWM -> PC9
+
+IN1 -> PC10
+
+IN2 -> PC 11
 
 ### 2D Motorized Head Servo
 
@@ -66,9 +82,9 @@ buttom servo PWM ->
 
 ### OLED
 
-SCL ->
+SCL -> PG12
 
-SDA ->
+SDA -> PD5
 
 ### key
 
