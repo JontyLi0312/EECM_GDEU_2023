@@ -8,10 +8,10 @@
 #include "motor_PWM.h"
 
 void motor_init(void);
-void motor1_speed(uint16_t speed);
-void motor2_speed(uint16_t speed);
-void motor3_speed(uint16_t speed);
-void motor4_speed(uint16_t speed);
+void motor1_speed(u16 speed);
+void motor2_speed(u16 speed);
+void motor3_speed(u16 speed);
+void motor4_speed(u16 speed);
 void motor1_control(u8 mode);
 void motor2_control(u8 mode);
 void motor3_control(u8 mode);
@@ -43,12 +43,12 @@ void motor_init(void)
 /**
  * @brief 减速电机1调速
  *
- * @param speed 速度，用speed为0-100，代表0速到100%满速
+ * @param speed 速度，speed值为0-100，代表0速到100%满速
  */
-void motor1_speed(uint16_t speed)
+void motor1_speed(u16 speed)
 {
-    uint16_t CCR;
-    CCR = speed;
+    u16 CCR;
+    CCR = speed * 20;
 
     TIM_SetCompare1(TIM3, CCR);
 }
@@ -56,12 +56,12 @@ void motor1_speed(uint16_t speed)
 /**
  * @brief 减速电机2调速
  *
- * @param speed 速度，用speed为0-100，代表0速到100%满速
+ * @param speed 速度，speed值为0-100，代表0速到100%满速
  */
-void motor2_speed(uint16_t speed)
+void motor2_speed(u16 speed)
 {
-    uint16_t CCR;
-    CCR = speed;
+    u16 CCR;
+    CCR = speed * 20;
 
     TIM_SetCompare2(TIM3, CCR);
 }
@@ -69,12 +69,12 @@ void motor2_speed(uint16_t speed)
 /**
  * @brief 减速电机3调速
  *
- * @param speed 速度，用speed为0-100，代表0速到100%满速
+ * @param speed 速度，speed值为0-100，代表0速到100%满速
  */
-void motor3_speed(uint16_t speed)
+void motor3_speed(u16 speed)
 {
-    uint16_t CCR;
-    CCR = speed;
+    u16 CCR;
+    CCR = speed * 20;
 
     TIM_SetCompare3(TIM3, CCR);
 }
@@ -82,12 +82,12 @@ void motor3_speed(uint16_t speed)
 /**
  * @brief 减速电机4调速
  *
- * @param speed 速度，用speed为0-100，代表0速到100%满速
+ * @param speed 速度，speed值为0-100，代表0速到100%满速
  */
-void motor4_speed(uint16_t speed)
+void motor4_speed(u16 speed)
 {
-    uint16_t CCR;
-    CCR = speed;
+    u16 CCR;
+    CCR = speed * 20;
 
     TIM_SetCompare4(TIM3, CCR);
 }
