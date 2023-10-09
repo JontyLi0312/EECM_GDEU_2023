@@ -8,8 +8,8 @@
 #include "delay.h"
 
 void key_init(void);
-uint8_t colour_key_get(void);
-uint16_t start_key_get(void);
+u8 colour_key_get(void);
+u8 start_key_get(void);
 
 /**
  * @brief 按键初始化
@@ -48,10 +48,9 @@ void key_init(void)
  *         @arg 3 green
  *         @arg 4 none
  */
-uint8_t colour_key_get(void)
+u8 colour_key_get(void)
 {
-    uint8_t colour_key_flag;
-
+    u8 colour_key_flag;
     if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_4) == 0)
     {
         delay_ms(20);
@@ -99,9 +98,9 @@ uint8_t colour_key_get(void)
  *         @arg 1 开始
  *         @arg 0 等待
  */
-uint16_t start_key_get(void)
+u8 start_key_get(void)
 {
-    uint16_t start_key_flag;
+    u8 start_key_flag;
     if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_3) == 0)
     {
         delay_ms(20);
