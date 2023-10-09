@@ -8,11 +8,14 @@
 #include "motor_PWM.h"
 
 void motor_init(void);
-void motor_PWM_init(void);
 void motor1_speed(uint16_t speed);
 void motor2_speed(uint16_t speed);
 void motor3_speed(uint16_t speed);
 void motor4_speed(uint16_t speed);
+void motor1_control(u8 mode);
+void motor2_control(u8 mode);
+void motor3_control(u8 mode);
+void motor4_control(u8 mode);
 
 /**
  * @brief 减速电机控制引脚初始化
@@ -89,4 +92,110 @@ void motor4_speed(uint16_t speed)
     TIM_SetCompare4(TIM3, CCR);
 }
 
-// todo 减速电机前进后退停止模式控制
+/**
+ * @brief 减速电机1模式控制
+ *
+ * @param mode
+ *        @arg 1 forward
+ *        @arg 2 backward
+ *        @arg 0 stop
+ */
+void motor1_control(u8 mode)
+{
+    if (mode == 1)
+    {
+        GPIO_SetBits(GPIOC, GPIO_Pin_0);
+        GPIO_ResetBits(GPIOC, GPIO_Pin_1);
+    }
+    else if (mode == 2)
+    {
+        GPIO_ResetBits(GPIOC, GPIO_Pin_0);
+        GPIO_SetBits(GPIOC, GPIO_Pin_0);
+    }
+    else if (mode == 0)
+    {
+        GPIO_ResetBits(GPIOC, GPIO_Pin_0);
+        GPIO_ResetBits(GPIOC, GPIO_Pin_1);
+    }
+}
+
+/**
+ * @brief 减速电机2模式控制
+ *
+ * @param mode
+ *        @arg 1 forward
+ *        @arg 2 backward
+ *        @arg 0 stop
+ */
+void motor2_control(u8 mode)
+{
+    if (mode == 1)
+    {
+        GPIO_SetBits(GPIOC, GPIO_Pin_2);
+        GPIO_ResetBits(GPIOC, GPIO_Pin_3);
+    }
+    else if (mode == 2)
+    {
+        GPIO_ResetBits(GPIOC, GPIO_Pin_2);
+        GPIO_SetBits(GPIOC, GPIO_Pin_3);
+    }
+    else if (mode == 0)
+    {
+        GPIO_ResetBits(GPIOC, GPIO_Pin_2);
+        GPIO_ResetBits(GPIOC, GPIO_Pin_3);
+    }
+}
+
+/**
+ * @brief 减速电机3模式控制
+ *
+ * @param mode
+ *        @arg 1 forward
+ *        @arg 2 backward
+ *        @arg 0 stop
+ */
+void motor3_control(u8 mode)
+{
+    if (mode == 1)
+    {
+        GPIO_SetBits(GPIOC, GPIO_Pin_4);
+        GPIO_ResetBits(GPIOC, GPIO_Pin_5);
+    }
+    else if (mode == 2)
+    {
+        GPIO_ResetBits(GPIOC, GPIO_Pin_4);
+        GPIO_SetBits(GPIOC, GPIO_Pin_5);
+    }
+    else if (mode == 0)
+    {
+        GPIO_ResetBits(GPIOC, GPIO_Pin_4);
+        GPIO_ResetBits(GPIOC, GPIO_Pin_5);
+    }
+}
+
+/**
+ * @brief 减速电机4模式控制
+ *
+ * @param mode
+ *        @arg 1 forward
+ *        @arg 2 backward
+ *        @arg 0 stop
+ */
+void motor4_control(u8 mode)
+{
+    if (mode == 1)
+    {
+        GPIO_SetBits(GPIOC, GPIO_Pin_10);
+        GPIO_ResetBits(GPIOC, GPIO_Pin_11);
+    }
+    else if (mode == 2)
+    {
+        GPIO_ResetBits(GPIOC, GPIO_Pin_10);
+        GPIO_SetBits(GPIOC, GPIO_Pin_11);
+    }
+    else if (mode == 0)
+    {
+        GPIO_ResetBits(GPIOC, GPIO_Pin_10);
+        GPIO_ResetBits(GPIOC, GPIO_Pin_11);
+    }
+}
