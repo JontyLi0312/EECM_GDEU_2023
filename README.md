@@ -1,8 +1,8 @@
-# 2023�㶫ʡ��ѧ������ʵ���ۺϴ���_ȫ����Խ������С��
+# 2023广东省大学生工科实验综合大赛_全地形越障运送小车
 
 MCU: STM32F407ZGT6
 
-Keil project��base on AC6
+Keil project，base on AC6
 
 ## Category
 
