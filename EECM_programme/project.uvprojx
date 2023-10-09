@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\HARDWARE\OLED;.\HARDWARE\key</IncludePath>
+              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\key</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -580,6 +580,11 @@
               <FileType>1</FileType>
               <FilePath>.\SYSTEM\usart\usart.c</FilePath>
             </File>
+            <File>
+              <FileName>motor_PWM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SYSTEM\motor_PWM\motor_PWM.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -594,6 +599,11 @@
               <FileName>key.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\key\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\motor\motor.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -11,7 +11,7 @@
 #include "delay.h"
 #include "oled.h"
 #include "key.h"
-#include "led.h"
+#include "motor.h"
 
 int main(void)
 {
@@ -20,7 +20,7 @@ int main(void)
     delay_init(168);
     OLED_Init();
     key_init();
-    led_init();
+    motor_init();
 
     delay_ms(500);
 
@@ -31,12 +31,11 @@ int main(void)
     while (1)
     {
         // 等待开始
-        uint16_t start_flag;
+        u8 start_flag;
         start_flag = start_key_get();
 
         while (start_flag)
         {
-            OLED_Clear();
             OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
             OLED_ShowString(0, 10, (unsigned char *)"Select Colour, PLZ", 8, 1);
             OLED_Refresh();
@@ -44,8 +43,9 @@ int main(void)
             // 等待颜色选择
             while (1)
             {
-                uint8_t colour_flag;
+                u8 colour_flag;
                 colour_flag = colour_key_get();
+
                 if (colour_flag != 0)
                 {
                     if (colour_flag == 1)
