@@ -96,14 +96,6 @@ colour key 2 -> PA5
 
 colour key 3 -> PA6
 
-### LED
-
-red led -> PB2
-
-blue led -> PB1
-
-green led -> PB0
-
 ### jy901s
 
 TX ->
