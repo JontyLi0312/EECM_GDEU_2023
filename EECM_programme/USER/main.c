@@ -13,6 +13,7 @@
 #include "key.h"
 #include "motor.h"
 #include "jy901s.h"
+#include "5graysacle.h"
 
 int main(void)
 {
@@ -23,6 +24,7 @@ int main(void)
     key_init();
     motor_init();
     jy901s_init();
+    grayscale_init();
 
     jy901s_angleData g_angleDatas;
 

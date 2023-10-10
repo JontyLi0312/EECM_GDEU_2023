@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\key;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\SYSTEM\usart2</IncludePath>
+              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\SYSTEM\usart2;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\key;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\HARDWARE\5ChannelGrayscaleSensor</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -623,6 +623,11 @@
               <FileName>wit_c_sdk.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\jy901s\wit_c_sdk\wit_c_sdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>5grayscale.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\5ChannelGrayscaleSensor\5grayscale.c</FilePath>
             </File>
           </Files>
         </Group>
