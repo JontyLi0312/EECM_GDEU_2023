@@ -22,7 +22,7 @@ Keil project，base on AC6
 4. MP1584EN
 5. OLED
 6. key
-7. LED
+7. 5 channel gray scale sensor
 
 ## Pins
 
@@ -88,7 +88,7 @@ SDA -> PD5
 
 ### key
 
-start key -> PA3
+start key -> PA7
 
 colour key 1 -> PA4
 
@@ -98,9 +98,21 @@ colour key 3 -> PA6
 
 ### jy901s
 
-TX ->
+TX -> PA2
 
-RX ->
+RX -> PA3
+
+### 5 channel gray scale sensor
+
+left -> PB11
+
+mid_left -> PB12
+
+mid -> PB13
+
+mid_right -> PB14
+
+right -> PB15
 
 ## Code Description
 
