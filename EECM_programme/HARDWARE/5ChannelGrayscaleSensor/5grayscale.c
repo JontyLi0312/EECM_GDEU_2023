@@ -29,7 +29,7 @@ void grayscale_init(void)
  *          @arg 5 右
  *          @arg 6 error
  */
-u8 grayScale_direction(void)
+u8 grayScale_direction(void) // bug 情况考虑不充分
 {
     u8 left, mid_left, right, mid_right, mid;
     u8 direction;
