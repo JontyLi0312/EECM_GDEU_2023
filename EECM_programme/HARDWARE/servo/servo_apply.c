@@ -7,7 +7,7 @@
 #include "servo_PWM.h"
 void Servo_PWM_Init(void)
 {
-	servo_PWM();
+	Servo_PWM();
 }
 
 void Servo_SetAngle_Level(float Angle)       
