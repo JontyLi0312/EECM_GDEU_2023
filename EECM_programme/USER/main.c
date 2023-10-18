@@ -15,8 +15,6 @@
 #include "jy901s.h"
 #include "5graysacle.h"
 
-int control;
-
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
