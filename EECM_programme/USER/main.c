@@ -41,36 +41,9 @@ int main(void)
         while (start_flag)
         {
             OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
-            OLED_ShowString(0, 10, (unsigned char *)"Select Colour, PLZ", 8, 1);
             OLED_Refresh();
 
-            // 等待颜色选择
-            while (1)
-            {
-                u8 colour_flag;
-                colour_flag = colour_key_get();
-
-                if (colour_flag != 0)
-                {
-                    if (colour_flag == 1)
-                    {
-                        OLED_ShowString(0, 10, (unsigned char *)"SELECT : RED      ", 8, 1);
-                    }
-                    else if (colour_flag == 2)
-                    {
-                        OLED_ShowString(0, 10, (unsigned char *)"SELECT : BLUE     ", 8, 1);
-                    }
-                    else if (colour_flag == 3)
-                    {
-                        OLED_ShowString(0, 10, (unsigned char *)"SELECT : GREEN    ", 8, 1);
-                    }
-
-                    OLED_Refresh();
-
-                    break;
-                }
-            }
-            break;
+            start_flag = 0;
         }
     }
 }

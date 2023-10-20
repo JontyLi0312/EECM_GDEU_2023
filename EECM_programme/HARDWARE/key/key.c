@@ -40,6 +40,31 @@ void key_init(void)
 }
 
 /**
+ * @brief 开始按钮状态获取
+ *
+ * @return uint16_t
+ *         @arg 1 开始
+ *         @arg 0 等待
+ */
+u8 start_key_get(void)
+{
+    u8 start_key_flag;
+    if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7) == 0)
+    {
+        delay_ms(20);
+        while (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7) == 0)
+            ;
+        delay_ms(20);
+
+        start_key_flag = 1;
+    }
+    else
+        start_key_flag = 0;
+
+    return start_key_flag;
+}
+
+/**
  * @brief 获取按键
  *
  * @return uint8_t colour_key_flag
@@ -89,29 +114,4 @@ u8 colour_key_get(void)
     }
 
     return colour_key_flag;
-}
-
-/**
- * @brief 开始按钮状态获取
- *
- * @return uint16_t
- *         @arg 1 开始
- *         @arg 0 等待
- */
-u8 start_key_get(void)
-{
-    u8 start_key_flag;
-    if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7) == 0)
-    {
-        delay_ms(20);
-        while (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7) == 0)
-            ;
-        delay_ms(20);
-
-        start_key_flag = 1;
-    }
-    else
-        start_key_flag = 0;
-
-    return start_key_flag;
 }
