@@ -1,7 +1,7 @@
 #include "stm32f4xx.h" // Device header
 
 void grayscale_init(void);
-u8 grayScale_direction(void);
+u8 grayScale_detect(void);
 
 void grayscale_init(void)
 {
@@ -22,48 +22,41 @@ void grayscale_init(void)
  * @brief 获取方向
  *
  * @return u8 direction
- *          @arg 1 左
- *          @arg 2 左前
- *          @arg 3 前
- *          @arg 4 右前
- *          @arg 5 右
- *          @arg 6 error
+ *          @arg 1 右
+ *          @arg 2 左
+ *          @arg 3 停
+ *          @arg 0 前
  */
-u8 grayScale_direction(void) // bug 情况考虑不充分
+u8 grayScale_detect(void)
 {
     u8 left, mid_left, right, mid_right, mid;
+    u8 forward;
     u8 direction;
+
     left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
     mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
     right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
     mid_right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14);
     mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
 
-    u8 left90 = 0, left45 = 0, forward = 0,
-       right45 = 0, right90 = 0;
+    forward = mid_left || mid_right || mid;
 
-    if (left == 0)
+    if (mid_left == 0)
     {
         direction = 1;
     }
-    else if (mid_left == 0)
+    else if (mid_right == 0)
     {
         direction = 2;
     }
-    else if (mid == 0)
+    else if (forward == 0)
     {
         direction = 3;
-    }
-    else if (mid_right == 0)
-    {
-        direction = 4;
-    }
-    else if (right == 0)
-    {
-        direction = 5;
     }
     else
     {
         direction = 0;
     }
+
+    return direction;
 }
