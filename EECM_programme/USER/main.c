@@ -43,7 +43,7 @@ int main(void)
             OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
             OLED_Refresh();
 
-            start_flag = 0;
+            break;
         }
     }
 }
