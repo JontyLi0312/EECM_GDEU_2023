@@ -26,13 +26,19 @@ Keil project，base on AC6
 
 ## Pins
 
+### OpenMV
+
+TX -> PC12
+
+RX -> PD2
+
 ### DC gear motor 1
 
-encoder A ->
+encoder A -> PA8
 
-encoder B ->
+encoder B -> PA9
 
-PWM -> PC6
+PWM -> PA6
 
 IN1 -> PC0
 
@@ -40,11 +46,11 @@ IN2 -> PC1
 
 ### DC gerat motor 2
 
-encoder A ->
+encoder A -> PC6
 
-encoder B ->
+encoder B -> PC7
 
-PWM -> PC7
+PWM -> PA7
 
 IN1 -> PC2
 
@@ -52,9 +58,9 @@ IN2 -> PC3
 
 ### DC gerat motor 3
 
-encoder A ->
+encoder A -> PA15
 
-encoder B ->
+encoder B -> PB3
 
 PWM -> PC8
 
@@ -64,9 +70,9 @@ IN2 -> PC5
 
 ### DC gerat motor 4
 
-encoder A ->
+encoder A -> PA0
 
-encoder B ->
+encoder B -> PA1
 
 PWM -> PC9
 
@@ -88,7 +94,7 @@ SDA -> PD5
 
 ### key
 
-start key -> PA7
+start key -> PB4
 
 ### jy901s
 
