@@ -90,12 +90,6 @@ SDA -> PD5
 
 start key -> PA7
 
-colour key 1 -> PA4
-
-colour key 2 -> PA5
-
-colour key 3 -> PA6
-
 ### jy901s
 
 TX -> PA2
