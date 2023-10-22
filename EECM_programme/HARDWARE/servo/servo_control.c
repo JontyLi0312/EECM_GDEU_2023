@@ -6,9 +6,10 @@
  */
 #include "servo_control.h"
 #include "servo_apply.h"
+#include "jy901s.h"
 float   g_Vertical_Kp=0.9, g_Vertical_Ki=0.005, g_Vertical_D =-3; 
 int16_t g_Vertical_PWM;
-struct jy901s_angleData g_angleData;           //结构体名字
+jy901s_angleData g_angleData;           //结构体名字
 
 //函数声明
 int16_t Vertical(float Pitch,float Med_target);
@@ -45,7 +46,8 @@ void Servo_Limit(void)
 //结合角度实现舵机的输出
 void Servo_accomplish(void)
 {
-        g_Vertical_PWM = Vertical(g_angleData.Pitch,0)*2.973 + 345  ;
+	    jy901s_getData(&g_angleData);
+        g_Vertical_PWM = Vertical(g_angleData.pitch,0)*2.973 + 345  ;
 	    Servo_Limit();
 		Servo_SetAngle_Vertical(g_Vertical_PWM); 
 
