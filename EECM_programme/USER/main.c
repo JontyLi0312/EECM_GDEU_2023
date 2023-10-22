@@ -14,7 +14,8 @@
 #include "motor.h"
 #include "jy901s.h"
 #include "5graysacle.h"
-
+#include "servo_control.h"
+#include "servo_apply.h"
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -25,6 +26,7 @@ int main(void)
     motor_init();
     jy901s_init();
     grayscale_init();
+    Servo_PWM_Init();
 
     jy901s_angleData g_angleDatas;
 
