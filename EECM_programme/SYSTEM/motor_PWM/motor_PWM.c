@@ -16,18 +16,24 @@ void motor_PWM_init(void)
 {
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 
     GPIO_InitTypeDef GPIO_motor_PWM_initStructure;
-    GPIO_motor_PWM_initStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 |
-                                            GPIO_Pin_8 | GPIO_Pin_9;
+    GPIO_motor_PWM_initStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9;
     GPIO_motor_PWM_initStructure.GPIO_Mode = GPIO_Mode_AF;
     GPIO_motor_PWM_initStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_motor_PWM_initStructure.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_motor_PWM_initStructure.GPIO_Speed = GPIO_High_Speed;
     GPIO_Init(GPIOC, &GPIO_motor_PWM_initStructure);
+    GPIO_motor_PWM_initStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
+    GPIO_motor_PWM_initStructure.GPIO_Mode = GPIO_Mode_AF;
+    GPIO_motor_PWM_initStructure.GPIO_OType = GPIO_OType_PP;
+    GPIO_motor_PWM_initStructure.GPIO_PuPd = GPIO_PuPd_UP;
+    GPIO_motor_PWM_initStructure.GPIO_Speed = GPIO_High_Speed;
+    GPIO_Init(GPIOA, &GPIO_motor_PWM_initStructure);
 
-    GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_TIM3);
-    GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_TIM3);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_TIM3);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_TIM3);
     GPIO_PinAFConfig(GPIOC, GPIO_PinSource8, GPIO_AF_TIM3);
     GPIO_PinAFConfig(GPIOC, GPIO_PinSource9, GPIO_AF_TIM3);
 
