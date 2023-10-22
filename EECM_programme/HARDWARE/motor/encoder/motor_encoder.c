@@ -92,6 +92,20 @@ void motor2Encoder_init(void)
     NVIC_Init(&g_NVIC_InitStructure);
 }
 
+int16_t Read_Speed(uint8_t TIMX)
+{
+    int16_t Speed_Value;
+    switch(TIMX)
+{
+    case 5:Speed_Value =TIM_GetCounter(TIM5);TIM_SetCounter(TIM5,0);break;
+    case 1:Speed_Value =TIM_GetCounter(TIM1);TIM_SetCounter(TIM1,0);break;
+    case 8:Speed_Value =TIM_GetCounter(TIM8);TIM_SetCounter(TIM8,0);break;
+    case 2:Speed_Value =TIM_GetCounter(TIM2);TIM_SetCounter(TIM2,0);break;
+    default:Speed_Value = 0;
+ }
+    return Speed_Value; 
+}
+
 void motor3Encoder_init(void)
 {
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15; // 光栅尺
