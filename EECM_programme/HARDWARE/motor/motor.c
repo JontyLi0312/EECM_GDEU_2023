@@ -6,6 +6,7 @@
  */
 #include "motor.h"
 #include "motor_PWM.h"
+#include "motor_encoder.h"
 
 void motor_init(void);
 void motor1_speed(u16 speed);
@@ -38,6 +39,7 @@ void motor_init(void)
     GPIO_Init(GPIOC, &GPIO_motor_initStructure);
 
     motor_PWM_init();
+    motorEncoder_init();
 }
 
 /**
