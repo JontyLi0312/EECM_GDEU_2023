@@ -24,6 +24,8 @@ void Servo_PWM (void)
     servo_PWM_InitStructure.GPIO_PuPd  =   GPIO_PuPd_NOPULL;
     GPIO_Init(GPIOB, &servo_PWM_InitStructure);
     
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_TIM4);
+    GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
     
     TIM_TimeBaseInitTypeDef TIM4_PWM_initStructure;
 	TIM4_PWM_initStructure.TIM_ClockDivision = TIM_CKD_DIV1;
