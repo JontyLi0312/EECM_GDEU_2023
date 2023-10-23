@@ -6,16 +6,19 @@ u8 grayScale_detect(void);
 void grayscale_init(void)
 {
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 
     GPIO_InitTypeDef GPIO_grayscale_initStructure;
     GPIO_grayscale_initStructure.GPIO_Mode = GPIO_Mode_IN;
     GPIO_grayscale_initStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_grayscale_initStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12 |
-                                            GPIO_Pin_13 | GPIO_Pin_14 |
-                                            GPIO_Pin_15;
+                                            GPIO_Pin_13 | GPIO_Pin_15;
     GPIO_grayscale_initStructure.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_grayscale_initStructure.GPIO_Speed = GPIO_Fast_Speed;
     GPIO_Init(GPIOB, &GPIO_grayscale_initStructure);
+
+    GPIO_grayscale_initStructure.GPIO_Pin = GPIO_Pin_13;
+    GPIO_Init(GPIOE, &GPIO_grayscale_initStructure);
 }
 
 /**
@@ -37,7 +40,7 @@ u8 grayScale_detect(void)
     right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
     mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
     mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
-    mid_right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14);
+    mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
 
     stop = mid_left || mid_right || mid;
 
