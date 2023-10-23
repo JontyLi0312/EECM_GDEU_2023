@@ -1,4 +1,4 @@
-# 2023广东省大学生工科实验综合大赛_全地形越障运送小车
+# 2023 广东省大学生工科实验综合大赛\_全地形越障运送小车
 
 MCU: STM32F407ZGT6
 
@@ -78,7 +78,7 @@ PWM -> PC9
 
 IN1 -> PC10
 
-IN2 -> PC 11
+IN2 -> PC11
 
 ### 2D Motorized Head Servo
 
@@ -110,7 +110,7 @@ mid_left -> PB12
 
 mid -> PB13
 
-mid_right -> PB14
+mid_right -> PE13
 
 right -> PB15
 
@@ -118,20 +118,20 @@ right -> PB15
 
 ### Hardware
 
-* OLED
+-   OLED
 
 ### System
 
-* Delay
+-   Delay
 
 ### User
 
-* main
+-   main
 
 ## Usage
 
 1. press start buttom
-2. 
+2.
 
 ## Contributor
 
