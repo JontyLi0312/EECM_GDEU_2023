@@ -58,5 +58,11 @@ u8 grayScale_detect(void)
         direction = 1;
     }
 
+    // test
+    //  direction = 0;
+    //  direction = 1;
+    //  direction = 'L';
+    direction = 'R';
+
     return direction;
 }
