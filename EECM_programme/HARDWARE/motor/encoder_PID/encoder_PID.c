@@ -50,7 +50,7 @@ void pid_calc(PID *p) //
     p->Err_2 = p->Err_1;
     p->Err_1 = p->Err;
 }
-
+//给定对于编码器的速度值以及电机序号
 void PID_Move(int16_t speed, int8_t Dre)
 {
     if (Dre == 1) //           
