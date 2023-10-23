@@ -78,7 +78,7 @@ PWM -> PC9
 
 IN1 -> PC10
 
-IN2 -> PC 11
+IN2 -> PC11
 
 ### 2D Motorized Head Servo
 
