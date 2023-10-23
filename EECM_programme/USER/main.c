@@ -52,6 +52,7 @@ int main(void)
                 // stop
                 OLED_ShowString(0, 20, (unsigned char *)"stop", 8, 1);
                 OLED_Refresh();
+                break;
             }
             else if (direction == 1)
             {
@@ -76,8 +77,8 @@ int main(void)
                 // error
                 OLED_ShowString(0, 20, (unsigned char *)"error", 8, 1);
                 OLED_Refresh();
+                break;
             }
-            break;
         }
     }
 }
