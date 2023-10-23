@@ -2,66 +2,126 @@
 #include "motor_encoder.h"
 #include "motor.h"
 
-int16_t g_MOTO5,g_MOTO1,g_MOTO8,g_MOTO2;
-int16_t g_PWM_MAX,g_PWM_MIN;
-encoder_PID g_Speed_PID;
+int16_t output = 0;
+int8_t n, a;
+void PID_Init();
+void pid_calc(PID *p);
+void PID_Move(int16_t speed, int8_t Dre);
 
-g_Speed_PID.kp = 0; 
-g_Speed_PID.ki = 0;
-g_Speed_PID.kd = 0;
+PID ASR1;
+PID ASR2;
 
-int16_t Motor_Speed(int16_t Target_Speed,int16_t Encoder);
 
-int16_t Motor_Speed(int16_t Target_Speed,int16_t Encoder)
+void PID_Init()
 {
-    static int16_t s_Pwm_Out , s_Angle_Err , s_Angle_S,
-    s_Angle_Err_Lowout , s_Angle_Err_Lowout_last;//last相当于上一次偏差
-    float a = 0.7;                              //滤波系数
-    s_Angle_Err = Encoder - Target_Speed;
-    //滤波公式 low_out = (1-a)*Ek + a*low_out_last
-   s_Angle_Err_Lowout = (1-a)*s_Angle_Err + a*s_Angle_Err_Lowout_last; //滤波过后相当于偏差
-   s_Angle_S += s_Angle_Err_Lowout;
-   s_Angle_S = s_Angle_S>120?120:(s_Angle_S<(-120)?(-120):s_Angle_S);    //积分
-   s_Pwm_Out = g_Speed_PID.kp*s_Angle_Err_Lowout + g_Speed_PID.ki*s_Angle_S + g_Speed_PID.kd*(s_Angle_Err_Lowout -s_Angle_Err_Lowout_last);
-   s_Angle_Err_Lowout_last = s_Angle_Err_Lowout;               //将偏差传递
-   return s_Pwm_Out;
-}
+    ASR1.Kp = 1; //        
+    ASR1.Ki = 0.005;
+    ASR1.Kd = 0.001;
+    ASR1.T = 0.02; //           20ms
+    ASR1.OutMax = +1000;
+    ASR1.OutMin = -1000;
 
-
-void Limit_Motor(int16_t *Pwm_Out)
-{
-    if(*Pwm_Out>g_PWM_MAX){*Pwm_Out = 7200;}
-    if(*Pwm_Out<g_PWM_MIN){*Pwm_Out = -7200;}
+    ASR2.Kp = 1; //       
+    ASR2.Ki = 0.005;
+    ASR2.Kd = 0.001;
+    ASR2.T = 0.02; //           20ms
+    ASR2.OutMax = +1000;
+    ASR2.OutMin = -1000;
 
 }
 
-void Motor_Load5(int16_t Target_Speed)
+void pid_calc(PID *p) //
 {
-    int16_t g_Get_Encoder5 = Read_Speed(5);
-    int16_t Pwm_Out =Motor_Speed(Target_Speed,g_Get_Encoder5);
-    Limit_Motor(&Pwm_Out);
-    motor1_speed(Pwm_Out);
+    float a0, a1, a2;
 
-}
-void Motor_Load1(int16_t Target_Speed)
-{
-    int16_t g_Get_Encoder1 = Read_Speed(1);
-    int16_t Pwm_Out = Motor_Speed(Target_Speed,g_Get_Encoder1);
-    Limit_Motor(&Pwm_Out);
-    motor2_speed(Pwm_Out);
+    a0 = p->Kp + p->Ki * p->T + p->Kd / p->T;
+    a1 = p->Kp + 2 * p->Kd / p->T;
+    a2 = p->Kd / p->T;
 
-}
-void Motor_Load8(int16_t Target_Speed)
-{
-    int16_t g_Get_Encoder8 = Read_Speed(8);
-    int16_t Pwm_Out = Motor_Speed(Target_Speed,g_Get_Encoder8);
-    Limit_Motor(&Pwm_Out);
-    motor3_speed(Pwm_Out);
+    p->Out = p->Out_1 + a0 * p->Err - a1 * p->Err_1 + a2 * p->Err_2;
 
+    if (p->Out > p->OutMax) // 限幅
+        p->Out = p->OutMax;
+
+    if (p->Out < p->OutMin)
+        p->Out = p->OutMin;
+
+    p->Out_1 = p->Out;
+    p->Err_2 = p->Err_1;
+    p->Err_1 = p->Err;
 }
-void Motor_Load2(int16_t Target_Speed)
+
+void PID_Move(int16_t speed, int8_t Dre)
 {
-    int16_t g_Get_Encoder2 = Read_Speed(2);
-    int16_t Pwm_Out = Motor_Speed(Target_Speed,g_Get_Encoder2);
-    Limit_Motor(&Pwm_Out);
+    if (Dre == 1) //           
+    {
+        ASR1.Ref = speed;
+        a = 1;    
+    }
+    if (Dre == 2) //             
+    {
+       
+        ASR2.Ref = speed;
+        a = 2; 
+     
+    }
+  
 }
+
+void PID_apply()
+{
+    int16_t PWMA, PWMB;
+
+    PWMA += (int16_t)output1;
+    PWMB += (int16_t)output2;
+    
+    if (PWMA < 0)
+    {
+        PWMA = 250;
+    }
+    else
+    {
+        if (PWMA > 7000)
+        {
+            PWMA = 7000;
+        }
+    }
+    if (PWMB < 0)
+    {
+        PWMB = 250;
+    }
+    else
+    {
+        if (PWMB > 7000)
+        {
+            PWMB = 7000;
+        }
+    }
+   
+    motor1_speed(PWMA);
+    motor1_speed(PWMB);
+    
+}
+
+/******中断函数********/
+
+void TIM4_IRQHandler(void)
+
+{
+    if (TIM_GetITStatus(TIM1, TIM_IT_Update) == SET)
+    {
+
+        ASR1.Fdb = Read_Speed(1) * 10;
+        ASR2.Fdb = Read_Speed(2) * 10;
+
+        ASR1.Err = ASR1.Ref - ASR1.Fdb;
+        ASR2.Err = ASR2.Ref - ASR2.Fdb;
+      
+        pid_calc(&ASR1);
+        pid_calc(&ASR2);
+        
+        output1 = ASR1.Out;
+        output2 = ASR2.Out;
+       
+        TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
+    }
