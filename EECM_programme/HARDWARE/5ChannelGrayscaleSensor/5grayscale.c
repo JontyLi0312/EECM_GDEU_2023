@@ -22,40 +22,40 @@ void grayscale_init(void)
  * @brief 获取方向
  *
  * @return u8 direction
- *          @arg 1 右
- *          @arg 2 左
- *          @arg 3 停
- *          @arg 0 前
+ *          @arg 'R' 右
+ *          @arg 'L' 左
+ *          @arg 0 停
+ *          @arg 1 前
  */
 u8 grayScale_detect(void)
 {
     u8 left, mid_left, right, mid_right, mid;
-    u8 forward;
+    u8 stop;
     u8 direction;
 
     left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
-    mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
     right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
-    mid_right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14);
     mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
+    mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
+    mid_right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14);
 
-    forward = mid_left || mid_right || mid;
+    stop = mid_left || mid_right || mid;
 
     if (mid_left == 0)
     {
-        direction = 1;
+        direction = 'R';
     }
     else if (mid_right == 0)
     {
-        direction = 2;
+        direction = 'L';
     }
-    else if (forward == 0)
+    else if (stop == 1)
     {
-        direction = 3;
+        direction = 0;
     }
     else
     {
-        direction = 0;
+        direction = 1;
     }
 
     return direction;

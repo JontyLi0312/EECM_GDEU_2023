@@ -48,7 +48,9 @@ u8 start_key_get(void)
         start_key_flag = 1;
     }
     else
+    {
         start_key_flag = 0;
+    }
 
     return start_key_flag;
 }
