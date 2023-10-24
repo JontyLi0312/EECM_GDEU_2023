@@ -70,9 +70,9 @@ IN2 -> PC5
 
 ### DC gerat motor 4
 
-encoder A -> PA0
+encoder A -> PB6
 
-encoder B -> PA1
+encoder B -> PB7
 
 PWM -> PC9
 
@@ -82,15 +82,15 @@ IN2 -> PC11
 
 ### 2D Motorized Head Servo
 
-top servo PWM -> PB7
+top servo PWM -> PA2
 
-buttom servo PWM -> PB6
+buttom servo PWM -> PA3
 
 ### OLED
 
 SCL -> PG12
 
-SDA -> PD5
+SDA -> PG11
 
 ### key
 
@@ -98,7 +98,7 @@ start key -> PB4
 
 ### jy901s
 
-TX -> PA2
+TX -> PD5
 
 RX -> PA3
 
