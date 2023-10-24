@@ -26,13 +26,3 @@ void TIM6_Init(void)
     TIM_Cmd(TIM6, ENABLE);
 }
 
-// TIM6中断服务函数
-void TIM6_DAC_IRQHandler(void) 
-{
-    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) 
-    {
-        // 在这里执行20ms定时器触发后的操作
-        // 清除中断标志位
-        TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
-    }
-}

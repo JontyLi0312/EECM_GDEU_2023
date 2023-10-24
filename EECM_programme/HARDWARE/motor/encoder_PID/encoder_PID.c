@@ -112,16 +112,16 @@ uint16_t Num_Abs(int16_t Encoder)
 }
 
 
-/******中断函数********/
 
-void TIM4_IRQHandler(void)
+// TIM6中断服务函数
+void TIM6_DAC_IRQHandler(void) 
 
 {
-    if (TIM_GetITStatus(TIM1, TIM_IT_Update) == SET)
+    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)    // 在这里执行20ms定时器触发后的操作
     {
-
-        ASR1.Fdb = Read_Speed(1);
-        ASR2.Fdb = Read_Speed(2);
+        // 让编码器的值变成整数
+        ASR1.Fdb = Num_Abs(Read_Speed(1));
+        ASR2.Fdb = Num_Abs(Read_Speed(2));
 
         ASR1.Err = ASR1.Ref - ASR1.Fdb;
         ASR2.Err = ASR2.Ref - ASR2.Fdb;
@@ -132,5 +132,7 @@ void TIM4_IRQHandler(void)
         output1 = ASR1.Out;
         output2 = ASR2.Out;
        
-        TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
+        TIM_ClearITPendingBit(TIM6, TIM_IT_Update);    // 清除中断标志位
     }
+
+
