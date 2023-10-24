@@ -11,9 +11,13 @@ TIM_TimeBaseInitTypeDef g_TIM_TimeBaseStructure;
 TIM_ICInitTypeDef g_TIM_ICInitStructure;
 NVIC_InitTypeDef g_NVIC_InitStructure;
 
+/**
+ * @brief 四个电机编码器初始化
+ *
+ */
 void motorEncoder_init(void)
 {
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
     RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
     RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM8, ENABLE);
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
@@ -27,6 +31,10 @@ void motorEncoder_init(void)
     motor4Encoder_init();
 }
 
+/**
+ * @brief 电机1编码器初始化
+ *
+ */
 void motor1Encoder_init(void)
 {
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9; // 光栅尺
@@ -67,6 +75,10 @@ void motor1Encoder_init(void)
     NVIC_Init(&g_NVIC_InitStructure);
 }
 
+/**
+ * @brief 电机2编码器初始化
+ *
+ */
 void motor2Encoder_init(void)
 {
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7; // 光栅尺
@@ -92,7 +104,10 @@ void motor2Encoder_init(void)
     NVIC_Init(&g_NVIC_InitStructure);
 }
 
-
+/**
+ * @brief 电机3编码器初始化
+ *
+ */
 void motor3Encoder_init(void)
 {
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15; // 光栅尺
@@ -121,56 +136,69 @@ void motor3Encoder_init(void)
     NVIC_Init(&g_NVIC_InitStructure);
 }
 
+/**
+ * @brief 电机4编码器初始化
+ *
+ */
 void motor4Encoder_init(void)
 {
-    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1; // 光栅尺
-    GPIO_Init(GPIOA, &g_GPIO_InitStructure);
+    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7; // 光栅尺
+    GPIO_Init(GPIOB, &g_GPIO_InitStructure);
 
-    GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_TIM5);
-    GPIO_PinAFConfig(GPIOA, GPIO_PinSource1, GPIO_AF_TIM5);
+    GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_TIM4);
+    GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
 
-    TIM_TimeBaseInit(TIM5, &g_TIM_TimeBaseStructure);
+    TIM_TimeBaseInit(TIM4, &g_TIM_TimeBaseStructure);
 
-    TIM_EncoderInterfaceConfig(TIM5, TIM_EncoderMode_TI1,
+    TIM_EncoderInterfaceConfig(TIM4, TIM_EncoderMode_TI1,
                                TIM_ICPolarity_Rising,
                                TIM_ICPolarity_Rising); // 编码器接口模式配置
 
-    TIM_ICInit(TIM5, &g_TIM_ICInitStructure);
+    TIM_ICInit(TIM4, &g_TIM_ICInitStructure);
 
-    TIM_ClearFlag(TIM5, TIM_FLAG_Update);      // 清除标志位
-    TIM_ITConfig(TIM5, TIM_IT_Update, ENABLE); // 更新中断
+    TIM_ClearFlag(TIM4, TIM_FLAG_Update);      // 清除标志位
+    TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE); // 更新中断
 
-    TIM_SetCounter(TIM5, 0); // 计数器清零
-    TIM_Cmd(TIM5, ENABLE);
+    TIM_SetCounter(TIM4, 0); // 计数器清零
+    TIM_Cmd(TIM4, ENABLE);
 
-    g_NVIC_InitStructure.NVIC_IRQChannel = TIM5_IRQn;
+    g_NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;
     NVIC_Init(&g_NVIC_InitStructure);
 }
-int16_t Read_Speed(uint8_t motor)
+
+/**
+ * @brief 获取电机速度
+ *
+ * @param TIMX
+ *        @arg TIM4
+ *        @arg TIM1
+ *        @arg TIM8
+ *        @arg TIM2
+ * @return int16_t speed_Value 返回CCR值
+ */
+int16_t Read_Speed(uint8_t TIMX)
 {
     int16_t Speed_Value;
-    switch(motor)
-{
-    case 1:Speed_Value =TIM_GetCounter(TIM1);TIM_SetCounter(TIM1,0);break;
-    case 2:Speed_Value =TIM_GetCounter(TIM8);TIM_SetCounter(TIM8,0);break;
-    default:Speed_Value = 0;
- }
-    return Speed_Value; 
-}
-
-
-void TIM1_CC_IRQHandler(void)
-{
-}
-
-void TIM2_IRQHandler(void)
-{
-}
-
-void TIM8_CC_IRQHandler(void)
-{
-}
-
-void TIM5_IRQHandler(void)
-{
+    switch (TIMX)
+    {
+    case 5:
+        Speed_Value = TIM_GetCounter(TIM4);
+        TIM_SetCounter(TIM4, 0);
+        break;
+    case 1:
+        Speed_Value = TIM_GetCounter(TIM1);
+        TIM_SetCounter(TIM1, 0);
+        break;
+    case 8:
+        Speed_Value = TIM_GetCounter(TIM8);
+        TIM_SetCounter(TIM8, 0);
+        break;
+    case 2:
+        Speed_Value = TIM_GetCounter(TIM2);
+        TIM_SetCounter(TIM2, 0);
+        break;
+    default:
+        Speed_Value = 0;
+    }
+    return Speed_Value;
 }
