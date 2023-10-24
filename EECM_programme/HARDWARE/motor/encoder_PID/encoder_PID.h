@@ -35,12 +35,11 @@ extern int16_t output1;
 extern int16_t output2;
 
 
-extern int8_t n;
-extern int8_t a;
+
 
 void PID_Init(void);
 void pid_calc(PID *p);
 void PID_Move(int16_t speed, int8_t Dre);
-
+void PID_apply();
 
 #endif
