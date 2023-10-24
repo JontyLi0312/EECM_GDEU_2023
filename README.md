@@ -70,9 +70,9 @@ IN2 -> PC5
 
 ### DC gerat motor 4
 
-encoder A -> PA0
+encoder A -> PB6
 
-encoder B -> PA1
+encoder B -> PB7
 
 PWM -> PC9
 
