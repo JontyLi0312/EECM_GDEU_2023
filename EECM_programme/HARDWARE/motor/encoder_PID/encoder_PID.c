@@ -7,6 +7,8 @@ void PID_Init();
 void pid_calc(PID *p);
 void PID_Move(int16_t speed, int8_t Dre);
 void PID_apply();
+uint16_t Num_Abs(int16_t Encoder) ;
+
 PID ASR1;
 PID ASR2;
 
@@ -101,6 +103,14 @@ void PID_apply()
     motor1_speed(PWMB);
     
 }
+//绝对值函数，输入的是读取到编码器的值。使编码器的值变成正数，
+uint16_t Num_Abs(int16_t Encoder)
+{
+	uint16_t Middle;
+	Middle = Encoder>0?Encoder:(-Encoder);
+	return Middle;
+}
+
 
 /******中断函数********/
 
@@ -110,8 +120,8 @@ void TIM4_IRQHandler(void)
     if (TIM_GetITStatus(TIM1, TIM_IT_Update) == SET)
     {
 
-        ASR1.Fdb = Read_Speed(1) * 10;
-        ASR2.Fdb = Read_Speed(2) * 10;
+        ASR1.Fdb = Read_Speed(1);
+        ASR2.Fdb = Read_Speed(2);
 
         ASR1.Err = ASR1.Ref - ASR1.Fdb;
         ASR2.Err = ASR2.Ref - ASR2.Fdb;
