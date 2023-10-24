@@ -2,12 +2,11 @@
 #include "motor_encoder.h"
 #include "motor.h"
 
-int16_t output = 0;
-int8_t n, a;
+
 void PID_Init();
 void pid_calc(PID *p);
 void PID_Move(int16_t speed, int8_t Dre);
-
+void PID_apply();
 PID ASR1;
 PID ASR2;
 
@@ -56,13 +55,13 @@ void PID_Move(int16_t speed, int8_t Dre)
     if (Dre == 1) //           
     {
         ASR1.Ref = speed;
-        a = 1;    
+         
     }
     if (Dre == 2) //             
     {
        
         ASR2.Ref = speed;
-        a = 2; 
+      
      
     }
   
@@ -72,29 +71,29 @@ void PID_apply()
 {
     int16_t PWMA, PWMB;
 
-    PWMA += (int16_t)output1;
-    PWMB += (int16_t)output2;
+    PWMA = (int16_t)output1;
+    PWMB = (int16_t)output2;
     
-    if (PWMA < 0)
+    if (PWMA < 20)
     {
-        PWMA = 250;
+        PWMA = 20;
     }
     else
     {
-        if (PWMA > 7000)
+        if (PWMA > 90)
         {
-            PWMA = 7000;
+            PWMA = 90;
         }
     }
-    if (PWMB < 0)
+    if (PWMB < 20)
     {
-        PWMB = 250;
+        PWMB = 20;
     }
     else
     {
-        if (PWMB > 7000)
+        if (PWMB > 90)
         {
-            PWMB = 7000;
+            PWMB = 90;
         }
     }
    
