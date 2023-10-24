@@ -11,6 +11,10 @@ TIM_TimeBaseInitTypeDef g_TIM_TimeBaseStructure;
 TIM_ICInitTypeDef g_TIM_ICInitStructure;
 NVIC_InitTypeDef g_NVIC_InitStructure;
 
+/**
+ * @brief 四个电机编码器初始化
+ *
+ */
 void motorEncoder_init(void)
 {
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
@@ -27,33 +31,10 @@ void motorEncoder_init(void)
     motor4Encoder_init();
 }
 
-int16_t Read_Speed(uint8_t TIMX)
-{
-    int16_t Speed_Value;
-    switch (TIMX)
-    {
-    case 5:
-        Speed_Value = TIM_GetCounter(TIM4);
-        TIM_SetCounter(TIM4, 0);
-        break;
-    case 1:
-        Speed_Value = TIM_GetCounter(TIM1);
-        TIM_SetCounter(TIM1, 0);
-        break;
-    case 8:
-        Speed_Value = TIM_GetCounter(TIM8);
-        TIM_SetCounter(TIM8, 0);
-        break;
-    case 2:
-        Speed_Value = TIM_GetCounter(TIM2);
-        TIM_SetCounter(TIM2, 0);
-        break;
-    default:
-        Speed_Value = 0;
-    }
-    return Speed_Value;
-}
-
+/**
+ * @brief 电机1编码器初始化
+ *
+ */
 void motor1Encoder_init(void)
 {
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9; // 光栅尺
@@ -94,6 +75,10 @@ void motor1Encoder_init(void)
     NVIC_Init(&g_NVIC_InitStructure);
 }
 
+/**
+ * @brief 电机2编码器初始化
+ *
+ */
 void motor2Encoder_init(void)
 {
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7; // 光栅尺
@@ -119,8 +104,10 @@ void motor2Encoder_init(void)
     NVIC_Init(&g_NVIC_InitStructure);
 }
 
-
-
+/**
+ * @brief 电机3编码器初始化
+ *
+ */
 void motor3Encoder_init(void)
 {
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15; // 光栅尺
@@ -149,6 +136,10 @@ void motor3Encoder_init(void)
     NVIC_Init(&g_NVIC_InitStructure);
 }
 
+/**
+ * @brief 电机4编码器初始化
+ *
+ */
 void motor4Encoder_init(void)
 {
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7; // 光栅尺
@@ -173,4 +164,41 @@ void motor4Encoder_init(void)
 
     g_NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;
     NVIC_Init(&g_NVIC_InitStructure);
+}
+
+/**
+ * @brief 获取电机速度
+ *
+ * @param TIMX
+ *        @arg TIM4
+ *        @arg TIM1
+ *        @arg TIM8
+ *        @arg TIM2
+ * @return int16_t speed_Value 返回CCR值
+ */
+int16_t Read_Speed(uint8_t TIMX)
+{
+    int16_t Speed_Value;
+    switch (TIMX)
+    {
+    case 5:
+        Speed_Value = TIM_GetCounter(TIM4);
+        TIM_SetCounter(TIM4, 0);
+        break;
+    case 1:
+        Speed_Value = TIM_GetCounter(TIM1);
+        TIM_SetCounter(TIM1, 0);
+        break;
+    case 8:
+        Speed_Value = TIM_GetCounter(TIM8);
+        TIM_SetCounter(TIM8, 0);
+        break;
+    case 2:
+        Speed_Value = TIM_GetCounter(TIM2);
+        TIM_SetCounter(TIM2, 0);
+        break;
+    default:
+        Speed_Value = 0;
+    }
+    return Speed_Value;
 }
