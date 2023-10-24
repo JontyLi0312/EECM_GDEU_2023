@@ -6,6 +6,7 @@ void motor2Encoder_init(void);
 void motor3Encoder_init(void);
 void motor4Encoder_init(void);
 int16_t Read_Speed(uint8_t motor);
+
 GPIO_InitTypeDef g_GPIO_InitStructure;
 TIM_TimeBaseInitTypeDef g_TIM_TimeBaseStructure;
 TIM_ICInitTypeDef g_TIM_ICInitStructure;
@@ -176,29 +177,17 @@ void motor4Encoder_init(void)
  *        @arg TIM2
  * @return int16_t speed_Value 返回CCR值
  */
-int16_t Read_Speed(uint8_t TIMX)
+
+int16_t Read_Speed(uint8_t motor)
 {
     int16_t Speed_Value;
-    switch (TIMX)
-    {
-    case 5:
-        Speed_Value = TIM_GetCounter(TIM4);
-        TIM_SetCounter(TIM4, 0);
-        break;
-    case 1:
-        Speed_Value = TIM_GetCounter(TIM1);
-        TIM_SetCounter(TIM1, 0);
-        break;
-    case 8:
-        Speed_Value = TIM_GetCounter(TIM8);
-        TIM_SetCounter(TIM8, 0);
-        break;
-    case 2:
-        Speed_Value = TIM_GetCounter(TIM2);
-        TIM_SetCounter(TIM2, 0);
-        break;
-    default:
-        Speed_Value = 0;
-    }
-    return Speed_Value;
+    switch(motor)
+{
+    case 1:Speed_Value =TIM_GetCounter(TIM1);TIM_SetCounter(TIM1,0);break;
+    case 2:Speed_Value =TIM_GetCounter(TIM8);TIM_SetCounter(TIM8,0);break;
+    case 3:Speed_Value =TIM_GetCounter(TIM2);TIM_SetCounter(TIM2,0);break;
+    case 4:Speed_Value =TIM_GetCounter(TIM4);TIM_SetCounter(TIM4,0);break;
+    default:Speed_Value = 0;
+ }
+    return Speed_Value; 
 }
