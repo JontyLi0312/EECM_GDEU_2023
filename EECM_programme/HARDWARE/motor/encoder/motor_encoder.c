@@ -24,6 +24,7 @@ void motorEncoder_init(void)
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 
     motor1Encoder_init();
     motor2Encoder_init();
@@ -37,15 +38,17 @@ void motorEncoder_init(void)
  */
 void motor1Encoder_init(void)
 {
-    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9; // 光栅尺
+    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; // 光栅尺
     g_GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
     g_GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
     g_GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
     g_GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_Init(GPIOA, &g_GPIO_InitStructure);
+    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+    GPIO_Init(GPIOE, &g_GPIO_InitStructure);
 
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource8, GPIO_AF_TIM1);
-    GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_TIM1);
+    GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
 
     TIM_TimeBaseStructInit(&g_TIM_TimeBaseStructure);
     g_TIM_TimeBaseStructure.TIM_Prescaler = 0;

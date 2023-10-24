@@ -28,17 +28,25 @@ Keil project，base on AC6
 
 ### OpenMV
 
+**USART3**
+
 TX -> PC12
 
 RX -> PD2
 
 ### DC gear motor 1
 
+**TIM1**
+
 encoder A -> PA8
 
-encoder B -> PA9
+encoder B -> PE11
+
+**TIM3_CH1**
 
 PWM -> PA6
+
+**GPIO**
 
 IN1 -> PC0
 
@@ -46,11 +54,17 @@ IN2 -> PC1
 
 ### DC gerat motor 2
 
+**TIM8**
+
 encoder A -> PC6
 
 encoder B -> PC7
 
+**TIM3_CH2**
+
 PWM -> PA7
+
+**GPIO**
 
 IN1 -> PC2
 
@@ -58,11 +72,17 @@ IN2 -> PC3
 
 ### DC gerat motor 3
 
+**TIM2**
+
 encoder A -> PA15
 
 encoder B -> PB3
 
+**TIM3_CH3**
+
 PWM -> PC8
+
+**GPIO**
 
 IN1 -> PC4
 
@@ -70,11 +90,17 @@ IN2 -> PC5
 
 ### DC gerat motor 4
 
+**TIM4**
+
 encoder A -> PB6
 
 encoder B -> PB7
 
+**TIM3_CH4**
+
 PWM -> PC9
+
+**GPIO**
 
 IN1 -> PC10
 
@@ -82,11 +108,15 @@ IN2 -> PC11
 
 ### 2D Motorized Head Servo
 
+**TIM5**
+
 top servo PWM -> PA2
 
-buttom servo PWM -> PA3
+buttom servo PWM -> PA1
 
 ### OLED
+
+**IIC**
 
 SCL -> PG12
 
@@ -94,15 +124,21 @@ SDA -> PG11
 
 ### key
 
+**GPIO**
+
 start key -> PB4
 
 ### jy901s
 
-TX -> PD5
+**USART2**
 
-RX -> PA3
+TX -> PA3
+
+RX -> PD5
 
 ### 5 channel gray scale sensor
+
+**GPIO**
 
 left -> PB11
 
@@ -118,20 +154,20 @@ right -> PB15
 
 ### Hardware
 
--   OLED
+- OLED
 
 ### System
 
--   Delay
+- Delay
 
 ### User
 
--   main
+- main
 
 ## Usage
 
 1. press start buttom
-2.
+2. 
 
 ## Contributor
 
