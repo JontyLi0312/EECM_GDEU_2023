@@ -28,7 +28,7 @@ Keil project，base on AC6
 
 ### OpenMV
 
-**USART3**
+**UART5**
 
 TX -> PC12
 
@@ -132,9 +132,9 @@ start key -> PB4
 
 **USART2**
 
-TX -> PA3
+RX -> PA3
 
-RX -> PD5
+TX -> PD5
 
 ### 5 channel gray scale sensor
 
