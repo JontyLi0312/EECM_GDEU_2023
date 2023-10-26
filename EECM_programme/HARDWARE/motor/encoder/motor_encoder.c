@@ -56,6 +56,7 @@ void motor1Encoder_init(void)
     g_TIM_TimeBaseStructure.TIM_Period = 65535;
     g_TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
     g_TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    g_TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
     TIM_TimeBaseInit(TIM1, &g_TIM_TimeBaseStructure);
 
     // 编码器模式1 – 根据TI1FP1的电平，计数器在TI2FP2的边沿向上/下计数。
