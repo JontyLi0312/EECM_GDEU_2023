@@ -23,7 +23,7 @@ int main(void)
 
     delay_init(168);
     OLED_Init();
-    key_init();
+    // key_init();
     motor_init();
     jy901s_init();
     grayscale_init();
