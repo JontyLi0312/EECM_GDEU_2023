@@ -16,6 +16,8 @@
 #include "5graysacle.h"
 #include "servo_control.h"
 #include "servo_apply.h"
+#include "Timer.h"
+
 
 int main(void)
 {
