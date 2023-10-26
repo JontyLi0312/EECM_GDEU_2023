@@ -116,11 +116,11 @@ void TIM6_DAC_IRQHandler(void)
 {
     if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) // 在这里执行20ms定时器触发后的操作
     {
-        // 让编码器的值变成整数
-        ASR1.Fdb = Num_Abs(Read_Speed(1));
-        ASR2.Fdb = Num_Abs(Read_Speed(2));
-        ASR3.Fdb = Num_Abs(Read_Speed(3));
-        ASR4.Fdb = Num_Abs(Read_Speed(4));
+        // 让编码器的值变成正整数
+        ASR1.Fdb = (Num_Abs(Read_Speed(1)) - 78)/56.0 +20;
+        ASR2.Fdb = (Num_Abs(Read_Speed(2)) - 78)/56.0 +20;
+        ASR3.Fdb = (Num_Abs(Read_Speed(3)) - 78)/56.0 +20;
+        ASR4.Fdb = (Num_Abs(Read_Speed(4)) - 78)/56.0 +20;
 
 
         ASR1.Err = ASR1.Ref - ASR1.Fdb;
