@@ -26,10 +26,6 @@ void motor_PWM_init(void)
     GPIO_motor_PWM_initStructure.GPIO_Speed = GPIO_High_Speed;
     GPIO_Init(GPIOC, &GPIO_motor_PWM_initStructure);
     GPIO_motor_PWM_initStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
-    GPIO_motor_PWM_initStructure.GPIO_Mode = GPIO_Mode_AF;
-    GPIO_motor_PWM_initStructure.GPIO_OType = GPIO_OType_PP;
-    GPIO_motor_PWM_initStructure.GPIO_PuPd = GPIO_PuPd_UP;
-    GPIO_motor_PWM_initStructure.GPIO_Speed = GPIO_High_Speed;
     GPIO_Init(GPIOA, &GPIO_motor_PWM_initStructure);
 
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_TIM3);
@@ -51,6 +47,9 @@ void motor_PWM_init(void)
     TIM_OC_motor_PWM_initStructure.TIM_OutputState = TIM_OutputState_Enable;
     TIM_OC_motor_PWM_initStructure.TIM_Pulse = 0;
     TIM_OC1Init(TIM3, &TIM_OC_motor_PWM_initStructure);
+    TIM_OC2Init(TIM3, &TIM_OC_motor_PWM_initStructure);
+    TIM_OC3Init(TIM3, &TIM_OC_motor_PWM_initStructure);
+    TIM_OC4Init(TIM3, &TIM_OC_motor_PWM_initStructure);
 
     TIM_Cmd(TIM3, ENABLE);
 }
