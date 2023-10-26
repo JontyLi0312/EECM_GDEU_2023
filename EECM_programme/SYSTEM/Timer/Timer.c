@@ -1,3 +1,4 @@
+#include "Timer.h"
 void TIM6_Init(void) 
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
