@@ -39,20 +39,18 @@ void motorEncoder_init(void)
  */
 void motor1Encoder_init(void)
 {
-    // g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; // 光栅尺
-    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_11;
+    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; // 光栅尺
     g_GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
     g_GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
     g_GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
     g_GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-    // GPIO_Init(GPIOA, &g_GPIO_InitStructure);
+    GPIO_Init(GPIOA, &g_GPIO_InitStructure);
 
-    // g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
     GPIO_Init(GPIOE, &g_GPIO_InitStructure);
 
-    // GPIO_PinAFConfig(GPIOA, GPIO_PinSource8, GPIO_AF_TIM1);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource8, GPIO_AF_TIM1);
     GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
-    GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_TIM1);
 
     g_TIM_TimeBaseStructure.TIM_Prescaler = 0;
     g_TIM_TimeBaseStructure.TIM_Period = 65535;
