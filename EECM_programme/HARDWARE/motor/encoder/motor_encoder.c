@@ -39,6 +39,11 @@ void motorEncoder_init(void)
  */
 void motor1Encoder_init(void)
 {
+    GPIO_InitTypeDef g_GPIO_InitStructure;
+    TIM_TimeBaseInitTypeDef g_TIM_TimeBaseStructure;
+    TIM_ICInitTypeDef g_TIM_ICInitStructure;
+    NVIC_InitTypeDef g_NVIC_InitStructure;
+
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; // 光栅尺
     g_GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
     g_GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
@@ -66,6 +71,8 @@ void motor1Encoder_init(void)
 
     TIM_ICStructInit(&g_TIM_ICInitStructure); // 默认值赋值
     TIM_ICInit(TIM1, &g_TIM_ICInitStructure);
+
+    TIM_ARRPreloadConfig(TIM1, ENABLE);
 
     TIM_ClearFlag(TIM1, TIM_FLAG_Update); // 清除标志位
 
