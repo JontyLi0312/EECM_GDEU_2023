@@ -26,8 +26,8 @@ void motor_PWM_init(void)
     GPIO_motor_PWM_initStructure.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_motor_PWM_initStructure.GPIO_Speed = GPIO_High_Speed;
     GPIO_Init(GPIOC, &GPIO_motor_PWM_initStructure);
-    //GPIO_motor_PWM_initStructure.GPIO_Pin = GPIO_Pin_7;
-    //GPIO_Init(GPIOA, &GPIO_motor_PWM_initStructure);
+    GPIO_motor_PWM_initStructure.GPIO_Pin = GPIO_Pin_7;
+    GPIO_Init(GPIOA, &GPIO_motor_PWM_initStructure);
     GPIO_motor_PWM_initStructure.GPIO_Pin = GPIO_Pin_4;
     GPIO_Init(GPIOB, &GPIO_motor_PWM_initStructure);
 
