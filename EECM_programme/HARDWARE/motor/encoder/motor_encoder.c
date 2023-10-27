@@ -39,18 +39,20 @@ void motorEncoder_init(void)
  */
 void motor1Encoder_init(void)
 {
-    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; // 光栅尺
+    // g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; // 光栅尺
+    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_11;
     g_GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
     g_GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
     g_GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
     g_GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-    GPIO_Init(GPIOA, &g_GPIO_InitStructure);
+    // GPIO_Init(GPIOA, &g_GPIO_InitStructure);
 
-    g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+    // g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
     GPIO_Init(GPIOE, &g_GPIO_InitStructure);
 
-    GPIO_PinAFConfig(GPIOA, GPIO_PinSource8, GPIO_AF_TIM1);
+    // GPIO_PinAFConfig(GPIOA, GPIO_PinSource8, GPIO_AF_TIM1);
     GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
+    GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_TIM1);
 
     g_TIM_TimeBaseStructure.TIM_Prescaler = 0;
     g_TIM_TimeBaseStructure.TIM_Period = 65535;
@@ -59,15 +61,13 @@ void motor1Encoder_init(void)
     g_TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
     TIM_TimeBaseInit(TIM1, &g_TIM_TimeBaseStructure);
 
-    TIM_ICStructInit(&g_TIM_ICInitStructure); // 默认值赋值
-    TIM_ICInit(TIM1, &g_TIM_ICInitStructure);
-    g_TIM_ICInitStructure.TIM_Channel = TIM_Channel_2;
-    TIM_ICInit(TIM1, &g_TIM_ICInitStructure);
-
     // 编码器模式1 – 根据TI1FP1的电平，计数器在TI2FP2的边沿向上/下计数。
     TIM_EncoderInterfaceConfig(TIM1, TIM_EncoderMode_TI1,
                                TIM_ICPolarity_Rising,
                                TIM_ICPolarity_Rising); // 编码器接口模式配置
+
+    TIM_ICStructInit(&g_TIM_ICInitStructure); // 默认值赋值
+    TIM_ICInit(TIM1, &g_TIM_ICInitStructure);
 
     TIM_ClearFlag(TIM1, TIM_FLAG_Update); // 清除标志位
 

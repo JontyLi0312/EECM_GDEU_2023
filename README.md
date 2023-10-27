@@ -44,7 +44,7 @@ encoder B -> PE11
 
 **TIM3_CH1**
 
-PWM -> PA6
+PWM -> PB4
 
 **GPIO**
 
