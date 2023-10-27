@@ -112,7 +112,7 @@ void motor1_control(u8 mode)
     else if (mode == 2)
     {
         GPIO_ResetBits(GPIOC, GPIO_Pin_0);
-        GPIO_SetBits(GPIOC, GPIO_Pin_0);
+        GPIO_SetBits(GPIOC, GPIO_Pin_1);
     }
     else if (mode == 0)
     {
