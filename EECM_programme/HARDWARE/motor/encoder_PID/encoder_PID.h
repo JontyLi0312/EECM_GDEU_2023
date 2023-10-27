@@ -43,7 +43,7 @@ extern int16_t output4;
 void PID_Init(void);
 void pid_calc(PID *p);
 void PID_Move(int16_t speed, int8_t Dre);
-void PID_apply();
+void PID_apply(void);
 uint16_t Num_Abs(int16_t Encoder);
 
 #endif

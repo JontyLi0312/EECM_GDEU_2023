@@ -1,47 +1,51 @@
 #include "encoder_PID.h"
 #include "motor_encoder.h"
 #include "motor.h"
-
-void PID_Init();
+#include "oled.h"
+void PID_Init(void);
 void pid_calc(PID *p);
 void PID_Move(int16_t speed, int8_t Dre);
-void PID_apply();
+void PID_apply(void);
 uint16_t Num_Abs(int16_t Encoder);
 
 PID ASR1;
 PID ASR2;
 PID ASR3;
 PID ASR4;
+int16_t output1;
+int16_t output2;
+int16_t output3;
+int16_t output4;
 
-void PID_Init()
+void PID_Init(void)
 {
     ASR1.Kp = 1; //
     ASR1.Ki = 0.005;
     ASR1.Kd = 0.001;
     ASR1.T = 0.02; //           20ms
     ASR1.OutMax = 90;
-    ASR1.OutMin = 20;
+    ASR1.OutMin = 0;
 
     ASR2.Kp = 1; //
     ASR2.Ki = 0.005;
     ASR2.Kd = 0.0014;
     ASR2.T = 0.02; //           20ms
     ASR2.OutMax = 90;
-    ASR2.OutMin = 20;
+    ASR2.OutMin = 0;
     ASR2.Kp = 1; //
 
     ASR3.Ki = 0.005;
     ASR3.Kd = 0.001;
     ASR3.T = 0.02; //           20ms
     ASR3.OutMax = 90;
-    ASR3.OutMin = 20;
+    ASR3.OutMin = 0;
 
     ASR4.Kp = 1; //
     ASR4.Ki = 0.005;
     ASR4.Kd = 0.001;
     ASR4.T = 0.02; //           20ms
     ASR4.OutMax = 90;
-    ASR4.OutMin = 20;
+    ASR4.OutMin = 0;
 }
 
 void pid_calc(PID *p) //
@@ -87,7 +91,7 @@ void PID_Move(int16_t speed, int8_t Dre)
     }
 }
 //
-void PID_apply()
+void PID_apply(void)
 {
     int16_t PWM1, PWM2,PWM3, PWM4;
 
@@ -96,11 +100,10 @@ void PID_apply()
     PWM3 = (int16_t)output3;
     PWM4 = (int16_t)output4;
 
-
     motor1_speed(PWM1);
     motor2_speed(PWM2);
-    motor1_speed(PWM3);
-    motor2_speed(PWM4);
+    motor3_speed(PWM3);
+    motor4_speed(PWM4);
 }
 // 绝对值函数，输入的是读取到编码器的值。使编码器的值变成正数，
 uint16_t Num_Abs(int16_t Encoder)
@@ -110,7 +113,7 @@ uint16_t Num_Abs(int16_t Encoder)
     return Middle;
 }
 
-// TIM6中断服务函数
+//TIM6中断服务函数
 void TIM6_DAC_IRQHandler(void)
 
 {
@@ -133,10 +136,14 @@ void TIM6_DAC_IRQHandler(void)
         pid_calc(&ASR3);
         pid_calc(&ASR4);
 
-        output1 = ASR1.Out;
-        output2 = ASR2.Out;
-        output3 = ASR3.Out;
-        output4 = ASR4.Out;
+       output1 = ASR1.Out;
+       output2 = ASR2.Out;
+       output3 = ASR3.Out;
+       output4 = ASR4.Out;
+       PID_apply();
+       OLED_ShowNum(1, 20, output4 , 5, 8, 1);
+       OLED_Refresh();
+
 
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update); // 清除中断标志位
     }
