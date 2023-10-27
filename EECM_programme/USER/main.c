@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "sys.h"
-#include "usart.h"
 #include "delay.h"
 #include "oled.h"
 #include "key.h"
