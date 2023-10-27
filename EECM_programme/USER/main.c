@@ -41,7 +41,7 @@ int main(void)
         motor1_speed(50);
 
         int32_t count;
-        count = TIM_GetCounter(TIM2);
+        count = TIM_GetCounter(TIM1);
         OLED_ShowNum(0, 10, count, 8, 8, 1);
         OLED_Refresh();
     }
