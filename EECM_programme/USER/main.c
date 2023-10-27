@@ -16,12 +16,13 @@
 #include "servo_control.h"
 #include "servo_apply.h"
 #include "Timer.h"
+#include "motor_encoder.h"
+#include "encoder_PID.h"
 
 
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-
     delay_init(168);
     OLED_Init();
     // key_init();
@@ -29,15 +30,16 @@ int main(void)
     jy901s_init();
     grayscale_init();
     Servo_PWM_Init();
-
+    PID_Init();
     jy901s_angleData g_angleDatas;
 
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char *)"Status: WAIT", 8, 1);
     OLED_Refresh();
-
-    while (1)
-    {
+   
+     while (1)
+     {
+     
         // 等待开始
         u8 start_flag;
         start_flag = start_key_get();
