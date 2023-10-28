@@ -120,10 +120,10 @@ void TIM6_DAC_IRQHandler(void)
     if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) // 在这里执行20ms定时器触发后的操作
     {
         // 让编码器的值变成正整数
-        ASR1.Fdb = (Num_Abs(Read_Speed(1)) - 48)/63.0 +10;
-        ASR2.Fdb = (Num_Abs(Read_Speed(2)) - 48)/63.0 +10;
-        ASR3.Fdb = (Num_Abs(Read_Speed(3)) - 48)/63.0 +10;
-        ASR4.Fdb = (Num_Abs(Read_Speed(4)) - 48)/63.0 +10;
+        ASR1.Fdb = (Num_Abs(Read_Speed(1)) - 48)/6.3 +10;
+        ASR2.Fdb = (Num_Abs(Read_Speed(2)) - 48)/6.3 +10;
+        ASR3.Fdb = (Num_Abs(Read_Speed(3)) - 48)/6.3 +10;
+        ASR4.Fdb = (Num_Abs(Read_Speed(4)) - 48)/6.3 +10;
 
 
         ASR1.Err = ASR1.Ref - ASR1.Fdb;
@@ -141,7 +141,7 @@ void TIM6_DAC_IRQHandler(void)
        output3 = ASR3.Out;
        output4 = ASR4.Out;
        PID_apply();
-       OLED_ShowNum(1, 20, output4 , 5, 8, 1);
+       OLED_ShowNum(1, 20, ASR4.Fdb  , 5, 8, 1);
        OLED_Refresh();
 
 

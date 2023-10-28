@@ -5,7 +5,7 @@
 typedef struct
 {
     int16_t Ref;
-    int16_t Fdb;
+    float Fdb;
 
     float Kp;
     float Ki;
