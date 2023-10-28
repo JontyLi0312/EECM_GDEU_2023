@@ -158,10 +158,10 @@ void motor4Encoder_init(void)
  * @brief 获取电机速度
  *
  * @param TIMX
- *        @arg TIM4
  *        @arg TIM1
  *        @arg TIM8
  *        @arg TIM2
+ *        @arg TIM4
  * @return int16_t speed_Value 返回CCR值
  */
 
