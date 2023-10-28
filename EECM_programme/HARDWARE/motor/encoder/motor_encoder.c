@@ -19,8 +19,8 @@ NVIC_InitTypeDef g_NVIC_InitStructure;
 void motorEncoder_init(void)
 {
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
-    RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
-    RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM8, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM8, ENABLE);
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
