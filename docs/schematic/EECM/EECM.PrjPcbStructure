@@ -1,1 +1,6 @@
-Record=TopLevelDocument|FileName=Sheet1.SchDoc|SheetNumber=1
+Record=TopLevelDocument|FileName=parent.SchDoc|SheetNumber=1
+Record=SheetSymbol|SourceDocument=parent.SchDoc|Designator=FK1|SchDesignator=FK1|FileName=MCU.SchDoc|SheetNumber=2|SymbolType=Normal|RawFileName=MCU.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=parent.SchDoc|Designator=FK2|SchDesignator=FK2|FileName=sensor.SchDoc|SheetNumber=3|SymbolType=Normal|RawFileName=sensor.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=parent.SchDoc|Designator=FK3|SchDesignator=FK3|FileName=motor.SchDoc|SheetNumber=5|SymbolType=Normal|RawFileName=motor.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=parent.SchDoc|Designator=FK4|SchDesignator=FK4|FileName=display.SchDoc|SheetNumber=6|SymbolType=Normal|RawFileName=display.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=parent.SchDoc|Designator=FK5|SchDesignator=FK5|FileName=power.SchDoc|SheetNumber=4|SymbolType=Normal|RawFileName=power.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 

@@ -126,7 +126,7 @@ SDA -> PG11
 
 **GPIO**
 
-start key -> PB4
+start key -> ？？？
 
 ### jy901s
 
@@ -154,20 +154,20 @@ right -> PB15
 
 ### Hardware
 
-- OLED
+-   OLED
 
 ### System
 
-- Delay
+-   Delay
 
 ### User
 
-- main
+-   main
 
 ## Usage
 
 1. press start buttom
-2. 
+2.
 
 ## Contributor
 
