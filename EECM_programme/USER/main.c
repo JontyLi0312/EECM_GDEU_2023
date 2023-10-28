@@ -30,6 +30,7 @@ int main(void)
     grayscale_init();
     Servo_PWM_Init();
     PID_Init();
+    TIM6_Init() ;
     jy901s_angleData g_angleDatas;
 
     OLED_Clear();
