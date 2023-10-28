@@ -39,10 +39,15 @@ void motorEncoder_init(void)
  */
 void motor1Encoder_init(void)
 {
+    GPIO_InitTypeDef g_GPIO_InitStructure;
+    TIM_TimeBaseInitTypeDef g_TIM_TimeBaseStructure;
+    TIM_ICInitTypeDef g_TIM_ICInitStructure;
+    NVIC_InitTypeDef g_NVIC_InitStructure;
+
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; // 光栅尺
     g_GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
     g_GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
-    g_GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    g_GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
     g_GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_Init(GPIOA, &g_GPIO_InitStructure);
 
@@ -59,15 +64,15 @@ void motor1Encoder_init(void)
     g_TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
     TIM_TimeBaseInit(TIM1, &g_TIM_TimeBaseStructure);
 
-    TIM_ICStructInit(&g_TIM_ICInitStructure); // 默认值赋值
-    TIM_ICInit(TIM1, &g_TIM_ICInitStructure);
-    g_TIM_ICInitStructure.TIM_Channel = TIM_Channel_2;
-    TIM_ICInit(TIM1, &g_TIM_ICInitStructure);
-
     // 编码器模式1 – 根据TI1FP1的电平，计数器在TI2FP2的边沿向上/下计数。
     TIM_EncoderInterfaceConfig(TIM1, TIM_EncoderMode_TI1,
                                TIM_ICPolarity_Rising,
                                TIM_ICPolarity_Rising); // 编码器接口模式配置
+
+    TIM_ICStructInit(&g_TIM_ICInitStructure); // 默认值赋值
+    TIM_ICInit(TIM1, &g_TIM_ICInitStructure);
+
+    TIM_ARRPreloadConfig(TIM1, ENABLE);
 
     TIM_ClearFlag(TIM1, TIM_FLAG_Update); // 清除标志位
 
