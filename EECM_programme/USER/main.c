@@ -37,8 +37,8 @@ int main(void)
 
     while (1)
     {
-        //motor1_control(1);
-        //motor1_speed(50);
+        motor1_control(1);
+        motor4_speed(50);
 
         int32_t count;
         count = TIM_GetCounter(TIM1);
