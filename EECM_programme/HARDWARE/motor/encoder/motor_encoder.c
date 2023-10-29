@@ -39,10 +39,6 @@ void motorEncoder_init(void)
  */
 void motor1Encoder_init(void)
 {
-    GPIO_InitTypeDef g_GPIO_InitStructure;
-    TIM_TimeBaseInitTypeDef g_TIM_TimeBaseStructure;
-    TIM_ICInitTypeDef g_TIM_ICInitStructure;
-    NVIC_InitTypeDef g_NVIC_InitStructure;
 
     g_GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; // 光栅尺
     g_GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
