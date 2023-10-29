@@ -104,12 +104,12 @@ void motor4_speed(u16 speed)
  */
 void motor1_control(u8 mode)
 {
-    if (mode == 1)
+    if (mode == 2)
     {
         GPIO_SetBits(GPIOC, GPIO_Pin_0);
         GPIO_ResetBits(GPIOC, GPIO_Pin_1);
     }
-    else if (mode == 2)
+    else if (mode == 1)
     {
         GPIO_ResetBits(GPIOC, GPIO_Pin_0);
         GPIO_SetBits(GPIOC, GPIO_Pin_1);
@@ -131,12 +131,12 @@ void motor1_control(u8 mode)
  */
 void motor2_control(u8 mode)
 {
-    if (mode == 1)
+    if (mode == 2)
     {
         GPIO_SetBits(GPIOC, GPIO_Pin_2);
         GPIO_ResetBits(GPIOC, GPIO_Pin_3);
     }
-    else if (mode == 2)
+    else if (mode == 1)
     {
         GPIO_ResetBits(GPIOC, GPIO_Pin_2);
         GPIO_SetBits(GPIOC, GPIO_Pin_3);
