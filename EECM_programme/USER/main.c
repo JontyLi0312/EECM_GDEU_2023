@@ -16,7 +16,6 @@
 #include "servo_control.h"
 #include "servo_apply.h"
 #include "Timer.h"
-#include "motor_encoder.h"
 #include "encoder_PID.h"
 
 int main(void)
@@ -30,69 +29,60 @@ int main(void)
     grayscale_init();
     Servo_PWM_Init();
     PID_Init();
-    TIM6_Init() ;
+    TIM6_Init();
     jy901s_angleData g_angleDatas;
 
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char *)"Status: WAIT", 8, 1);
     OLED_Refresh();
 
+    u8 start_flag;
+    start_flag = start_key_get();
+    // test
+    start_flag = 0;
+    while (start_flag)
+    {
+        start_flag = start_key_get();
+    }
+
     while (1)
     {
+        OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
+        OLED_Refresh();
 
-        // 等待开始
-        u8 start_flag;
-        start_flag = start_key_get();
-        while (start_flag)
+        u8 direction;
+        direction = grayScale_detect();
+        if (direction == 0)
         {
-            OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
+            // stop
+            OLED_ShowString(0, 20, (unsigned char *)"stop", 8, 1);
             OLED_Refresh();
-
-            // while (1)
-            // {
-            //     // 等待开始
-            //     u8 start_flag;
-            //     start_flag = start_key_get();
-            //     while (start_flag)
-            //     {
-            //         OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
-            //         OLED_Refresh();
-
-            //         u8 direction;
-            //         direction = grayScale_detect();
-            //         if (direction == 0)
-            //         {
-            //             // stop
-            //             OLED_ShowString(0, 20, (unsigned char *)"stop", 8, 1);
-            //             OLED_Refresh();
-            //             break;
-            //         }
-            //         else if (direction == 1)
-            //         {
-            //             // forward
-            //             OLED_ShowString(0, 20, (unsigned char *)"forward", 8, 1);
-            //             OLED_Refresh();
-            //         }
-            //         else if (direction == 'L')
-            //         {
-            //             // turn left
-            //             OLED_ShowString(0, 20, (unsigned char *)"turn left", 8, 1);
-            //             OLED_Refresh();
-            //         }
-            //         else if (direction == 'R')
-            //         {
-            //             // turn right
-            //             OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
-            //             OLED_Refresh();
-            //         }
-            //         else
-            //         {
-            //             // error
-            //             OLED_ShowString(0, 20, (unsigned char *)"error", 8, 1);
-            //             OLED_Refresh();
-            //             break;
-            //         }
-            //     }
-            // }
+            break;
+        }
+        else if (direction == 1)
+        {
+            // forward
+            OLED_ShowString(0, 20, (unsigned char *)"forward", 8, 1);
+            OLED_Refresh();
+        }
+        else if (direction == 'L')
+        {
+            // turn left
+            OLED_ShowString(0, 20, (unsigned char *)"turn left", 8, 1);
+            OLED_Refresh();
+        }
+        else if (direction == 'R')
+        {
+            // turn right
+            OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
+            OLED_Refresh();
+        }
+        else
+        {
+            // error
+            OLED_ShowString(0, 20, (unsigned char *)"error", 8, 1);
+            OLED_Refresh();
+            break;
         }
     }
+}
