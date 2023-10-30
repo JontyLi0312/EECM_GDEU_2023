@@ -20,6 +20,9 @@
 
 void turn_left(void);
 void turn_right(void);
+void forward(void);
+void backward(void);
+void stop(void);
 
 int main(void)
 {
@@ -61,9 +64,11 @@ int main(void)
     // test
     while (1)
     {
-        turn_left();
+        forward();
         delay_ms(2000);
-        turn_right();
+        stop();
+        delay_ms(2000);
+        backward();
         delay_ms(2000);
     }
 
@@ -108,6 +113,10 @@ int main(void)
     }
 }
 
+/**
+ * @brief car turn left
+ *
+ */
 void turn_left(void)
 {
     motor1_control(1);
@@ -120,6 +129,10 @@ void turn_left(void)
     PID_Move(15, 4);
 }
 
+/**
+ * @brief car turn right
+ *
+ */
 void turn_right(void)
 {
     motor1_control(1);
@@ -132,6 +145,10 @@ void turn_right(void)
     PID_Move(30, 4);
 }
 
+/**
+ * @brief car forward
+ *
+ */
 void forward(void)
 {
     motor1_control(1);
@@ -144,6 +161,10 @@ void forward(void)
     PID_Move(40, 4);
 }
 
+/**
+ * @brief car stop
+ *
+ */
 void stop(void)
 {
     motor1_control(0);
@@ -156,6 +177,10 @@ void stop(void)
     PID_Move(0, 4);
 }
 
+/**
+ * @brief car backward
+ *
+ */
 void backward(void)
 {
     motor1_control(2);
