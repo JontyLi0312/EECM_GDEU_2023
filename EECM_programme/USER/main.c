@@ -79,6 +79,13 @@ int main(void)
         PID_Move(40, 4);
 
         delay_ms(2000);
+
+        motor2_control(0);
+        motor1_control(0);
+        motor3_control(0);
+        motor4_control(0);
+
+        delay_ms(2000);
     }
 
     while (1)
