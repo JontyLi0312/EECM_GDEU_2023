@@ -62,8 +62,8 @@ int main(void)
     while (1)
     {
         // turn_left();
-        motor1_control(2);
-        PID_Move(20, 1);
+        motor2_control(2);
+        PID_Move(100, 2);
     }
 
     while (1)
