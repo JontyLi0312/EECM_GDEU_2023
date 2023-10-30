@@ -87,7 +87,7 @@ void PID_Move(int16_t speed, int8_t Dre)
     if (Dre == 4) //
     {
 
-        ASR4.Ref = speed /4.16;
+        ASR4.Ref = speed / 4.16;
     }
 }
 //
@@ -113,13 +113,13 @@ uint16_t Num_Abs(int16_t Encoder)
     return Middle;
 }
 
-//TIM6中断服务函数
+// TIM6中断服务函数
 void TIM6_DAC_IRQHandler(void)
 
 {
     if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) // 在这里执行20ms定时器触发后的操作
     {
-        //让编码器的值变成正整数
+        // 让编码器的值变成正整数
         ASR1.Fdb = (Num_Abs(Read_Speed(1)) - 48) / 6.3 + 10;
         ASR2.Fdb = (Num_Abs(Read_Speed(2)) - 48) / 6.3 + 10;
         ASR3.Fdb = (Num_Abs(Read_Speed(3)) - 48) / 6.3 + 10;
@@ -141,10 +141,10 @@ void TIM6_DAC_IRQHandler(void)
         output4 = ASR4.Out;
         PID_apply();
 
-        OLED_ShowNum(1, 20,  ASR1.Fdb*4.16, 5, 8, 1);
-        OLED_ShowNum(1, 30,  ASR2.Fdb*4.16, 5, 8, 1);
-        OLED_ShowNum(1, 40,  ASR3.Fdb*4.16, 5, 8, 1);
-        OLED_ShowNum(1, 50,  ASR4.Fdb*4.16, 5, 8, 1);
+        OLED_ShowNum(0, 30, ASR1.Fdb * 4.16, 3, 8, 1);
+        OLED_ShowNum(30, 30, ASR2.Fdb * 4.16, 3, 8, 1);
+        OLED_ShowNum(0, 40, ASR3.Fdb * 4.16, 3, 8, 1);
+        OLED_ShowNum(30, 40, ASR4.Fdb * 4.16, 3, 8, 1);
         OLED_Refresh();
 
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update); // 清除中断标志位

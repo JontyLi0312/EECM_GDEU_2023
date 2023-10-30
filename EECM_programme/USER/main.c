@@ -37,14 +37,7 @@ int main(void)
     PID_Init();
     TIM6_Init();
 
-    // motor1_control(0);
-    // motor2_control(0);
-    // motor3_control(0);
-    // motor4_control(0);
-    // PID_Move(0, 1);
-    // PID_Move(0, 2);
-    // PID_Move(0, 3);
-    // PID_Move(0, 4);
+    stop();
 
     jy901s_angleData g_angleDatas;
 
@@ -61,17 +54,6 @@ int main(void)
     //     // start_flag = start_key_get();
     // }
 
-    // test
-    while (1)
-    {
-        forward();
-        delay_ms(2000);
-        stop();
-        delay_ms(2000);
-        backward();
-        delay_ms(2000);
-    }
-
     while (1)
     {
         OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
@@ -83,25 +65,21 @@ int main(void)
         {
             // stop
             OLED_ShowString(0, 20, (unsigned char *)"stop", 8, 1);
-            OLED_Refresh();
         }
         else if (direction == 'f')
         {
             // forward
             OLED_ShowString(0, 20, (unsigned char *)"forward", 8, 1);
-            OLED_Refresh();
         }
         else if (direction == 'L')
         {
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn left", 8, 1);
-            OLED_Refresh();
         }
         else if (direction == 'R')
         {
             // turn right
             OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
-            OLED_Refresh();
         }
         else
         {
@@ -110,6 +88,7 @@ int main(void)
             OLED_Refresh();
             break;
         }
+        OLED_Refresh();
     }
 }
 
@@ -184,11 +163,11 @@ void stop(void)
 void backward(void)
 {
     motor1_control(2);
-    PID_Move(15, 1);
+    PID_Move(20, 1);
     motor2_control(2);
-    PID_Move(15, 2);
+    PID_Move(20, 2);
     motor3_control(2);
-    PID_Move(15, 3);
+    PID_Move(20, 3);
     motor4_control(2);
-    PID_Move(15, 4);
+    PID_Move(20, 4);
 }
