@@ -18,6 +18,9 @@
 #include "Timer.h"
 #include "encoder_PID.h"
 
+void turn_left(void);
+void turn_right(void);
+
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -58,7 +61,9 @@ int main(void)
     // test
     while (1)
     {
-        turn_left();
+        // turn_left();
+        motor1_control(2);
+        PID_Move(20, 1);
     }
 
     while (1)
@@ -105,17 +110,16 @@ int main(void)
 void turn_left(void)
 {
     motor1_control(2);
+    PID_Move(20, 1);
     motor4_control(2);
+    PID_Move(20, 4);
     motor2_control(1);
-    motor3_control(1);
-
     PID_Move(30, 2);
+    motor3_control(1);
     PID_Move(30, 3);
-    PID_Move(10, 1);
-    PID_Move(10, 4);
 }
 
-void turn_left(void)
+void turn_right(void)
 {
     motor1_control(1);
     motor4_control(1);
