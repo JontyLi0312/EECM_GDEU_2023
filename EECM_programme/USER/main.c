@@ -58,34 +58,7 @@ int main(void)
     // test
     while (1)
     {
-        motor2_control(1);
-        PID_Move(40, 2);
-        motor1_control(1);
-        PID_Move(40, 1);
-        motor3_control(1);
-        PID_Move(40, 3);
-        motor4_control(1);
-        PID_Move(40, 4);
-
-        delay_ms(2000);
-
-        motor2_control(2);
-        PID_Move(40, 2);
-        motor1_control(2);
-        PID_Move(40, 1);
-        motor3_control(2);
-        PID_Move(40, 3);
-        motor4_control(2);
-        PID_Move(40, 4);
-
-        delay_ms(2000);
-
-        motor2_control(0);
-        motor1_control(0);
-        motor3_control(0);
-        motor4_control(0);
-
-        delay_ms(2000);
+        turn_left();
     }
 
     while (1)
@@ -127,4 +100,30 @@ int main(void)
             break;
         }
     }
+}
+
+void turn_left(void)
+{
+    motor1_control(2);
+    motor4_control(2);
+    motor2_control(1);
+    motor3_control(1);
+
+    PID_Move(30, 2);
+    PID_Move(30, 3);
+    PID_Move(10, 1);
+    PID_Move(10, 4);
+}
+
+void turn_left(void)
+{
+    motor1_control(1);
+    motor4_control(1);
+    motor2_control(2);
+    motor3_control(2);
+
+    PID_Move(30, 1);
+    PID_Move(30, 4);
+    PID_Move(10, 2);
+    PID_Move(10, 3);
 }
