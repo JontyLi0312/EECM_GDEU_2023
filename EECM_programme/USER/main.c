@@ -47,12 +47,12 @@ int main(void)
     OLED_Refresh();
 
     u8 start_flag;
-    start_flag = start_key_get();
-    // test
+    // start_flag = start_key_get();
+    //  test
     start_flag = 0;
     while (start_flag)
     {
-        start_flag = start_key_get();
+        // start_flag = start_key_get();
     }
 
     // test
