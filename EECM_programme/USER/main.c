@@ -58,13 +58,27 @@ int main(void)
     // test
     while (1)
     {
-        motor1_control(1);
+        motor2_control(1);
         PID_Move(40, 2);
+        motor1_control(1);
+        PID_Move(40, 1);
+        motor3_control(1);
+        PID_Move(40, 3);
+        motor4_control(1);
+        PID_Move(40, 4);
 
         delay_ms(2000);
 
-        motor1_control(2);
+        motor2_control(2);
         PID_Move(40, 2);
+        motor1_control(2);
+        PID_Move(40, 1);
+        motor3_control(2);
+        PID_Move(40, 3);
+        motor4_control(2);
+        PID_Move(40, 4);
+
+        delay_ms(2000);
     }
 
     while (1)
