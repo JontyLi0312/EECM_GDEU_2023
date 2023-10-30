@@ -62,6 +62,9 @@ int main(void)
     while (1)
     {
         turn_left();
+        delay_ms(2000);
+        turn_right();
+        delay_ms(2000);
     }
 
     while (1)
@@ -111,21 +114,20 @@ void turn_left(void)
     PID_Move(30, 1);
     motor2_control(1);
     PID_Move(30, 2);
-    motor3_control(2);
+    motor3_control(1);
     PID_Move(15, 3);
-    motor4_control(2);
+    motor4_control(1);
     PID_Move(15, 4);
 }
 
 void turn_right(void)
 {
     motor1_control(1);
+    PID_Move(20, 1);
+    motor2_control(1);
+    PID_Move(20, 2);
+    motor3_control(1);
+    PID_Move(30, 3);
     motor4_control(1);
-    motor2_control(2);
-    motor3_control(2);
-
-    PID_Move(30, 1);
     PID_Move(30, 4);
-    PID_Move(10, 2);
-    PID_Move(10, 3);
 }
