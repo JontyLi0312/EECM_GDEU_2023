@@ -54,11 +54,11 @@ u8 grayScale_detect(void)
     }
     else if (stop == 1)
     {
-        direction = 0;
+        direction = 's';
     }
     else
     {
-        direction = 1;
+        direction = 'f';
     }
 
     return direction;
