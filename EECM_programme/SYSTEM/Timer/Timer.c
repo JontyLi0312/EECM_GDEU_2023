@@ -9,7 +9,7 @@ void TIM6_Init(void)
 
     // 配置TIM6为基本定时器，时钟源为内部时钟
     TIM_TimeBaseStructure.TIM_Prescaler = 8400-1; // 时钟预分频，得到10 kHz的计数频率
-    TIM_TimeBaseStructure.TIM_Period = 2000-1;    // 自动重装载值，实现20 ms的定时
+    TIM_TimeBaseStructure.TIM_Period = 500-1;    // 自动重装载值，实现20 ms的定时
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(TIM6, &TIM_TimeBaseStructure);
 
