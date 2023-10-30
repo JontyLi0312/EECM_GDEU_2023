@@ -31,14 +31,14 @@ int main(void)
     PID_Init();
     TIM6_Init();
 
-    motor1_control(0);
-    motor2_control(0);
-    motor3_control(0);
-    motor4_control(0);
-    PID_Move(0, 1);
-    PID_Move(0, 2);
-    PID_Move(0, 3);
-    PID_Move(0, 4);
+    // motor1_control(0);
+    // motor2_control(0);
+    // motor3_control(0);
+    // motor4_control(0);
+    // PID_Move(0, 1);
+    // PID_Move(0, 2);
+    // PID_Move(0, 3);
+    // PID_Move(0, 4);
 
     jy901s_angleData g_angleDatas;
 
@@ -50,10 +50,10 @@ int main(void)
     // start_flag = start_key_get();
     //  test
     start_flag = 0;
-    while (start_flag)
-    {
-        // start_flag = start_key_get();
-    }
+    // while (start_flag)
+    // {
+    //     // start_flag = start_key_get();
+    // }
 
     // test
     while (1)
@@ -61,7 +61,7 @@ int main(void)
         motor1_control(1);
         PID_Move(40, 2);
 
-        delay_ms(500);
+        delay_ms(2000);
 
         motor1_control(2);
         PID_Move(40, 2);
