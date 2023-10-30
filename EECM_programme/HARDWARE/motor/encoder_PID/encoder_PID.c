@@ -19,29 +19,29 @@ int16_t output4;
 
 void PID_Init(void)
 {
-    ASR1.Kp = 0.9; //
-    ASR1.Ki = 5.81;
+    ASR1.Kp = 6.8;
+    ASR1.Ki = 55.81;
     ASR1.Kd = 0.0049;
     ASR1.T = 0.02; //           20ms
     ASR1.OutMax = 90;
     ASR1.OutMin = 0;
 
-    ASR2.Kp = 0.9; 
-    ASR2.Ki = 5.81;
+    ASR2.Kp = 6.8;
+    ASR2.Ki = 55.81;
     ASR2.Kd = 0.0049;
-    ASR2.T = 0.02;        //           20ms
+    ASR2.T = 0.02; //           20ms
     ASR2.OutMax = 90;
     ASR2.OutMin = 0;
 
-    ASR3.Kp = 0.9;
-    ASR3.Ki = 5.81;
+    ASR3.Kp = 6.8;
+    ASR3.Ki = 55.81;
     ASR3.Kd = 0.0049;
     ASR3.T = 0.02; //           20ms
     ASR3.OutMax = 90;
     ASR3.OutMin = 0;
 
-    ASR4.Kp = 0.9;
-    ASR4.Ki = 5.85;
+    ASR4.Kp = 6.8;
+    ASR4.Ki = 55.81;
     ASR4.Kd = 0.0049;
     ASR4.T = 0.02; //           20ms
     ASR4.OutMax = 90;
@@ -73,21 +73,21 @@ void PID_Move(int16_t speed, int8_t Dre)
 {
     if (Dre == 1) //
     {
-        ASR1.Ref = speed;
+        ASR1.Ref = speed / 4.16;
     }
     if (Dre == 2) //
     {
 
-        ASR2.Ref = speed;
+        ASR2.Ref = speed / 4.16;
     }
     if (Dre == 3) //
     {
-        ASR3.Ref = speed;
+        ASR3.Ref = speed / 4.16;
     }
     if (Dre == 4) //
     {
 
-        ASR4.Ref = speed;
+        ASR4.Ref = speed /4.16;
     }
 }
 //
@@ -141,10 +141,10 @@ void TIM6_DAC_IRQHandler(void)
         output4 = ASR4.Out;
         PID_apply();
 
-        OLED_ShowNum(1, 20,  ASR1.Fdb, 5, 8, 1);
-        OLED_ShowNum(1, 30,  ASR2.Fdb, 5, 8, 1);
-        OLED_ShowNum(1, 40,  ASR3.Fdb, 5, 8, 1);
-        OLED_ShowNum(1, 50,  ASR4.Fdb, 5, 8, 1);
+        OLED_ShowNum(1, 20,  ASR1.Fdb*4.16, 5, 8, 1);
+        OLED_ShowNum(1, 30,  ASR2.Fdb*4.16, 5, 8, 1);
+        OLED_ShowNum(1, 40,  ASR3.Fdb*4.16, 5, 8, 1);
+        OLED_ShowNum(1, 50,  ASR4.Fdb*4.16, 5, 8, 1);
         OLED_Refresh();
 
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update); // 清除中断标志位
