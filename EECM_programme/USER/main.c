@@ -61,9 +61,7 @@ int main(void)
     // test
     while (1)
     {
-        // turn_left();
-        motor2_control(2);
-        PID_Move(100, 2);
+        turn_left();
     }
 
     while (1)
@@ -109,14 +107,14 @@ int main(void)
 
 void turn_left(void)
 {
-    motor1_control(2);
-    PID_Move(20, 1);
-    motor4_control(2);
-    PID_Move(20, 4);
+    motor1_control(1);
+    PID_Move(30, 1);
     motor2_control(1);
     PID_Move(30, 2);
-    motor3_control(1);
-    PID_Move(30, 3);
+    motor3_control(2);
+    PID_Move(15, 3);
+    motor4_control(2);
+    PID_Move(15, 4);
 }
 
 void turn_right(void)
