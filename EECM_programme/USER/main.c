@@ -123,11 +123,47 @@ void turn_left(void)
 void turn_right(void)
 {
     motor1_control(1);
-    PID_Move(20, 1);
+    PID_Move(15, 1);
     motor2_control(1);
-    PID_Move(20, 2);
+    PID_Move(15, 2);
     motor3_control(1);
     PID_Move(30, 3);
     motor4_control(1);
     PID_Move(30, 4);
+}
+
+void forward(void)
+{
+    motor1_control(1);
+    PID_Move(40, 1);
+    motor2_control(1);
+    PID_Move(40, 2);
+    motor3_control(1);
+    PID_Move(40, 3);
+    motor4_control(1);
+    PID_Move(40, 4);
+}
+
+void stop(void)
+{
+    motor1_control(0);
+    PID_Move(0, 1);
+    motor2_control(0);
+    PID_Move(0, 2);
+    motor3_control(0);
+    PID_Move(0, 3);
+    motor4_control(0);
+    PID_Move(0, 4);
+}
+
+void backward(void)
+{
+    motor1_control(2);
+    PID_Move(15, 1);
+    motor2_control(2);
+    PID_Move(15, 2);
+    motor3_control(2);
+    PID_Move(15, 3);
+    motor4_control(2);
+    PID_Move(15, 4);
 }
