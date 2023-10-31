@@ -50,7 +50,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
             OLED_Refresh();
 
-            // stop(10);
+            stop(10);
         }
         else if (direction == 'F')
         {
@@ -58,7 +58,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"forward   ", 8, 1);
             OLED_Refresh();
 
-            // forward(10);
+            forward(10);
         }
         else if (direction == 'L')
         {
@@ -66,7 +66,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
             OLED_Refresh();
 
-            // turn_left(10);
+            turn_left(10);
         }
         else if (direction == 'R')
         {
@@ -74,7 +74,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"turn ritht", 8, 1);
             OLED_Refresh();
 
-            // turn_right(10);
+            turn_right(10);
         }
         else
         {

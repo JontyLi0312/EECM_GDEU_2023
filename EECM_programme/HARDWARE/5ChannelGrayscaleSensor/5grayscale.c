@@ -43,8 +43,8 @@ u8 grayScale_detect(void)
     sensor_mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
 
     stop = sensor_mid_left || sensor_mid_right || sensor_mid || sensor_left || sensor_right;
-    right = !sensor_mid_left || !sensor_mid || sensor_mid_right;
-    left = !sensor_mid_right || !sensor_mid || sensor_mid_left;
+    right = !sensor_mid_left || sensor_mid_right;
+    left = !sensor_mid_right || sensor_mid_left;
 
     if (stop == 0)
     {
