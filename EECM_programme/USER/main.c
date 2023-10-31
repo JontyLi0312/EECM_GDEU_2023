@@ -21,7 +21,7 @@ void forward(u16 time);
 void backward(u16 time);
 void stop(u16 time);
 
-void main(void)
+int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     delay_init(168);
@@ -40,7 +40,24 @@ void main(void)
     OLED_ShowString(0, 0, (unsigned char *)"Status: WAIT", 8, 1);
     OLED_Refresh();
 
+    // test
     while (1)
+    {
+        u8 out1, out2, out3, out4, out5;
+        out1 = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
+        out2 = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
+        out3 = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
+        out4 = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
+        out5 = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
+
+        OLED_ShowChar(0, 10, out1, 8, 1);
+        OLED_ShowChar(10, 10, out2, 8, 1);
+        OLED_ShowChar(20, 10, out3, 8, 1);
+        OLED_ShowChar(30, 10, out4, 8, 1);
+        OLED_ShowChar(40, 10, out5, 8, 1);
+    }
+
+    while (0)
     {
         OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
         OLED_Refresh();
@@ -87,6 +104,8 @@ void main(void)
             break;
         }
     }
+
+    return 0;
 }
 
 /**
