@@ -15,11 +15,13 @@
 #include "Timer.h"
 #include "encoder_PID.h"
 
-void turn_left(u16 time);
-void turn_right(u16 time);
-void forward(u16 time);
-void backward(u16 time);
-void stop(u16 time);
+void turn_left(void);
+void turn_right(void);
+void forward(void);
+void backward(void);
+void stop(void);
+void large_left(void);
+void large_right(void);
 
 int main(void)
 {
@@ -32,7 +34,7 @@ int main(void)
     PID_Init();
     TIM6_Init();
 
-    stop(1);
+    stop();
 
     jy901s_angleData g_angleDatas;
 
@@ -40,8 +42,15 @@ int main(void)
     OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
     OLED_Refresh();
 
-    while (1)
+    forward();
+    delay_ms(10);
+
+    // test
+    large_left();
+
+    while (0)
     {
+
         u8 direction;
         direction = grayScale_detect();
         if (direction == 'S')
@@ -50,7 +59,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
             OLED_Refresh();
 
-            stop(10);
+            stop();
         }
         else if (direction == 'F')
         {
@@ -58,7 +67,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"forward   ", 8, 1);
             OLED_Refresh();
 
-            forward(10);
+            forward();
         }
         else if (direction == 'L')
         {
@@ -66,7 +75,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
             OLED_Refresh();
 
-            turn_left(10);
+            turn_left();
         }
         else if (direction == 'R')
         {
@@ -74,7 +83,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"turn ritht", 8, 1);
             OLED_Refresh();
 
-            turn_right(10);
+            turn_right();
         }
         else
         {
@@ -92,7 +101,7 @@ int main(void)
  * @brief car turn left
  *
  */
-void turn_left(u16 time)
+void turn_left(void)
 {
     motor1_control(1);
     PID_Move(30, 1);
@@ -108,7 +117,7 @@ void turn_left(u16 time)
  * @brief car turn right
  *
  */
-void turn_right(u16 time)
+void turn_right(void)
 {
     motor1_control(1);
     PID_Move(15, 1);
@@ -118,15 +127,49 @@ void turn_right(u16 time)
     PID_Move(30, 3);
     motor4_control(1);
     PID_Move(30, 4);
+}
 
-    delay_ms(time);
+/**
+ * @brief 大角度左转
+ *
+ */
+void large_left(void)
+{
+    motor1_control(1);
+    PID_Move(50, 1);
+    motor2_control(1);
+    PID_Move(50, 2);
+    motor3_control(1);
+    PID_Move(15, 3);
+    motor4_control(1);
+    PID_Move(15, 4);
+
+    delay_ms(10);
+}
+
+/**
+ * @brief 大角度右转
+ *
+ */
+void large_right(void)
+{
+    motor1_control(1);
+    PID_Move(15, 1);
+    motor2_control(1);
+    PID_Move(15, 2);
+    motor3_control(1);
+    PID_Move(50, 3);
+    motor4_control(1);
+    PID_Move(50, 4);
+
+    delay_ms(10);
 }
 
 /**
  * @brief car forward
  *
  */
-void forward(u16 time)
+void forward(void)
 {
     motor1_control(1);
     PID_Move(40, 1);
@@ -142,7 +185,7 @@ void forward(u16 time)
  * @brief car backward
  *
  */
-void backward(u16 time)
+void backward(void)
 {
     motor1_control(2);
     PID_Move(20, 1);
@@ -158,7 +201,7 @@ void backward(u16 time)
  * @brief car stop
  *
  */
-void stop(u16 time)
+void stop(void)
 {
     motor1_control(0);
     PID_Move(0, 1);
