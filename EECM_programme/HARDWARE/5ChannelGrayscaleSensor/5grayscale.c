@@ -32,19 +32,19 @@ void grayscale_init(void)
  */
 u8 grayScale_detect(void)
 {
-    u8 left, mid_left, right, mid_right, mid;
-    u8 stop;
+    u8 sensor_left, sensor_mid_left, sensor_right, sensor_mid_right, sensor_mid;
+    u8 stop, right, left;
     u8 direction;
 
-    left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
-    right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
-    mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
-    mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
-    mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
+    sensor_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
+    sensor_right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
+    sensor_mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
+    sensor_mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
+    sensor_mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
 
-    stop = mid_left || mid_right || mid;
-    right = !mid_left || !mid || mid_right;
-    left = !mid_right || !mid || mid_left;
+    stop = sensor_mid_left || sensor_mid_right || sensor_mid || sensor_left || sensor_right;
+    right = !sensor_mid_left || !sensor_mid || sensor_mid_right;
+    left = !sensor_mid_right || !sensor_mid || sensor_mid_left;
 
     if (stop == 0)
     {
