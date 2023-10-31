@@ -55,6 +55,7 @@ int main(void)
         OLED_ShowChar(20, 10, out3, 8, 1);
         OLED_ShowChar(30, 10, out4, 8, 1);
         OLED_ShowChar(40, 10, out5, 8, 1);
+        OLED_Refresh();
     }
 
     while (0)
