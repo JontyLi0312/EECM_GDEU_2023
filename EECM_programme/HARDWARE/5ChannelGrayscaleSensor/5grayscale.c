@@ -25,10 +25,10 @@ void grayscale_init(void)
  * @brief 获取方向
  *
  * @return u8 direction
- *          @arg 'R' 右
- *          @arg 'L' 左
- *          @arg 0 停
- *          @arg 1 前
+ *          @arg 'R' turn right
+ *          @arg 'L' turn left
+ *          @arg 's' stop
+ *          @arg 'f' forward
  */
 u8 grayScale_detect(void)
 {
