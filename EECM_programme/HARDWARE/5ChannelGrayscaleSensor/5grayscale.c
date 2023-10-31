@@ -27,8 +27,8 @@ void grayscale_init(void)
  * @return u8 direction
  *          @arg 'R' turn right
  *          @arg 'L' turn left
- *          @arg 's' stop
- *          @arg 'f' forward
+ *          @arg 'S' stop
+ *          @arg 'F' forward
  */
 u8 grayScale_detect(void)
 {
@@ -43,22 +43,24 @@ u8 grayScale_detect(void)
     mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
 
     stop = mid_left || mid_right || mid;
+    right = !mid_left || !mid || mid_right;
+    left = !mid_right || !mid || mid_left;
 
-    if (mid_left == 0)
+    if (stop == 0)
     {
-        direction = 'R';
+        direction = 'S';
     }
-    else if (mid_right == 0)
+    else if (right == 0)
     {
         direction = 'L';
     }
-    else if (stop == 0)
+    else if (left == 0)
     {
-        direction = 's';
+        direction = 'R';
     }
     else
     {
-        direction = 'f';
+        direction = 'F';
     }
 
     return direction;

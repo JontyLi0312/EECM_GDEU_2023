@@ -37,17 +37,14 @@ int main(void)
     jy901s_angleData g_angleDatas;
 
     OLED_Clear();
-    OLED_ShowString(0, 0, (unsigned char *)"Status: WAIT", 8, 1);
+    OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
     OLED_Refresh();
 
-    while (0)
+    while (1)
     {
-        OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
-        OLED_Refresh();
-
         u8 direction;
         direction = grayScale_detect();
-        if (direction == 's')
+        if (direction == 'S')
         {
             // stop
             OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
@@ -55,7 +52,7 @@ int main(void)
 
             // stop(10);
         }
-        else if (direction == 'f')
+        else if (direction == 'F')
         {
             // forward
             OLED_ShowString(0, 20, (unsigned char *)"forward   ", 8, 1);
