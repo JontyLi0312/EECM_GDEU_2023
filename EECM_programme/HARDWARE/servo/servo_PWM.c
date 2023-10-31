@@ -29,7 +29,7 @@ void Servo_PWM(void)
 	TIM5_PWM_initStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM5_PWM_initStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM5_PWM_initStructure.TIM_Period = 5000 - 1;	// ARR
-	TIM5_PWM_initStructure.TIM_Prescaler = 288 - 1; // PSC
+	TIM5_PWM_initStructure.TIM_Prescaler = 336 - 1; // PSC
 	TIM5_PWM_initStructure.TIM_RepetitionCounter = 0;
 	TIM_TimeBaseInit(TIM5, &TIM5_PWM_initStructure);
 
