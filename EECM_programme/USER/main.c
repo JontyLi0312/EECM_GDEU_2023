@@ -64,31 +64,34 @@ int main(void)
         if (direction == 's')
         {
             // stop
-            OLED_ShowString(0, 20, (unsigned char *)"stop", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
+            OLED_Refresh();
         }
         else if (direction == 'f')
         {
             // forward
-            OLED_ShowString(0, 20, (unsigned char *)"forward", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char *)"forward   ", 8, 1);
+            OLED_Refresh();
         }
         else if (direction == 'L')
         {
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn left", 8, 1);
+            OLED_Refresh();
         }
         else if (direction == 'R')
         {
             // turn right
             OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
+            OLED_Refresh();
         }
         else
         {
             // error
-            OLED_ShowString(0, 20, (unsigned char *)"error", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char *)"error     ", 8, 1);
             OLED_Refresh();
             break;
         }
-        OLED_Refresh();
     }
 }
 
