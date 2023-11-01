@@ -20,8 +20,8 @@ void turn_right(void);
 void forward(void);
 void backward(void);
 void stop(void);
-void large_left(void);
-void large_right(void);
+void turn_LargeLeft(void);
+void turn_LargeRight(void);
 
 int main(void)
 {
@@ -45,13 +45,11 @@ int main(void)
     forward();
     delay_ms(10);
 
-    // test
-    large_left();
-
-    while (0)
+    while (1)
     {
 
-        u8 direction;
+        u8 direction, flag;
+        int i;
         direction = grayScale_detect();
         if (direction == 'S')
         {
@@ -76,6 +74,21 @@ int main(void)
             OLED_Refresh();
 
             turn_left();
+
+            while (1)
+            {
+                flag = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
+                if (flag == 1)
+                {
+                    break;
+                }
+
+                i++;
+                if (i == 500)
+                {
+                    break;
+                }
+            }
         }
         else if (direction == 'R')
         {
@@ -84,6 +97,21 @@ int main(void)
             OLED_Refresh();
 
             turn_right();
+
+            while (1)
+            {
+                flag = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
+                if (flag == 1)
+                {
+                    break;
+                }
+
+                i++;
+                if (i == 500)
+                {
+                    break;
+                }
+            }
         }
         else
         {
@@ -92,6 +120,8 @@ int main(void)
             OLED_Refresh();
             break;
         }
+
+        i = 0;
     }
 
     return 0;
@@ -104,9 +134,9 @@ int main(void)
 void turn_left(void)
 {
     motor1_control(1);
-    PID_Move(30, 1);
+    PID_Move(60, 1);
     motor2_control(1);
-    PID_Move(30, 2);
+    PID_Move(60, 2);
     motor3_control(1);
     PID_Move(15, 3);
     motor4_control(1);
@@ -124,45 +154,9 @@ void turn_right(void)
     motor2_control(1);
     PID_Move(15, 2);
     motor3_control(1);
-    PID_Move(30, 3);
+    PID_Move(60, 3);
     motor4_control(1);
-    PID_Move(30, 4);
-}
-
-/**
- * @brief 大角度左转
- *
- */
-void large_left(void)
-{
-    motor1_control(1);
-    PID_Move(50, 1);
-    motor2_control(1);
-    PID_Move(50, 2);
-    motor3_control(1);
-    PID_Move(15, 3);
-    motor4_control(1);
-    PID_Move(15, 4);
-
-    delay_ms(10);
-}
-
-/**
- * @brief 大角度右转
- *
- */
-void large_right(void)
-{
-    motor1_control(1);
-    PID_Move(15, 1);
-    motor2_control(1);
-    PID_Move(15, 2);
-    motor3_control(1);
-    PID_Move(50, 3);
-    motor4_control(1);
-    PID_Move(50, 4);
-
-    delay_ms(10);
+    PID_Move(60, 4);
 }
 
 /**
@@ -172,13 +166,13 @@ void large_right(void)
 void forward(void)
 {
     motor1_control(1);
-    PID_Move(40, 1);
+    PID_Move(45, 1);
     motor2_control(1);
-    PID_Move(40, 2);
+    PID_Move(45, 2);
     motor3_control(1);
-    PID_Move(40, 3);
+    PID_Move(45, 3);
     motor4_control(1);
-    PID_Move(40, 4);
+    PID_Move(45, 4);
 }
 
 /**
@@ -188,13 +182,13 @@ void forward(void)
 void backward(void)
 {
     motor1_control(2);
-    PID_Move(20, 1);
+    PID_Move(30, 1);
     motor2_control(2);
-    PID_Move(20, 2);
+    PID_Move(30, 2);
     motor3_control(2);
-    PID_Move(20, 3);
+    PID_Move(30, 3);
     motor4_control(2);
-    PID_Move(20, 4);
+    PID_Move(30, 4);
 }
 
 /**
@@ -204,11 +198,7 @@ void backward(void)
 void stop(void)
 {
     motor1_control(0);
-    PID_Move(0, 1);
     motor2_control(0);
-    PID_Move(0, 2);
     motor3_control(0);
-    PID_Move(0, 3);
     motor4_control(0);
-    PID_Move(0, 4);
 }
