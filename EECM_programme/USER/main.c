@@ -47,9 +47,7 @@ int main(void)
 
     while (1)
     {
-
         u8 direction, flag;
-        int i;
         direction = grayScale_detect();
         if (direction == 'S')
         {
@@ -67,6 +65,19 @@ int main(void)
 
             forward();
         }
+        else if (direction == 'l')
+        {
+            OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
+            OLED_Refresh();
+            turn_left();
+        }
+        else if (direction == 'r')
+        {
+            OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
+            OLED_Refresh();
+
+            turn_right();
+        }
         else if (direction == 'L')
         {
             // turn left
@@ -75,20 +86,15 @@ int main(void)
 
             turn_left();
 
-            while (1)
-            {
-                flag = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
-                if (flag == 1)
-                {
-                    break;
-                }
-
-                i++;
-                if (i == 500)
-                {
-                    break;
-                }
-            }
+            // while (1)
+            // {
+            //     flag = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
+            //     if (flag == 1)
+            //     {
+            //         break;
+            //     }
+            // }
+            delay_ms(500);
         }
         else if (direction == 'R')
         {
@@ -98,20 +104,15 @@ int main(void)
 
             turn_right();
 
-            while (1)
-            {
-                flag = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
-                if (flag == 1)
-                {
-                    break;
-                }
-
-                i++;
-                if (i == 500)
-                {
-                    break;
-                }
-            }
+            // while (1)
+            // {
+            //     flag = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
+            //     if (flag == 1)
+            //     {
+            //         break;
+            //     }
+            // }
+            delay_ms(500);
         }
         else
         {
@@ -120,8 +121,6 @@ int main(void)
             OLED_Refresh();
             break;
         }
-
-        i = 0;
     }
 
     return 0;
@@ -134,13 +133,13 @@ int main(void)
 void turn_left(void)
 {
     motor1_control(1);
-    PID_Move(60, 1);
+    PID_Move(70, 1);
     motor2_control(1);
-    PID_Move(60, 2);
+    PID_Move(70, 2);
     motor3_control(1);
-    PID_Move(15, 3);
+    PID_Move(5, 3);
     motor4_control(1);
-    PID_Move(15, 4);
+    PID_Move(5, 4);
 }
 
 /**
@@ -150,13 +149,13 @@ void turn_left(void)
 void turn_right(void)
 {
     motor1_control(1);
-    PID_Move(15, 1);
+    PID_Move(5, 1);
     motor2_control(1);
-    PID_Move(15, 2);
+    PID_Move(5, 2);
     motor3_control(1);
-    PID_Move(60, 3);
+    PID_Move(70, 3);
     motor4_control(1);
-    PID_Move(60, 4);
+    PID_Move(70, 4);
 }
 
 /**
