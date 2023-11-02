@@ -49,40 +49,31 @@ int main(void)
     {
         u8 direction, flag;
         direction = grayScale_detect();
-        if (direction != 'F')
+
+        if (direction == 'S')
         {
-            i++;
+            // stop
+            OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
+            OLED_Refresh();
+
+            backward();
+            delay_ms(50);
         }
-
-        if (i == 2)
+        else if (direction == 'l')
         {
-            if (direction == 'S')
-            {
-                // stop
-                OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
-                OLED_Refresh();
+            // turn left
+            OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
+            OLED_Refresh();
 
-                backward();
-                delay_ms(50);
-            }
-            else if (direction == 'l')
-            {
-                // turn left
-                OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
-                OLED_Refresh();
+            turn_left();
+        }
+        else if (direction == 'r')
+        {
+            // turn right
+            OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
+            OLED_Refresh();
 
-                turn_left();
-            }
-            else if (direction == 'r')
-            {
-                // turn right
-                OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
-                OLED_Refresh();
-
-                turn_right();
-            }
-
-            i = 0;
+            turn_right();
         }
         else
         {
@@ -91,6 +82,8 @@ int main(void)
 
             forward();
         }
+
+        delay_ms(10);
     }
 
     return 0;
