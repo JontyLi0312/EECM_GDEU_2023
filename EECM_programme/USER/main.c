@@ -51,16 +51,7 @@ int main(void)
         direction = grayScale_detect();
         if (direction != 'F')
         {
-            delay_ms(5);
             i++;
-            if (i == 3)
-            {
-                i = 0;
-            }
-        }
-        else
-        {
-            i--;
         }
 
         if (i == 2)
@@ -90,6 +81,8 @@ int main(void)
 
                 turn_right();
             }
+
+            i = 0;
         }
         else
         {

@@ -39,8 +39,8 @@ u8 grayScale_detect(void)
     u8 direction;
 
     sensor_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
-    sensor_right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
-    sensor_mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
+    sensor_right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
+    sensor_mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
     sensor_mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
     sensor_mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
 
