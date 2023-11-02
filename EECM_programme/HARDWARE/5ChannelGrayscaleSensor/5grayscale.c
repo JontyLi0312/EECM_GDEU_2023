@@ -28,8 +28,8 @@ void grayscale_init(void)
  * @return u8 direction
  *          @arg 'R' turn large angle_right
  *          @arg 'L' turn large angle_left
- *          @arg 'L' turn left
- *          @arg 'R' turn right
+ *          @arg 'l' turn left
+ *          @arg 'r' turn right
  *          @arg 'S' stop
  *          @arg 'F' forward
  */
