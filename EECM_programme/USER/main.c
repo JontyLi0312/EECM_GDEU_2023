@@ -20,8 +20,6 @@ void turn_right(void);
 void forward(void);
 void backward(void);
 void stop(void);
-void turn_LargeLeft(void);
-void turn_LargeRight(void);
 
 int main(void)
 {
@@ -43,83 +41,62 @@ int main(void)
     OLED_Refresh();
 
     forward();
-    delay_ms(10);
+    delay_ms(50);
+
+    int i = 0;
 
     while (1)
     {
         u8 direction, flag;
         direction = grayScale_detect();
-        if (direction == 'S')
+        if (direction != 'F')
         {
-            // stop
-            OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
-            OLED_Refresh();
-
-            stop();
+            delay_ms(5);
+            i++;
+            if (i == 3)
+            {
+                i = 0;
+            }
         }
-        else if (direction == 'F')
+        else
         {
-            // forward
+            i--;
+        }
+
+        if (i == 2)
+        {
+            if (direction == 'S')
+            {
+                // stop
+                OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
+                OLED_Refresh();
+
+                backward();
+                delay_ms(50);
+            }
+            else if (direction == 'l')
+            {
+                // turn left
+                OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
+                OLED_Refresh();
+
+                turn_left();
+            }
+            else if (direction == 'r')
+            {
+                // turn right
+                OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
+                OLED_Refresh();
+
+                turn_right();
+            }
+        }
+        else
+        {
             OLED_ShowString(0, 20, (unsigned char *)"forward   ", 8, 1);
             OLED_Refresh();
 
             forward();
-        }
-        else if (direction == 'l')
-        {
-            OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
-            OLED_Refresh();
-            turn_left();
-        }
-        else if (direction == 'r')
-        {
-            OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
-            OLED_Refresh();
-
-            turn_right();
-        }
-        else if (direction == 'L')
-        {
-            // turn left
-            OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
-            OLED_Refresh();
-
-            turn_left();
-
-            // while (1)
-            // {
-            //     flag = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
-            //     if (flag == 1)
-            //     {
-            //         break;
-            //     }
-            // }
-            delay_ms(500);
-        }
-        else if (direction == 'R')
-        {
-            // turn right
-            OLED_ShowString(0, 20, (unsigned char *)"turn ritht", 8, 1);
-            OLED_Refresh();
-
-            turn_right();
-
-            // while (1)
-            // {
-            //     flag = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
-            //     if (flag == 1)
-            //     {
-            //         break;
-            //     }
-            // }
-            delay_ms(500);
-        }
-        else
-        {
-            // error
-            OLED_ShowString(0, 20, (unsigned char *)"error     ", 8, 1);
-            OLED_Refresh();
-            break;
         }
     }
 
@@ -133,9 +110,9 @@ int main(void)
 void turn_left(void)
 {
     motor1_control(1);
-    PID_Move(70, 1);
+    PID_Move(45, 1);
     motor2_control(1);
-    PID_Move(70, 2);
+    PID_Move(45, 2);
     motor3_control(1);
     PID_Move(5, 3);
     motor4_control(1);
@@ -153,9 +130,9 @@ void turn_right(void)
     motor2_control(1);
     PID_Move(5, 2);
     motor3_control(1);
-    PID_Move(70, 3);
+    PID_Move(45, 3);
     motor4_control(1);
-    PID_Move(70, 4);
+    PID_Move(45, 4);
 }
 
 /**
@@ -165,13 +142,13 @@ void turn_right(void)
 void forward(void)
 {
     motor1_control(1);
-    PID_Move(45, 1);
+    PID_Move(35, 1);
     motor2_control(1);
-    PID_Move(45, 2);
+    PID_Move(35, 2);
     motor3_control(1);
-    PID_Move(45, 3);
+    PID_Move(35, 3);
     motor4_control(1);
-    PID_Move(45, 4);
+    PID_Move(35, 4);
 }
 
 /**
