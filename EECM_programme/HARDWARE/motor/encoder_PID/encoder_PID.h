@@ -32,13 +32,10 @@ extern PID ASR2;
 extern PID ASR3;
 extern PID ASR4;
 
-
 extern int16_t output1;
 extern int16_t output2;
 extern int16_t output3;
 extern int16_t output4;
-
-
 
 void PID_Init(void);
 void pid_calc(PID *p);

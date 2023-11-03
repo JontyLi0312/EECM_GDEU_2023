@@ -1,4 +1,5 @@
-#include "stm32f4xx.h" // Device header
+#include "5graysacle.h"
+#include "delay.h"
 
 void grayscale_init(void);
 u8 grayScale_detect(void);
@@ -25,40 +26,72 @@ void grayscale_init(void)
  * @brief 获取方向
  *
  * @return u8 direction
- *          @arg 'R' 右
- *          @arg 'L' 左
- *          @arg 0 停
- *          @arg 1 前
+ *          @arg 'L' turn left
+ *          @arg 'R' turn right
+ *          @arg 'S' stop
+ *          @arg 'F' forward
  */
 u8 grayScale_detect(void)
 {
-    u8 left, mid_left, right, mid_right, mid;
-    u8 stop;
+    u8 sensor_left, sensor_mid_left, sensor_right, sensor_mid_right, sensor_mid;
+    u8 stop, backward, right, left, large_left, large_right;
     u8 direction;
 
-    left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
-    right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
-    mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
-    mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
-    mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
-
-    stop = mid_left || mid_right || mid;
-
-    if (mid_left == 0)
+    sensor_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
+    if (sensor_left == 1)
     {
-        direction = 'R';
+        delay_ms(20);
+        if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11) == 1)
+        {
+            sensor_left = 1;
+        }
+        else
+        {
+            sensor_left = 0;
+        }
     }
-    else if (mid_right == 0)
+
+    sensor_right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
+    if (sensor_right == 1)
+    {
+        delay_ms(20);
+        if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15) == 1)
+        {
+            sensor_right = 1;
+        }
+        else
+        {
+            sensor_right = 0;
+        }
+    }
+
+    sensor_mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
+    sensor_mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
+    sensor_mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
+
+    stop = sensor_mid_left || sensor_mid_right || sensor_mid || sensor_left || sensor_right;
+    backward = sensor_mid_left || sensor_mid_right || sensor_mid_right;
+    right = sensor_mid_right || !sensor_mid_left;
+    left = sensor_mid_left || !sensor_mid_right;
+
+    if (stop == 0)
+    {
+        direction = 'S';
+    }
+    else if(backward == 0){
+        direction = 'B';
+    }
+    else if (right == 0)
     {
         direction = 'L';
     }
-    else if (stop == 1)
+    else if (left == 0)
     {
-        direction = 0;
+        direction = 'R';
     }
     else
     {
-        direction = 1;
+        direction = 'F';
     }
 
     return direction;

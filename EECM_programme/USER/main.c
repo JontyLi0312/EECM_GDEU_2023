@@ -9,90 +9,164 @@
 #include "sys.h"
 #include "delay.h"
 #include "oled.h"
-// #include "key.h"
 #include "motor.h"
 #include "jy901s.h"
 #include "5graysacle.h"
-#include "servo_control.h"
-#include "servo_apply.h"
 #include "Timer.h"
-#include "motor_encoder.h"
 #include "encoder_PID.h"
+
+void turn_left(void);
+void turn_right(void);
+void forward(void);
+void backward(void);
+void stop(void);
 
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     delay_init(168);
     OLED_Init();
-    // key_init();
     motor_init();
     jy901s_init();
     grayscale_init();
-    Servo_PWM_Init();
     PID_Init();
-    TIM6_Init() ;
+    TIM6_Init();
+
+    stop();
+
     jy901s_angleData g_angleDatas;
 
     OLED_Clear();
-    OLED_ShowString(0, 0, (unsigned char *)"Status: WAIT", 8, 1);
+    OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
     OLED_Refresh();
+
+    forward();
+    delay_ms(50);
+
+    int i = 0;
 
     while (1)
     {
-
-        // 等待开始
-        u8 start_flag;
-        start_flag = start_key_get();
-        while (start_flag)
+        u8 direction, flag;
+        direction = grayScale_detect();
+        if (direction == 'S')
         {
-            OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
+            // stop
+            OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
             OLED_Refresh();
 
-            // while (1)
-            // {
-            //     // 等待开始
-            //     u8 start_flag;
-            //     start_flag = start_key_get();
-            //     while (start_flag)
-            //     {
-            //         OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
-            //         OLED_Refresh();
-
-            //         u8 direction;
-            //         direction = grayScale_detect();
-            //         if (direction == 0)
-            //         {
-            //             // stop
-            //             OLED_ShowString(0, 20, (unsigned char *)"stop", 8, 1);
-            //             OLED_Refresh();
-            //             break;
-            //         }
-            //         else if (direction == 1)
-            //         {
-            //             // forward
-            //             OLED_ShowString(0, 20, (unsigned char *)"forward", 8, 1);
-            //             OLED_Refresh();
-            //         }
-            //         else if (direction == 'L')
-            //         {
-            //             // turn left
-            //             OLED_ShowString(0, 20, (unsigned char *)"turn left", 8, 1);
-            //             OLED_Refresh();
-            //         }
-            //         else if (direction == 'R')
-            //         {
-            //             // turn right
-            //             OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
-            //             OLED_Refresh();
-            //         }
-            //         else
-            //         {
-            //             // error
-            //             OLED_ShowString(0, 20, (unsigned char *)"error", 8, 1);
-            //             OLED_Refresh();
-            //             break;
-            //         }
-            //     }
-            // }
+            stop();
         }
+        else if (direction == 'B')
+        {
+            // backward
+            OLED_ShowString(0, 20, (unsigned char *)"backward  ", 8, 1);
+            OLED_Refresh();
+
+            backward();
+        }
+        else if (direction == 'L')
+        {
+            // turn left
+            OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
+            OLED_Refresh();
+
+            turn_left();
+        }
+        else if (direction == 'R')
+        {
+            // turn right
+            OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
+            OLED_Refresh();
+
+            turn_right();
+        }
+        else
+        {
+            OLED_ShowString(0, 20, (unsigned char *)"forward   ", 8, 1);
+            OLED_Refresh();
+
+            forward();
+        }
+
+        delay_ms(10);
     }
+
+    return 0;
+}
+
+/**
+ * @brief car turn left
+ *
+ */
+void turn_left(void)
+{
+    motor1_control(1);
+    PID_Move(45, 1);
+    motor2_control(1);
+    PID_Move(45, 2);
+    motor3_control(1);
+    PID_Move(5, 3);
+    motor4_control(1);
+    PID_Move(5, 4);
+}
+
+/**
+ * @brief car turn right
+ *
+ */
+void turn_right(void)
+{
+    motor1_control(1);
+    PID_Move(5, 1);
+    motor2_control(1);
+    PID_Move(5, 2);
+    motor3_control(1);
+    PID_Move(45, 3);
+    motor4_control(1);
+    PID_Move(45, 4);
+}
+
+/**
+ * @brief car forward
+ *
+ */
+void forward(void)
+{
+    motor1_control(1);
+    PID_Move(35, 1);
+    motor2_control(1);
+    PID_Move(35, 2);
+    motor3_control(1);
+    PID_Move(35, 3);
+    motor4_control(1);
+    PID_Move(35, 4);
+}
+
+/**
+ * @brief car backward
+ *
+ */
+void backward(void)
+{
+    motor1_control(2);
+    PID_Move(5, 1);
+    motor2_control(2);
+    PID_Move(5, 2);
+    motor3_control(2);
+    PID_Move(5, 3);
+    motor4_control(2);
+    PID_Move(5, 4);
+}
+
+/**
+ * @brief car stop
+ *
+ */
+void stop(void)
+{
+    motor1_control(0);
+    motor2_control(0);
+    motor3_control(0);
+    motor4_control(0);
+}

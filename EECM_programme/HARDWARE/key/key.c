@@ -45,11 +45,11 @@ u8 start_key_get(void)
             ;
         delay_ms(20);
 
-        start_key_flag = 1;
+        start_key_flag = 0;
     }
     else
     {
-        start_key_flag = 0;
+        start_key_flag = 1;
     }
 
     return start_key_flag;
