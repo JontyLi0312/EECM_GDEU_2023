@@ -26,17 +26,15 @@ void grayscale_init(void)
  * @brief 获取方向
  *
  * @return u8 direction
- *          @arg 'R' turn large angle_right
- *          @arg 'L' turn large angle_left
- *          @arg 'l' turn left
- *          @arg 'r' turn right
+ *          @arg 'L' turn left
+ *          @arg 'R' turn right
  *          @arg 'S' stop
  *          @arg 'F' forward
  */
 u8 grayScale_detect(void)
 {
     u8 sensor_left, sensor_mid_left, sensor_right, sensor_mid_right, sensor_mid;
-    u8 stop, right, left, large_left, large_right;
+    u8 stop, backward, right, left, large_left, large_right;
     u8 direction;
 
     sensor_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
@@ -72,6 +70,7 @@ u8 grayScale_detect(void)
     sensor_mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
 
     stop = sensor_mid_left || sensor_mid_right || sensor_mid || sensor_left || sensor_right;
+    backward = sensor_mid_left || sensor_mid_right || sensor_mid_right;
     right = sensor_mid_right || !sensor_mid_left;
     left = sensor_mid_left || !sensor_mid_right;
 
@@ -79,13 +78,16 @@ u8 grayScale_detect(void)
     {
         direction = 'S';
     }
+    else if(backward == 0){
+        direction = 'B';
+    }
     else if (right == 0)
     {
-        direction = 'l';
+        direction = 'L';
     }
     else if (left == 0)
     {
-        direction = 'r';
+        direction = 'R';
     }
     else
     {

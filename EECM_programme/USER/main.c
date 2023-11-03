@@ -49,17 +49,23 @@ int main(void)
     {
         u8 direction, flag;
         direction = grayScale_detect();
-
         if (direction == 'S')
         {
             // stop
             OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
             OLED_Refresh();
 
-            backward();
-            delay_ms(50);
+            stop();
         }
-        else if (direction == 'l')
+        else if (direction == 'B')
+        {
+            // backward
+            OLED_ShowString(0, 20, (unsigned char *)"backward  ", 8, 1);
+            OLED_Refresh();
+
+            backward();
+        }
+        else if (direction == 'L')
         {
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
@@ -67,7 +73,7 @@ int main(void)
 
             turn_left();
         }
-        else if (direction == 'r')
+        else if (direction == 'R')
         {
             // turn right
             OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
@@ -144,13 +150,13 @@ void forward(void)
 void backward(void)
 {
     motor1_control(2);
-    PID_Move(30, 1);
+    PID_Move(5, 1);
     motor2_control(2);
-    PID_Move(30, 2);
+    PID_Move(5, 2);
     motor3_control(2);
-    PID_Move(30, 3);
+    PID_Move(5, 3);
     motor4_control(2);
-    PID_Move(30, 4);
+    PID_Move(5, 4);
 }
 
 /**
