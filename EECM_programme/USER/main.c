@@ -48,9 +48,9 @@ int main(void)
 
     while (1)
     {
-        u8 direction, flag;
-        direction = grayScale_detect();
-        if (direction == 'S')
+        u8 direction;
+        direction = Serial_RxPacket[0];
+        if (direction == 'N')
         {
             // stop
             OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
@@ -178,40 +178,40 @@ void stop(void)
  */
 void UART5_IRQHandler(void)
 {
-	static u16 RxState = 0;
-	static u16 pRxPacket = 0;
-	if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET)
-	{
-		u8 RxData = USART_ReceiveData(UART5);
+    static u16 RxState = 0;
+    static u16 pRxPacket = 0;
+    if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET)
+    {
+        u8 RxData = USART_ReceiveData(UART5);
 
-		if (RxState == 0)
-		{
-			if (RxData == '@')
-			{
-				RxState = 1;
-				pRxPacket = 0;
-			}
-		}
-		else if (RxState == 1)
-		{
-			if (RxData == '%')
-			{
-				RxState = 2;
-			}
-			else
-			{
-				Serial_RxPacket[pRxPacket] = RxData;
-				pRxPacket++;
-			}
-		}
-		else if (RxState == 2)
-		{
-			if (RxData == 'A')
-			{
-				RxState = 0;
-				Serial_RxPacket[pRxPacket] = '\0';
-			}
-		}
-		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
-	}
+        if (RxState == 0)
+        {
+            if (RxData == '@')
+            {
+                RxState = 1;
+                pRxPacket = 0;
+            }
+        }
+        else if (RxState == 1)
+        {
+            if (RxData == '%')
+            {
+                RxState = 2;
+            }
+            else
+            {
+                Serial_RxPacket[pRxPacket] = RxData;
+                pRxPacket++;
+            }
+        }
+        else if (RxState == 2)
+        {
+            if (RxData == 'A')
+            {
+                RxState = 0;
+                Serial_RxPacket[pRxPacket] = '\0';
+            }
+        }
+        USART_ClearITPendingBit(UART5, USART_IT_RXNE);
+    }
 }
