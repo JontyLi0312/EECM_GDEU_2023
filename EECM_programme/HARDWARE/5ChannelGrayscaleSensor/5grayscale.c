@@ -38,47 +38,24 @@ u8 grayScale_detect(void)
     u8 direction;
 
     sensor_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
-    if (sensor_left == 1)
-    {
-        delay_ms(20);
-        if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11) == 1)
-        {
-            sensor_left = 1;
-        }
-        else
-        {
-            sensor_left = 0;
-        }
-    }
-
     sensor_right = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
-    if (sensor_right == 1)
-    {
-        delay_ms(20);
-        if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15) == 1)
-        {
-            sensor_right = 1;
-        }
-        else
-        {
-            sensor_right = 0;
-        }
-    }
-
     sensor_mid = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
     sensor_mid_left = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
     sensor_mid_right = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13);
 
     stop = sensor_mid_left || sensor_mid_right || sensor_mid || sensor_left || sensor_right;
     backward = sensor_mid_left || sensor_mid_right || sensor_mid_right;
-    right = sensor_mid_right || !sensor_mid_left;
-    left = sensor_mid_left || !sensor_mid_right;
+    right = sensor_mid_right || !sensor_mid_left || !sensor_mid;
+    left = sensor_mid_left || !sensor_mid_right || !sensor_mid;
+    right = sensor_mid_right;
+    left = sensor_mid_left;
 
     if (stop == 0)
     {
         direction = 'S';
     }
-    else if(backward == 0){
+    else if (backward == 0)
+    {
         direction = 'B';
     }
     else if (right == 0)

@@ -41,9 +41,7 @@ int main(void)
     OLED_Refresh();
 
     forward();
-    delay_ms(50);
-
-    int i = 0;
+    delay_ms(100);
 
     while (1)
     {
@@ -102,9 +100,9 @@ int main(void)
 void turn_left(void)
 {
     motor1_control(1);
-    PID_Move(45, 1);
+    PID_Move(65, 1);
     motor2_control(1);
-    PID_Move(45, 2);
+    PID_Move(65, 2);
     motor3_control(1);
     PID_Move(5, 3);
     motor4_control(1);
@@ -122,9 +120,9 @@ void turn_right(void)
     motor2_control(1);
     PID_Move(5, 2);
     motor3_control(1);
-    PID_Move(45, 3);
+    PID_Move(65, 3);
     motor4_control(1);
-    PID_Move(45, 4);
+    PID_Move(65, 4);
 }
 
 /**
@@ -134,13 +132,13 @@ void turn_right(void)
 void forward(void)
 {
     motor1_control(1);
-    PID_Move(35, 1);
+    PID_Move(40, 1);
     motor2_control(1);
-    PID_Move(35, 2);
+    PID_Move(40, 2);
     motor3_control(1);
-    PID_Move(35, 3);
+    PID_Move(40, 3);
     motor4_control(1);
-    PID_Move(35, 4);
+    PID_Move(40, 4);
 }
 
 /**
@@ -150,13 +148,13 @@ void forward(void)
 void backward(void)
 {
     motor1_control(2);
-    PID_Move(5, 1);
+    PID_Move(15, 1);
     motor2_control(2);
-    PID_Move(5, 2);
+    PID_Move(15, 2);
     motor3_control(2);
-    PID_Move(5, 3);
+    PID_Move(15, 3);
     motor4_control(2);
-    PID_Move(5, 4);
+    PID_Move(15, 4);
 }
 
 /**
