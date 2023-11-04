@@ -4,6 +4,7 @@
  * @date 2023-10-08
  * @brief EECM_main.c
  */
+
 #include <stdio.h>
 #include <string.h>
 #include "sys.h"
@@ -14,6 +15,7 @@
 #include "5graysacle.h"
 #include "Timer.h"
 #include "encoder_PID.h"
+#include "UART5.h"
 
 void turn_left(void);
 void turn_right(void);
@@ -30,9 +32,8 @@ int main(void)
     jy901s_init();
     grayscale_init();
     PID_Init();
+    Uart5_init();
     TIM6_Init();
-
-    stop();
 
     jy901s_angleData g_angleDatas;
 
@@ -43,7 +44,11 @@ int main(void)
     forward();
     delay_ms(50);
 
-    int i = 0;
+    while (1)
+    {
+        OLED_ShowChar(0, 10, Serial_RxPacket[0], 8, 1);
+        OLED_Refresh();
+    }
 
     while (1)
     {
