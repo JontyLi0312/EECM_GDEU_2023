@@ -32,8 +32,6 @@ int main(void)
     PID_Init();
     TIM6_Init();
 
-    stop();
-
     jy901s_angleData g_angleDatas;
 
     OLED_Clear();
