@@ -19,7 +19,7 @@
 #include "Timer.h"
 #include "motor_encoder.h"
 #include "encoder_PID.h"
-
+#include "UART5.h"
 
 int main(void)
 {
@@ -32,15 +32,21 @@ int main(void)
     grayscale_init();
     Servo_PWM_Init();
     PID_Init();
+    Uart5_init(115200);
     jy901s_angleData g_angleDatas;
 
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char *)"Status: WAIT", 8, 1);
     OLED_Refresh();
-   
-     while (1)
-     {
-     
+
+    while (1)
+    {
+        OLED_ShowChar(0, 10, Serial_RxPacket[0], 8, 1);
+        OLED_Refresh();
+    }
+    while (1)
+    {
+
         // 等待开始
         u8 start_flag;
         start_flag = start_key_get();
