@@ -8,7 +8,7 @@
 #include "stm32f4xx.h"                  // Device header
 #include "UART5.h"
 
-u8 Serial_RxPacket[100];
+u8 Serial_RxPacket[5] = {'0','0','0','0','0'};
 
 void Uart5_init(unsigned int uiBaud)
 {

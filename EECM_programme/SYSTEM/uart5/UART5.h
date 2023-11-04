@@ -9,7 +9,7 @@
 #define __UART5_H
 #include <sys.h>
 
-extern u8 Serial_RxPacket[100];
+extern u8 Serial_RxPacket[2];
 
 void Uart5_init(unsigned int uiBaud);
 void Uart5_send(unsigned char *p_data, unsigned int uiSize);
