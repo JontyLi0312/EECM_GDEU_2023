@@ -23,6 +23,8 @@ void forward(void);
 void backward(void);
 void stop(void);
 
+u8 Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
+
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -174,4 +176,48 @@ void stop(void)
     motor2_control(0);
     motor3_control(0);
     motor4_control(0);
+}
+
+/**
+ * @brief openmvxunxian
+ *
+ */
+void UART5_IRQHandler(void)
+{
+	static u16 RxState = 0;
+	static u16 pRxPacket = 0;
+	if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET)
+	{
+		u8 RxData = USART_ReceiveData(UART5);
+
+		if (RxState == 0)
+		{
+			if (RxData == '@')
+			{
+				RxState = 1;
+				pRxPacket = 0;
+			}
+		}
+		else if (RxState == 1)
+		{
+			if (RxData == '%')
+			{
+				RxState = 2;
+			}
+			else
+			{
+				Serial_RxPacket[pRxPacket] = RxData;
+				pRxPacket++;
+			}
+		}
+		else if (RxState == 2)
+		{
+			if (RxData == 'A')
+			{
+				RxState = 0;
+				Serial_RxPacket[pRxPacket] = '\0';
+			}
+		}
+		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
+	}
 }
