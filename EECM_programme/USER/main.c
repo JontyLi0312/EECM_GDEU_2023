@@ -4,6 +4,7 @@
  * @date 2023-10-08
  * @brief EECM_main.c
  */
+
 #include <stdio.h>
 #include <string.h>
 #include "sys.h"
@@ -14,12 +15,15 @@
 #include "5graysacle.h"
 #include "Timer.h"
 #include "encoder_PID.h"
+#include "UART5.h"
 
 void turn_left(void);
 void turn_right(void);
 void forward(void);
 void backward(void);
 void stop(void);
+
+u8 Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
 
 int main(void)
 {
@@ -30,6 +34,7 @@ int main(void)
     jy901s_init();
     grayscale_init();
     PID_Init();
+    Uart5_init();
     TIM6_Init();
 
     jy901s_angleData g_angleDatas;
@@ -39,7 +44,7 @@ int main(void)
     OLED_Refresh();
 
     forward();
-    delay_ms(100);
+    delay_ms(50);
 
     while (1)
     {
@@ -165,4 +170,48 @@ void stop(void)
     motor2_control(0);
     motor3_control(0);
     motor4_control(0);
+}
+
+/**
+ * @brief openmvxunxian
+ *
+ */
+void UART5_IRQHandler(void)
+{
+	static u16 RxState = 0;
+	static u16 pRxPacket = 0;
+	if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET)
+	{
+		u8 RxData = USART_ReceiveData(UART5);
+
+		if (RxState == 0)
+		{
+			if (RxData == '@')
+			{
+				RxState = 1;
+				pRxPacket = 0;
+			}
+		}
+		else if (RxState == 1)
+		{
+			if (RxData == '%')
+			{
+				RxState = 2;
+			}
+			else
+			{
+				Serial_RxPacket[pRxPacket] = RxData;
+				pRxPacket++;
+			}
+		}
+		else if (RxState == 2)
+		{
+			if (RxData == 'A')
+			{
+				RxState = 0;
+				Serial_RxPacket[pRxPacket] = '\0';
+			}
+		}
+		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
+	}
 }
