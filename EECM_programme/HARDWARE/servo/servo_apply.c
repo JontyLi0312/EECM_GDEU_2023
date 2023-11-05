@@ -7,9 +7,16 @@
 #include "servo_PWM.h"
 #include "delay.h"
 #include "servo_apply.h"
-void Servo_PWM_Init(void)
+
+void Servo_Init(void)
 {
 	Servo_PWM();
+	
+}
+
+void Servo_Reset(void)
+{
+	
 	Servo_SetAngle_Level(408);      
 	Servo_SetAngle_Vertical(405); 
 
