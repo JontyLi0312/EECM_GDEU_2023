@@ -49,8 +49,9 @@ int main(void)
     while (1)
     {
         u8 direction;
-        direction = Serial_RxPacket[0];
-        if (direction == 'N')
+        // direction = Serial_RxPacket[0];
+        direction = grayScale_detect();
+        if (direction == 'S')
         {
             // stop
             OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
@@ -65,6 +66,8 @@ int main(void)
             OLED_Refresh();
 
             backward();
+
+            delay_ms(20);
         }
         else if (direction == 'L')
         {
@@ -103,9 +106,9 @@ int main(void)
 void turn_left(void)
 {
     motor1_control(1);
-    PID_Move(65, 1);
+    PID_Move(50, 1);
     motor2_control(1);
-    PID_Move(65, 2);
+    PID_Move(50, 2);
     motor3_control(1);
     PID_Move(5, 3);
     motor4_control(1);
@@ -123,9 +126,9 @@ void turn_right(void)
     motor2_control(1);
     PID_Move(5, 2);
     motor3_control(1);
-    PID_Move(65, 3);
+    PID_Move(50, 3);
     motor4_control(1);
-    PID_Move(65, 4);
+    PID_Move(50, 4);
 }
 
 /**
