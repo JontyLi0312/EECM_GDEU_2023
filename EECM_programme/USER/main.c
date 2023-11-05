@@ -16,6 +16,7 @@
 #include "Timer.h"
 #include "encoder_PID.h"
 #include "UART5.h"
+#include "servo_apply.h"
 
 void turn_left(void);
 void turn_right(void);
@@ -36,6 +37,8 @@ int main(void)
     PID_Init();
     Uart5_init();
     TIM6_Init();
+    Servo_Init();
+   
 
     jy901s_angleData g_angleDatas;
 
