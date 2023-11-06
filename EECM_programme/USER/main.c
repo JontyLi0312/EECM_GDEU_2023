@@ -38,7 +38,6 @@ int main(void)
     Uart5_init();
     TIM6_Init();
     Servo_Init();
-   
 
     jy901s_angleData g_angleDatas;
 
@@ -109,13 +108,13 @@ int main(void)
 void turn_left(void)
 {
     motor1_control(1);
-    PID_Move(50, 1);
+    PID_Move(20, 1);
     motor2_control(1);
-    PID_Move(50, 2);
-    motor3_control(1);
-    PID_Move(5, 3);
-    motor4_control(1);
-    PID_Move(5, 4);
+    PID_Move(20, 2);
+    motor3_control(2);
+    PID_Move(20, 3);
+    motor4_control(2);
+    PID_Move(20, 4);
 }
 
 /**
@@ -124,14 +123,14 @@ void turn_left(void)
  */
 void turn_right(void)
 {
-    motor1_control(1);
-    PID_Move(5, 1);
-    motor2_control(1);
-    PID_Move(5, 2);
+    motor1_control(2);
+    PID_Move(20, 1);
+    motor2_control(2);
+    PID_Move(20, 2);
     motor3_control(1);
-    PID_Move(50, 3);
+    PID_Move(20, 3);
     motor4_control(1);
-    PID_Move(50, 4);
+    PID_Move(20, 4);
 }
 
 /**
