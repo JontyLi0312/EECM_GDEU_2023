@@ -159,45 +159,50 @@ void stop(void)
 }
 
 /**
- * @brief openmvxunxian
+ * @brief openmv色块识别
  *
  */
 void UART5_IRQHandler(void)
 {
-    static u16 RxState = 0;
-    static u16 pRxPacket = 0;
-    if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET)
-    {
-        u8 RxData = USART_ReceiveData(UART5);
+	static u16 RxState = 0;
+	static u16 pRxPacket = 0;
+	if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET)
+	{
+		u8 RxData = USART_ReceiveData(UART5);
 
-        if (RxState == 0)
+		if (RxState == 0)
+		{
+			if (RxData == '@')
+			{
+				RxState = 1;
+				pRxPacket = 0;
+			}
+		}
+		else if (RxState == 1)
+		{
+			if (RxData == '%')
+			{
+				RxState = 2;
+			}
+			else
+			{
+				Serial_RxPacket[pRxPacket] = RxData;
+				pRxPacket++;
+			}
+		}
+		else if (RxState == 2)
+		{
+			if (RxData == 'A')
+			{
+				RxState = 0;
+				Serial_RxPacket[pRxPacket] = '\0';
+                //Serial_RxFlag = 1;
+			}
+		}
+		if (Serial_RxPacket[0] == '4')
         {
-            if (RxData == '@')
-            {
-                RxState = 1;
-                pRxPacket = 0;
-            }
+            stop();
         }
-        else if (RxState == 1)
-        {
-            if (RxData == '%')
-            {
-                RxState = 2;
-            }
-            else
-            {
-                Serial_RxPacket[pRxPacket] = RxData;
-                pRxPacket++;
-            }
-        }
-        else if (RxState == 2)
-        {
-            if (RxData == 'A')
-            {
-                RxState = 0;
-                Serial_RxPacket[pRxPacket] = '\0';
-            }
-        }
-        USART_ClearITPendingBit(UART5, USART_IT_RXNE);
-    }
+		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
+	}
 }
