@@ -116,8 +116,8 @@ void motor1_control(u8 mode)
     }
     else if (mode == 0)
     {
-        GPIO_ResetBits(GPIOC, GPIO_Pin_0);
-        GPIO_ResetBits(GPIOC, GPIO_Pin_1);
+        GPIO_SetBits(GPIOC, GPIO_Pin_0);
+        GPIO_SetBits(GPIOC, GPIO_Pin_1);
     }
 }
 
@@ -143,8 +143,8 @@ void motor2_control(u8 mode)
     }
     else if (mode == 0)
     {
-        GPIO_ResetBits(GPIOC, GPIO_Pin_2);
-        GPIO_ResetBits(GPIOC, GPIO_Pin_3);
+        GPIO_SetBits(GPIOC, GPIO_Pin_2);
+        GPIO_SetBits(GPIOC, GPIO_Pin_3);
     }
 }
 
@@ -170,8 +170,8 @@ void motor3_control(u8 mode)
     }
     else if (mode == 0)
     {
-        GPIO_ResetBits(GPIOC, GPIO_Pin_4);
-        GPIO_ResetBits(GPIOC, GPIO_Pin_5);
+        GPIO_SetBits(GPIOC, GPIO_Pin_4);
+        GPIO_SetBits(GPIOC, GPIO_Pin_5);
     }
 }
 
@@ -197,7 +197,7 @@ void motor4_control(u8 mode)
     }
     else if (mode == 0)
     {
-        GPIO_ResetBits(GPIOC, GPIO_Pin_10);
-        GPIO_ResetBits(GPIOC, GPIO_Pin_11);
+        GPIO_SetBits(GPIOC, GPIO_Pin_10);
+        GPIO_SetBits(GPIOC, GPIO_Pin_11);
     }
 }

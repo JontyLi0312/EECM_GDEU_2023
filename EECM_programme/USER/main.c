@@ -108,13 +108,13 @@ int main(void)
 void turn_left(void)
 {
     motor1_control(1);
-    PID_Move(20, 1);
+    PID_Move(15, 1);
     motor2_control(1);
-    PID_Move(20, 2);
+    PID_Move(15, 2);
     motor3_control(2);
-    PID_Move(20, 3);
+    PID_Move(15, 3);
     motor4_control(2);
-    PID_Move(20, 4);
+    PID_Move(15, 4);
 }
 
 /**
@@ -124,13 +124,13 @@ void turn_left(void)
 void turn_right(void)
 {
     motor1_control(2);
-    PID_Move(20, 1);
+    PID_Move(15, 1);
     motor2_control(2);
-    PID_Move(20, 2);
+    PID_Move(15, 2);
     motor3_control(1);
-    PID_Move(20, 3);
+    PID_Move(15, 3);
     motor4_control(1);
-    PID_Move(20, 4);
+    PID_Move(15, 4);
 }
 
 /**
@@ -140,13 +140,13 @@ void turn_right(void)
 void forward(void)
 {
     motor1_control(1);
-    PID_Move(40, 1);
+    PID_Move(30, 1);
     motor2_control(1);
-    PID_Move(40, 2);
+    PID_Move(30, 2);
     motor3_control(1);
-    PID_Move(40, 3);
+    PID_Move(30, 3);
     motor4_control(1);
-    PID_Move(40, 4);
+    PID_Move(30, 4);
 }
 
 /**
