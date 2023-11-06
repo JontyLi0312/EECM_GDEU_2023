@@ -17,6 +17,10 @@ int16_t output2;
 int16_t output3;
 int16_t output4;
 
+/**
+ * @brief PID算法初始化
+ *
+ */
 void PID_Init(void)
 {
     ASR1.Kp = 6.8;
@@ -48,6 +52,11 @@ void PID_Init(void)
     ASR4.OutMin = 0;
 }
 
+/**
+ * @brief PID算法计算
+ *
+ * @param p
+ */
 void pid_calc(PID *p) //
 {
     float a0, a1, a2;
@@ -68,7 +77,13 @@ void pid_calc(PID *p) //
     p->Err_2 = p->Err_1;
     p->Err_1 = p->Err;
 }
-// 给定对于编码器的速度值以及电机序号
+
+/**
+ * @brief PID控速
+ *
+ * @param speed 速度值（1 - 100）百分比
+ * @param Dre 需要控制的电机序号
+ */
 void PID_Move(int16_t speed, int8_t Dre)
 {
     if (Dre == 1) //
@@ -90,7 +105,11 @@ void PID_Move(int16_t speed, int8_t Dre)
         ASR4.Ref = speed / 4.16;
     }
 }
-//
+
+/**
+ * @brief PWM输入
+ *
+ */
 void PID_apply(void)
 {
     int16_t PWM1, PWM2, PWM3, PWM4;
@@ -105,7 +124,13 @@ void PID_apply(void)
     motor3_speed(PWM3);
     motor4_speed(PWM4);
 }
-// 绝对值函数，输入的是读取到编码器的值。使编码器的值变成正数，
+
+/**
+ * @brief 求绝对值
+ *
+ * @param Encoder 被绝对值的数
+ * @return uint16_t
+ */
 uint16_t Num_Abs(int16_t Encoder)
 {
     uint16_t Middle;
@@ -113,7 +138,10 @@ uint16_t Num_Abs(int16_t Encoder)
     return Middle;
 }
 
-// TIM6中断服务函数
+/**
+ * @brief TIM6中断函数
+ *
+ */
 void TIM6_DAC_IRQHandler(void)
 
 {
