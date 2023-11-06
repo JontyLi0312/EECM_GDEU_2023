@@ -121,13 +121,13 @@ void turn_right(void)
 void forward(void)
 {
     motor1_control(1);
-    PID_Move(45, 1);
+    PID_Move(40, 1);
     motor2_control(1);
-    PID_Move(45, 2);
+    PID_Move(40, 2);
     motor3_control(1);
-    PID_Move(45, 3);
+    PID_Move(40, 3);
     motor4_control(1);
-    PID_Move(45, 4);
+    PID_Move(40, 4);
 }
 
 /**
