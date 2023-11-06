@@ -100,7 +100,7 @@ void motor4_speed(u16 speed)
  * @param mode
  *        @arg 1 forward
  *        @arg 2 backward
- *        @arg 0 stop
+ *        @arg 0 short brake
  */
 void motor1_control(u8 mode)
 {
@@ -127,7 +127,7 @@ void motor1_control(u8 mode)
  * @param mode
  *        @arg 1 forward
  *        @arg 2 backward
- *        @arg 0 stop
+ *        @arg 0 short brake
  */
 void motor2_control(u8 mode)
 {
@@ -154,7 +154,7 @@ void motor2_control(u8 mode)
  * @param mode
  *        @arg 1 forward
  *        @arg 2 backward
- *        @arg 0 stop
+ *        @arg 0 short brake
  */
 void motor3_control(u8 mode)
 {
@@ -181,7 +181,7 @@ void motor3_control(u8 mode)
  * @param mode
  *        @arg 1 forward
  *        @arg 2 backward
- *        @arg 0 stop
+ *        @arg 0 short brake
  */
 void motor4_control(u8 mode)
 {
