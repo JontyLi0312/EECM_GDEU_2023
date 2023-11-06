@@ -59,21 +59,21 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
             OLED_Refresh();
 
-            while (1)
-            {
-                turn_left();
-                delay_ms(50);
-                turn_right();
-                delay_ms(50);
+            // while (1)
+            // {
+            //     turn_left();
+            //     delay_ms(50);
+            //     turn_right();
+            //     delay_ms(50);
 
-                swing++;
-                if (swing == 5)
-                {
-                    break;
-                }
-            }
+            //     swing++;
+            //     if (swing == 5)
+            //     {
+            //         break;
+            //     }
+            // }
 
-            stop();
+            // stop();
         }
         else if (direction == 'L')
         {
