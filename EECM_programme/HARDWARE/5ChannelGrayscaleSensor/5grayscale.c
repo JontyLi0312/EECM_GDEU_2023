@@ -54,10 +54,6 @@ u8 grayScale_detect(void)
     {
         direction = 'S';
     }
-    // else if (backward == 0)
-    // {
-    //     direction = 'B';
-    // }
     else if (right == 0)
     {
         direction = 'L';

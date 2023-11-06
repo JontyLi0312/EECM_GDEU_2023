@@ -51,25 +51,28 @@ int main(void)
     while (1)
     {
         u8 direction;
-        // direction = Serial_RxPacket[0];
         direction = grayScale_detect();
+        int swing = 0;
         if (direction == 'S')
         {
             // stop
             OLED_ShowString(0, 20, (unsigned char *)"stop      ", 8, 1);
             OLED_Refresh();
 
+            while (1)
+            {
+                if (grayScale_detect() != 'S')
+                {
+                    break;
+                }
+
+                turn_left();
+                delay_ms(15);
+                turn_right();
+                delay_ms(15);
+            }
+
             stop();
-        }
-        else if (direction == 'B')
-        {
-            // backward
-            OLED_ShowString(0, 20, (unsigned char *)"backward  ", 8, 1);
-            OLED_Refresh();
-
-            backward();
-
-            delay_ms(20);
         }
         else if (direction == 'L')
         {
@@ -108,13 +111,13 @@ int main(void)
 void turn_left(void)
 {
     motor1_control(1);
-    PID_Move(15, 1);
+    PID_Move(18, 1);
     motor2_control(1);
-    PID_Move(15, 2);
+    PID_Move(18, 2);
     motor3_control(2);
-    PID_Move(15, 3);
+    PID_Move(18, 3);
     motor4_control(2);
-    PID_Move(15, 4);
+    PID_Move(18, 4);
 }
 
 /**
@@ -124,13 +127,13 @@ void turn_left(void)
 void turn_right(void)
 {
     motor1_control(2);
-    PID_Move(15, 1);
+    PID_Move(18, 1);
     motor2_control(2);
-    PID_Move(15, 2);
+    PID_Move(18, 2);
     motor3_control(1);
-    PID_Move(15, 3);
+    PID_Move(18, 3);
     motor4_control(1);
-    PID_Move(15, 4);
+    PID_Move(18, 4);
 }
 
 /**
@@ -140,13 +143,13 @@ void turn_right(void)
 void forward(void)
 {
     motor1_control(1);
-    PID_Move(30, 1);
+    PID_Move(35, 1);
     motor2_control(1);
-    PID_Move(30, 2);
+    PID_Move(35, 2);
     motor3_control(1);
-    PID_Move(30, 3);
+    PID_Move(35, 3);
     motor4_control(1);
-    PID_Move(30, 4);
+    PID_Move(35, 4);
 }
 
 /**
