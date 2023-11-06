@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\SYSTEM\usart2;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\key;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\HARDWARE\5ChannelGrayscaleSensor;.\HARDWARE\motor\encoder;.\HARDWARE\servo;.\HARDWARE\motor\encoder_PID;.\SYSTEM\Timer;.\SYSTEM\uart5;.\SYSTEM\uart5</IncludePath>
+              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\SYSTEM\usart2;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\HARDWARE\5ChannelGrayscaleSensor;.\HARDWARE\motor\encoder;.\HARDWARE\servo;.\HARDWARE\motor\encoder_PID;.\SYSTEM\Timer;.\SYSTEM\uart5;.\SYSTEM\uart5</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -614,11 +614,6 @@
               <FileName>oled.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\OLED\oled.c</FilePath>
-            </File>
-            <File>
-              <FileName>key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HARDWARE\key\key.c</FilePath>
             </File>
             <File>
               <FileName>motor.c</FileName>
