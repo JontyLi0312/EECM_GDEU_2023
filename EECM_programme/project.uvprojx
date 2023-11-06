@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\SYSTEM\usart2;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\HARDWARE\5ChannelGrayscaleSensor;.\HARDWARE\motor\encoder;.\HARDWARE\servo;.\HARDWARE\motor\encoder_PID;.\SYSTEM\Timer;.\SYSTEM\uart5;.\SYSTEM\uart5</IncludePath>
+              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\SYSTEM\usart2;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\HARDWARE\5ChannelGrayscaleSensor;.\HARDWARE\motor\encoder;.\HARDWARE\servo;.\HARDWARE\motor\encoder_PID;.\SYSTEM\Timer;.\SYSTEM\uart5;.\SYSTEM\uart5;.\HARDWARE\OPENMV</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -664,6 +664,11 @@
               <FileName>encoder_PID.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\HARDWARE\motor\encoder_PID\encoder_PID.h</FilePath>
+            </File>
+            <File>
+              <FileName>openmv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\OPENMV\openmv.c</FilePath>
             </File>
           </Files>
         </Group>
