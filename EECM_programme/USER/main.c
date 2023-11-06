@@ -61,15 +61,16 @@ int main(void)
 
             while (1)
             {
-                if (grayScale_detect() != 'S')
+                turn_left();
+                delay_ms(50);
+                turn_right();
+                delay_ms(50);
+
+                swing++;
+                if (swing == 5)
                 {
                     break;
                 }
-
-                turn_left();
-                delay_ms(15);
-                turn_right();
-                delay_ms(15);
             }
 
             stop();
