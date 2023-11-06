@@ -665,11 +665,6 @@
               <FileType>5</FileType>
               <FilePath>.\HARDWARE\motor\encoder_PID\encoder_PID.h</FilePath>
             </File>
-            <File>
-              <FileName>openmv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HARDWARE\OPENMV\openmv.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
