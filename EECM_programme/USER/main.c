@@ -25,7 +25,7 @@ void backward(void);
 void stop(void);
 
 u8 Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
-
+u16 g_flag = 0;
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -52,6 +52,10 @@ int main(void)
     {
         u8 direction;
         direction = grayScale_detect();
+        if (g_flag == 1)
+        {
+            stop();
+        }
         if (direction == 'L')
         {
             // turn left
@@ -202,6 +206,7 @@ void UART5_IRQHandler(void)
 		if (Serial_RxPacket[0] == '4')
         {
             stop();
+            g_flag = 1;
         }
 		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
 	}
