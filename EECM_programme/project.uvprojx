@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\usart2;.\SYSTEM\uart5;.\SYSTEM\Timer;.\HARDWARE\motor;.\HARDWARE\motor\motor_PWM;.\HARDWARE\motor\encoder;.\HARDWARE\motor\encoder_PID;.\HARDWARE\OLED;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\HARDWARE\5ChannelGrayscaleSensor;.\HARDWARE\servo;.\HARDWARE\OPENMV;.\USER\drive</IncludePath>
+              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\usart2;.\SYSTEM\uart5;.\SYSTEM\Timer;.\HARDWARE\motor;.\HARDWARE\motor\motor_PWM;.\HARDWARE\motor\encoder;.\HARDWARE\motor\encoder_PID;.\HARDWARE\OLED;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\HARDWARE\5ChannelGrayscaleSensor;.\HARDWARE\servo;.\HARDWARE\OPENMV</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -695,11 +695,6 @@
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\USER\system_stm32f4xx.c</FilePath>
-            </File>
-            <File>
-              <FileName>drive.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\USER\drive\drive.c</FilePath>
             </File>
           </Files>
         </Group>
