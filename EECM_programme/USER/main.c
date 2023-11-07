@@ -48,8 +48,13 @@ int main(void)
     OLED_Refresh();
     Servo_Reset();
 
-    forward(40);
-    delay_ms(50);
+    // forward(40);
+    // delay_ms(50);
+
+    while (1)
+    {
+        forward(30);
+    }
 
     while (1)
     {
