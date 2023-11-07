@@ -44,9 +44,11 @@ int main(void)
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
     OLED_Refresh();
+    Servo_Reset();
 
     forward();
     delay_ms(50);
+
 
     while (1)
     {
@@ -55,6 +57,8 @@ int main(void)
         if (g_flag == 1)
         {
             stop();
+            Servo_Action();
+           
         }
         else if (direction == 'L')
         {
