@@ -20,7 +20,7 @@
 #include "servo_apply.h"
 #include "drive.h"
 
-u8 Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
+u8 g_Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
 u16 g_flag = 0;
 
 int main(void)
@@ -125,7 +125,7 @@ void UART5_IRQHandler(void)
             }
             else
             {
-                Serial_RxPacket[pRxPacket] = RxData;
+                g_Serial_RxPacket[pRxPacket] = RxData;
                 pRxPacket++;
             }
         }
@@ -134,11 +134,11 @@ void UART5_IRQHandler(void)
             if (RxData == 'A')
             {
                 RxState = 0;
-                Serial_RxPacket[pRxPacket] = '\0';
+                g_Serial_RxPacket[pRxPacket] = '\0';
                 // Serial_RxFlag = 1;
             }
         }
-        if (Serial_RxPacket[0] == '4')
+        if (g_Serial_RxPacket[0] == '4')
         {
             stop();
             g_flag = 1;
