@@ -7,8 +7,8 @@
 #include "OPENMV.h"
 u8 target;
 
-//u16 Serial_RxFlag;
-//u8 Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
+// u16 Serial_RxFlag;
+u8 Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
 /**
 @return u8 flag
  *          @arg '1' 上电初始标志位状态
@@ -17,24 +17,24 @@ u8 target;
  *          @arg '4' 找到与目标色块匹配的色块
  */
 u8 openmv()
-{	 
-	static u8 flag = '1';//上电初始标志位状态
+{
+	static u8 flag = '1'; // 上电初始标志位状态
 	u8 colour;
-	if (flag == '1' && (Serial_RxPacket[0] != '0'))//识别到目标色块
+	if (flag == '1' && (Serial_RxPacket[0] != '0')) // 识别到目标色块
 	{
 		target = Serial_RxPacket[0];
 		flag = '2';
 	}
-	else if (flag == '2' && Serial_RxPacket[0] == '0')//离开目标色块
+	else if (flag == '2' && Serial_RxPacket[0] == '0') // 离开目标色块
 	{
 		flag = '3';
-	}	
-	else if(flag == '3' )//寻找匹配色块
+	}
+	else if (flag == '3') // 寻找匹配色块
 	{
 		colour = Serial_RxPacket[0];
 		if (colour == target)
-		{	
-			flag = '4';//找到匹配色块
+		{
+			flag = '4'; // 找到匹配色块
 		}
 	}
 	return flag;

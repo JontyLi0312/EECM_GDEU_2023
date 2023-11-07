@@ -11,18 +11,15 @@
 #include "delay.h"
 #include "oled.h"
 #include "motor.h"
+#include "motor_encoder.h"
 #include "jy901s.h"
 #include "5graysacle.h"
 #include "Timer.h"
 #include "encoder_PID.h"
 #include "UART5.h"
 #include "servo_apply.h"
-
-void turn_left(void);
-void turn_right(void);
-void forward(int16_t speed);
-void backward(int16_t speed);
-void stop(void);
+#include "drive.h"
+#include "openmv.h"
 
 u8 g_Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
 
@@ -90,82 +87,6 @@ int main(void)
     }
 
     return 0;
-}
-
-/**
- * @brief car turn left
- *
- */
-void turn_left(void)
-{
-    motor1_control(1);
-    PID_Move(18, 1);
-    motor2_control(1);
-    PID_Move(18, 2);
-    motor3_control(2);
-    PID_Move(18, 3);
-    motor4_control(2);
-    PID_Move(18, 4);
-}
-
-/**
- * @brief car turn right
- *
- */
-void turn_right(void)
-{
-    motor1_control(2);
-    PID_Move(18, 1);
-    motor2_control(2);
-    PID_Move(18, 2);
-    motor3_control(1);
-    PID_Move(18, 3);
-    motor4_control(1);
-    PID_Move(18, 4);
-}
-
-/**
- * @brief car forward
- *
- */
-void forward(int16_t speed)
-{
-    motor1_control(1);
-    PID_Move(speed, 1);
-    motor2_control(1);
-    PID_Move(speed, 2);
-    motor3_control(1);
-    PID_Move(speed, 3);
-    motor4_control(1);
-    PID_Move(speed, 4);
-}
-
-/**
- * @brief car backward
- *
- */
-void backward(int16_t speed)
-{
-    motor1_control(2);
-    PID_Move(speed, 1);
-    motor2_control(2);
-    PID_Move(speed, 2);
-    motor3_control(2);
-    PID_Move(speed, 3);
-    motor4_control(2);
-    PID_Move(speed, 4);
-}
-
-/**
- * @brief car stop
- *
- */
-void stop(void)
-{
-    motor1_control(0);
-    motor2_control(0);
-    motor3_control(0);
-    motor4_control(0);
 }
 
 /**
