@@ -215,6 +215,7 @@ void UART5_IRQHandler(void)
 		}
 		if (Serial_RxPacket[0] == '4')
         {
+            delay_ms(500);
             stop();
             g_flag = 1;
         }
