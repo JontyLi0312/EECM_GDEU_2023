@@ -58,9 +58,15 @@ int main(void)
         {
             stop();
             Servo_Action();
-           
+            delay_ms(5000);
+            g_flag = 2;
         }
-        else if (direction == 'L')
+        if (g_flag == 2)
+        {
+            Servo_Init();
+            delay_ms(3000);
+        }
+        if (direction == 'L')
         {
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
