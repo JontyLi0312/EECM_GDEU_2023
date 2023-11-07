@@ -661,9 +661,20 @@
               <FilePath>.\HARDWARE\servo\servo_PWM.c</FilePath>
             </File>
             <File>
+<<<<<<< HEAD
               <FileName>openmv.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\OPENMV\openmv.c</FilePath>
+=======
+              <FileName>encoder_PID.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\motor\encoder_PID\encoder_PID.c</FilePath>
+            </File>
+            <File>
+              <FileName>encoder_PID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\HARDWARE\motor\encoder_PID\encoder_PID.h</FilePath>
+>>>>>>> feature_20231106_openmv
             </File>
           </Files>
         </Group>
