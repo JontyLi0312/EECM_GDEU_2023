@@ -17,12 +17,8 @@
 #include "encoder_PID.h"
 #include "UART5.h"
 #include "servo_apply.h"
-
-void turn_left(void);
-void turn_right(void);
-void forward(void);
-void backward(void);
-void stop(void);
+#include "drive.h"
+#include "motor_encoder.h"
 
 u8 g_Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
 u16 g_flag = 0;
@@ -65,7 +61,7 @@ int main(void)
     OLED_Refresh();
     Servo_Reset();
 
-    forward();
+    forward(40);
     delay_ms(50);
 
     // forward(40);
@@ -114,89 +110,13 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"forward   ", 8, 1);
             OLED_Refresh();
 
-            forward();
+            forward(40);
         }
 
         delay_ms(10);
     }
 
     return 0;
-}
-
-/**
- * @brief car turn left
- *
- */
-void turn_left(void)
-{
-    motor1_control(1);
-    PID_Move(18, 1);
-    motor2_control(1);
-    PID_Move(18, 2);
-    motor3_control(2);
-    PID_Move(18, 3);
-    motor4_control(2);
-    PID_Move(18, 4);
-}
-
-/**
- * @brief car turn right
- *
- */
-void turn_right(void)
-{
-    motor1_control(2);
-    PID_Move(18, 1);
-    motor2_control(2);
-    PID_Move(18, 2);
-    motor3_control(1);
-    PID_Move(18, 3);
-    motor4_control(1);
-    PID_Move(18, 4);
-}
-
-/**
- * @brief car forward
- *
- */
-void forward(void)
-{
-    motor1_control(1);
-    PID_Move(40, 1);
-    motor2_control(1);
-    PID_Move(40, 2);
-    motor3_control(1);
-    PID_Move(40, 3);
-    motor4_control(1);
-    PID_Move(40, 4);
-}
-
-/**
- * @brief car backward
- *
- */
-void backward(void)
-{
-    motor1_control(2);
-    PID_Move(15, 1);
-    motor2_control(2);
-    PID_Move(15, 2);
-    motor3_control(2);
-    PID_Move(15, 3);
-    motor4_control(2);
-    PID_Move(15, 4);
-}
-
-/**
- * @brief car stop
- *
- */
-void stop(void)
-{
-    motor1_control(0);
-    motor2_control(0);
-    motor3_control(0);
-    motor4_control(0);
 }
 
 /**
@@ -240,36 +160,6 @@ void UART5_IRQHandler(void)
             }
         }
         if (g_Serial_RxPacket[0] == '4')
-            if (RxState == 0)
-            {
-                if (RxData == '@')
-                {
-                    RxState = 1;
-                    pRxPacket = 0;
-                }
-            }
-            else if (RxState == 1)
-            {
-                if (RxData == '%')
-                {
-                    RxState = 2;
-                }
-                else
-                {
-                    g_Serial_RxPacket[pRxPacket] = RxData;
-                    pRxPacket++;
-                }
-            }
-            else if (RxState == 2)
-            {
-                if (RxData == 'A')
-                {
-                    RxState = 0;
-                    g_Serial_RxPacket[pRxPacket] = '\0';
-                    // Serial_RxFlag = 1;
-                }
-            }
-        if (g_Serial_RxPacket[0] == '4')
         {
             // delay_ms(500);
             // stop();
@@ -279,9 +169,6 @@ void UART5_IRQHandler(void)
 
         USART_ClearITPendingBit(UART5, USART_IT_RXNE);
     }
-}
-USART_ClearITPendingBit(UART5, USART_IT_RXNE);
-}
 }
 
 /**
@@ -324,5 +211,3 @@ void TIM6_DAC_IRQHandler(void)
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update); // 清除中断标志位
     }
 }
-
-// test
