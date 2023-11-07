@@ -17,7 +17,7 @@ void Servo_Init(void)
 void Servo_Reset(void)
 {
 	
-	Servo_SetAngle_Level(408);      
+	Servo_SetAngle_Level(380);      
 	Servo_SetAngle_Vertical(405); 
 
 }
@@ -33,7 +33,7 @@ void Servo_SetAngle_Vertical(float Angle)
 
 void Servo_Action(void)
 {
-	PWM_SetCompare_Level(250);
+	PWM_SetCompare_Level(230);
 	delay_ms(1000);
     PWM_SetCompare_Vertical(188);
 }
