@@ -39,7 +39,12 @@ int main(void)
     TIM6_Init();
     Servo_Init();
 
-    jy901s_angleData g_angleDatas;
+    jy901s_angleData angleDatas;
+    jy901s_getData(&angleDatas);
+    float base_roll, base_pitch, base_yaw;
+    base_roll = angleDatas.roll;
+    base_pitch = angleDatas.pitch;
+    base_yaw = angleDatas.yaw;
 
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
@@ -209,5 +214,39 @@ void UART5_IRQHandler(void)
             stop();
         }
         USART_ClearITPendingBit(UART5, USART_IT_RXNE);
+    }
+}
+
+/**
+ * @brief TIM6中断函数
+ *
+ */
+void TIM6_DAC_IRQHandler(void)
+{
+    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) // 在这里执行20ms定时器触发后的操作
+    {
+        // 让编码器的值变成正整数
+        ASR1.Fdb = (Num_Abs(Read_Speed(1)) - 48) / 6.3 + 10;
+        ASR2.Fdb = (Num_Abs(Read_Speed(2)) - 48) / 6.3 + 10;
+        ASR3.Fdb = (Num_Abs(Read_Speed(3)) - 48) / 6.3 + 10;
+        ASR4.Fdb = (Num_Abs(Read_Speed(4)) - 48) / 6.3 + 10;
+
+        ASR1.Err = ASR1.Ref - ASR1.Fdb;
+        ASR2.Err = ASR2.Ref - ASR2.Fdb;
+        ASR3.Err = ASR3.Ref - ASR3.Fdb;
+        ASR4.Err = ASR4.Ref - ASR4.Fdb;
+
+        pid_calc(&ASR1);
+        pid_calc(&ASR2);
+        pid_calc(&ASR3);
+        pid_calc(&ASR4);
+
+        output1 = ASR1.Out;
+        output2 = ASR2.Out;
+        output3 = ASR3.Out;
+        output4 = ASR4.Out;
+        PID_apply();
+
+        TIM_ClearITPendingBit(TIM6, TIM_IT_Update); // 清除中断标志位
     }
 }
