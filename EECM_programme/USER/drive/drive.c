@@ -83,4 +83,3 @@ void stop(void)
     motor3_control(0);
     motor4_control(0);
 }
-// test
