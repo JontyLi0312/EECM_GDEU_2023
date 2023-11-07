@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\motor_PWM;.\SYSTEM\usart2;.\HARDWARE\motor;.\HARDWARE\OLED;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\HARDWARE\5ChannelGrayscaleSensor;.\HARDWARE\motor\encoder;.\HARDWARE\servo;.\HARDWARE\motor\encoder_PID;.\SYSTEM\Timer;.\SYSTEM\uart5;.\SYSTEM\uart5;.\HARDWARE\OPENMV</IncludePath>
+              <IncludePath>.\CORE;.\FWLIB\inc;.\SYSTEM\sys;.\USER;.\SYSTEM\delay;.\SYSTEM\usart;.\SYSTEM\usart2;.\SYSTEM\uart5;.\SYSTEM\Timer;.\HARDWARE\motor;.\HARDWARE\motor\motor_PWM;.\HARDWARE\motor\encoder;.\HARDWARE\motor\encoder_PID;.\HARDWARE\OLED;.\HARDWARE\jy901s;.\HARDWARE\jy901s\wit_c_sdk;.\HARDWARE\5ChannelGrayscaleSensor;.\HARDWARE\servo;.\HARDWARE\OPENMV</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -586,11 +586,6 @@
               <FilePath>.\SYSTEM\usart\usart.c</FilePath>
             </File>
             <File>
-              <FileName>motor_PWM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\SYSTEM\motor_PWM\motor_PWM.c</FilePath>
-            </File>
-            <File>
               <FileName>UART2.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\SYSTEM\usart2\UART2.c</FilePath>
@@ -621,6 +616,26 @@
               <FilePath>.\HARDWARE\motor\motor.c</FilePath>
             </File>
             <File>
+              <FileName>motor_PWM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\motor\motor_PWM\motor_PWM.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor_encoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\motor\encoder\motor_encoder.c</FilePath>
+            </File>
+            <File>
+              <FileName>encoder_PID.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\motor\encoder_PID\encoder_PID.c</FilePath>
+            </File>
+            <File>
+              <FileName>5grayscale.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\5ChannelGrayscaleSensor\5grayscale.c</FilePath>
+            </File>
+            <File>
               <FileName>jy901s.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\jy901s\jy901s.c</FilePath>
@@ -629,16 +644,6 @@
               <FileName>wit_c_sdk.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\jy901s\wit_c_sdk\wit_c_sdk.c</FilePath>
-            </File>
-            <File>
-              <FileName>5grayscale.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HARDWARE\5ChannelGrayscaleSensor\5grayscale.c</FilePath>
-            </File>
-            <File>
-              <FileName>motor_encoder.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HARDWARE\motor\encoder\motor_encoder.c</FilePath>
             </File>
             <File>
               <FileName>servo_apply.c</FileName>
@@ -654,16 +659,6 @@
               <FileName>servo_PWM.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\servo\servo_PWM.c</FilePath>
-            </File>
-            <File>
-              <FileName>encoder_PID.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HARDWARE\motor\encoder_PID\encoder_PID.c</FilePath>
-            </File>
-            <File>
-              <FileName>encoder_PID.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\HARDWARE\motor\encoder_PID\encoder_PID.h</FilePath>
             </File>
             <File>
               <FileName>openmv.c</FileName>
