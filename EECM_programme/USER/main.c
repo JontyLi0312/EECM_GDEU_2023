@@ -23,6 +23,19 @@
 u8 g_Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
 u16 g_flag = 0;
 
+/**
+ * @brief 小车姿态数据
+ *
+ */
+jy901s_angleData g_angleDatas;
+/**
+ * @brief 小车姿态基准值
+ *
+ */
+float g_base_roll;
+float g_base_pitch;
+float g_base_yaw;
+
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -36,12 +49,10 @@ int main(void)
     TIM6_Init();
     Servo_Init();
 
-    jy901s_angleData angleDatas;
-    jy901s_getData(&angleDatas);
-    float base_roll, base_pitch, base_yaw;
-    base_roll = angleDatas.roll;
-    base_pitch = angleDatas.pitch;
-    base_yaw = angleDatas.yaw;
+    jy901s_getData(&g_angleDatas);
+    g_base_roll = g_angleDatas.roll;
+    g_base_pitch = g_angleDatas.pitch;
+    g_base_yaw = g_angleDatas.yaw;
 
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
@@ -181,6 +192,8 @@ void TIM6_DAC_IRQHandler(void)
         output3 = ASR3.Out;
         output4 = ASR4.Out;
         PID_apply();
+
+        jy901s_getData(&g_angleDatas);
 
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update); // 清除中断标志位
     }
