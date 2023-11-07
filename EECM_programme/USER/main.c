@@ -56,7 +56,7 @@ int main(void)
         {
             stop();
         }
-        if (direction == 'L')
+        else if (direction == 'L')
         {
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
