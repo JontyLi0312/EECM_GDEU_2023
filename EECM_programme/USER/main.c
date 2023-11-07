@@ -194,6 +194,10 @@ void TIM6_DAC_IRQHandler(void)
         PID_apply();
 
         jy901s_getData(&g_angleDatas);
+        float pitch_max = 0;
+        if(g_angleDatas.pitch >= pitch_max){
+            pitch_max = g_angleDatas.pitch;
+        }
 
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update); // 清除中断标志位
     }
