@@ -69,11 +69,6 @@ int main(void)
 
     while (1)
     {
-        forward(30);
-    }
-
-    while (1)
-    {
         u8 direction;
         direction = grayScale_detect();
         if (g_flag == 1)
