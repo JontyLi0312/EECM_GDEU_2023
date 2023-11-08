@@ -47,8 +47,8 @@ u8 grayScale_detect(void)
     backward = sensor_mid_left || sensor_mid_right || sensor_mid_right;
     right = sensor_mid_right || !sensor_mid_left;
     left = sensor_mid_left || !sensor_mid_right;
-    large_left = !sensor_left || sensor_mid_left || sensor_mid || sensor_mid_right || sensor_right;
-    large_right = sensor_left || sensor_mid_left || sensor_mid || sensor_mid_right || !sensor_right;
+    large_left = sensor_mid_left || sensor_mid;
+    large_right = sensor_mid_right || sensor_mid;
 
     if (stop == 0)
     {
@@ -56,11 +56,11 @@ u8 grayScale_detect(void)
     }
     else if (right == 0)
     {
-        direction = 'L';
+        direction = 'l';
     }
     else if (left == 0)
     {
-        direction = 'R';
+        direction = 'r';
     }
     else if (large_left == 0)
     {

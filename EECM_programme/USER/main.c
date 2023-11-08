@@ -115,13 +115,29 @@ int main(void)
             Servo_Init();
             delay_ms(3000);
         }
+        if (direction == 'l')
+        {
+            // turn left
+            OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
+            OLED_Refresh();
+
+            turn_left(20);
+        }
+        else if (direction == 'r')
+        {
+            // turn right
+            OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
+            OLED_Refresh();
+
+            turn_right(20);
+        }
         if (direction == 'L')
         {
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
             OLED_Refresh();
 
-            turn_left();
+            turn_left(40);
         }
         else if (direction == 'R')
         {
@@ -129,7 +145,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
             OLED_Refresh();
 
-            turn_right();
+            turn_right(40);
         }
         else
         {
