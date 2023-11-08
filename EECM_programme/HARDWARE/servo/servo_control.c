@@ -39,15 +39,15 @@ void Servo_Limit(void)
     if(g_Vertical_PWM>580)
     {g_Vertical_PWM=580;}
    
-    if(g_Vertical_PWM<110)
-    {g_Vertical_PWM=110;}
+    if(g_Vertical_PWM<188)
+    {g_Vertical_PWM=188;}
 }
 
 //结合角度实现舵机的输出
 void Servo_accomplish(void)
 {
 	    jy901s_getData(&g_angleData);
-        g_Vertical_PWM = Vertical(g_angleData.pitch,0)*2.973 + 345  ;
+        g_Vertical_PWM = Vertical(g_angleData.pitch,0)*2.973 + 405;
 	    Servo_Limit();
 		Servo_SetAngle_Vertical(g_Vertical_PWM); 
 
