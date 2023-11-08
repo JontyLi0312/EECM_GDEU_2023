@@ -73,16 +73,17 @@ int main(void)
         direction = grayScale_detect();
         if (g_flag == 1)
         {
-            delay_ms(200);
+            delay_ms(180);
             stop();
             Servo_Action();
-            delay_ms(1000);
+            delay_ms(1500);
             g_flag = 2;
         }
         if (g_flag == 2)
         {
             Servo_Reset();
-            delay_ms(1000);
+            delay_ms(1500);
+            g_flag = 3;
         }
         if (direction == 'L')
         {

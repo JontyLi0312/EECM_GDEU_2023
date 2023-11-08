@@ -8,7 +8,7 @@ output_str_blue = ""
 '''
 
 red_threshold  = (43, 66, 0, 40, 0, 39)#(0, 100, 19, 77, -9, 127)
-green_threshold  = (30, 66, -50, 0, 0, 61)
+green_threshold  = (45, 70, -60, -10, 0, 30)
 blue_threshold  = (30, 60, -10, 17, -50, 0)#(0, 36, -41, 22, -45, 39)#(27, 88, -29, 12, -43, -15)
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
