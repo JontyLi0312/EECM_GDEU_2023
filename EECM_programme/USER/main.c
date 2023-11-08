@@ -21,7 +21,7 @@
 #include "motor_encoder.h"
 
 u8 g_Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
-
+u8 g_flag = 0;
 /**
  * @brief 小车姿态数据
  *
@@ -71,6 +71,14 @@ int main(void)
         u8 direction;
         direction = grayScale_detect();
         
+        if(g_flag == 1)
+        {
+            stop();
+            Servo_Action();
+            delay_ms(1500);
+            Servo_Reset();
+            g_flag = 2;
+        }
         if (direction == 'L')
         {
             // turn left
@@ -143,12 +151,12 @@ void UART5_IRQHandler(void)
         }
         if (g_Serial_RxPacket[0] == '4')
         {
-            stop();
-            Servo_Action();
-            delay_ms(1500);
-            Servo_Reset();
-            delay_ms(1500);
+            g_flag = 1;
+            
+            //OLED_ShowString(0, 0, (unsigned char *)"fo   ", 8, 1);
+            //delay_ms(1500);
         }
+        //OLED_ShowString(0, 40, (unsigned char *)"forward   ", 8, 1);
         USART_ClearITPendingBit(UART5, USART_IT_RXNE);
     }   
 }
