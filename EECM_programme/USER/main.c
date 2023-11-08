@@ -71,20 +71,7 @@ int main(void)
     {
         u8 direction;
         direction = grayScale_detect();
-        if (g_flag == 1)
-        {
-            delay_ms(180);
-            stop();
-            Servo_Action();
-            delay_ms(1500);
-            g_flag = 2;
-        }
-        if (g_flag == 2)
-        {
-            Servo_Reset();
-            delay_ms(1500);
-            g_flag = 3;
-        }
+        
         if (direction == 'L')
         {
             // turn left
@@ -158,11 +145,19 @@ void UART5_IRQHandler(void)
         if (g_Serial_RxPacket[0] == '4')
         {
             // delay_ms(500);
-            // stop();
+            // stop();   
+            //delay_ms(180);
             stop();
+            Servo_Action();
+            delay_ms(1500);
             g_flag = 1;
         }
-
+        if (g_flag == 1)
+        {
+            Servo_Reset();
+            delay_ms(1500);
+            g_flag = 2;
+        }
         USART_ClearITPendingBit(UART5, USART_IT_RXNE);
     }
 }
