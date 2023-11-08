@@ -150,7 +150,7 @@ void UART5_IRQHandler(void)
             delay_ms(1500);
         }
         USART_ClearITPendingBit(UART5, USART_IT_RXNE);
-    }
+    }   
 }
 
 /**
