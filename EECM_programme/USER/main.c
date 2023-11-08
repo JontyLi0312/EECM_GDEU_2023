@@ -21,7 +21,6 @@
 #include "motor_encoder.h"
 
 u8 g_Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
-u16 g_flag = 0;
 
 /**
  * @brief 小车姿态数据
@@ -144,19 +143,11 @@ void UART5_IRQHandler(void)
         }
         if (g_Serial_RxPacket[0] == '4')
         {
-            // delay_ms(500);
-            // stop();   
-            //delay_ms(180);
             stop();
             Servo_Action();
             delay_ms(1500);
-            g_flag = 1;
-        }
-        if (g_flag == 1)
-        {
             Servo_Reset();
             delay_ms(1500);
-            g_flag = 2;
         }
         USART_ClearITPendingBit(UART5, USART_IT_RXNE);
     }
