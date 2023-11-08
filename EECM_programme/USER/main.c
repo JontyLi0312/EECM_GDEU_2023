@@ -77,6 +77,7 @@ int main(void)
             Servo_Action();
             delay_ms(1500);
             Servo_Reset();
+            delay_ms(1000);
             g_flag = 2;
         }
         if (direction == 'L')
