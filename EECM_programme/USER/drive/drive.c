@@ -15,13 +15,13 @@ void stop(void);
 void turn_left(void)
 {
     motor1_control(1);
-    PID_Move(18, 1);
+    PID_Move(40, 1);
     motor2_control(1);
-    PID_Move(18, 2);
+    PID_Move(40, 2);
     motor3_control(2);
-    PID_Move(18, 3);
+    PID_Move(10, 3);
     motor4_control(2);
-    PID_Move(18, 4);
+    PID_Move(10, 4);
 }
 
 /**
@@ -31,13 +31,13 @@ void turn_left(void)
 void turn_right(void)
 {
     motor1_control(2);
-    PID_Move(18, 1);
+    PID_Move(10, 1);
     motor2_control(2);
-    PID_Move(18, 2);
+    PID_Move(10, 2);
     motor3_control(1);
-    PID_Move(18, 3);
+    PID_Move(40, 3);
     motor4_control(1);
-    PID_Move(18, 4);
+    PID_Move(40, 4);
 }
 
 /**
