@@ -62,10 +62,10 @@ int main(void)
     // forward(40);
     // delay_ms(50);
 
-    while (1)
-    {
-        forward(30);
-    }
+    // while (1)
+    // {
+    //     forward(30);
+    // }
 
     while (1)
     {
@@ -101,6 +101,7 @@ int main(void)
         OLED_Refresh();
 
         u8 direction;
+
         direction = grayScale_detect();
         if (g_flag == 1)
         {
