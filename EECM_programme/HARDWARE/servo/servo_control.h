@@ -6,7 +6,10 @@
  */
 #ifndef __SERVO_CONTROL_H
 #define __SERVO_CONTROL_H
+
 #include "sys.h"
+#include "jy901s.h"
+extern jy901s_angleData g_angleData; 
 
 void Servo_Limit(void);
 int16_t Vertical(float Pitch,float Med_target);
