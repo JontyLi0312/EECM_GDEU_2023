@@ -66,8 +66,6 @@ int main(void)
     // forward(40);
     // delay_ms(50);
 
-    while (1)
-    {
     // while (1)
     // {
     //     forward(30);
@@ -108,8 +106,8 @@ int main(void)
 
         u8 direction;
         direction = grayScale_detect();
-        
-        if(g_flag == 1)
+
+        if (g_flag == 1)
         {
             stop();
             Servo_Action();
@@ -206,13 +204,13 @@ void UART5_IRQHandler(void)
         if (g_Serial_RxPacket[0] == '4')
         {
             g_flag = 1;
-            
-            //OLED_ShowString(0, 0, (unsigned char *)"fo   ", 8, 1);
-            //delay_ms(1500);
+
+            // OLED_ShowString(0, 0, (unsigned char *)"fo   ", 8, 1);
+            // delay_ms(1500);
         }
-        //OLED_ShowString(0, 40, (unsigned char *)"forward   ", 8, 1);
+        // OLED_ShowString(0, 40, (unsigned char *)"forward   ", 8, 1);
         USART_ClearITPendingBit(UART5, USART_IT_RXNE);
-    }   
+    }
 }
 
 /**
