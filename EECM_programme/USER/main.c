@@ -69,39 +69,38 @@ int main(void)
 
     while (1)
     {
-        jy901s_angleData angle_correction;
-        angle_correction.pitch = g_angleDatas.pitch - base_pitch;
-        angle_correction.roll = g_angleDatas.roll - base_roll;
-        angle_correction.yaw = g_angleDatas.yaw - base_yaw;
+        // jy901s_angleData angle_correction;
+        // angle_correction.pitch = g_angleDatas.pitch - base_pitch;
+        // angle_correction.roll = g_angleDatas.roll - base_roll;
+        // angle_correction.yaw = g_angleDatas.yaw - base_yaw;
 
-        float pitch_max = 0;
-        u8 climb_flag = 0;
-        if (angle_correction.pitch >= pitch_max)
-        {
-            pitch_max = angle_correction.pitch;
-        }
-        OLED_ShowNum(0, 30, (int32_t)pitch_max, 4, 8, 1);
-        OLED_Refresh();
+        // float pitch_max = 0;
+        // u8 climb_flag = 0;
+        // if (angle_correction.pitch >= pitch_max)
+        // {
+        //     pitch_max = angle_correction.pitch;
+        // }
+        // OLED_ShowNum(0, 30, (int32_t)pitch_max, 4, 8, 1);
+        // OLED_Refresh();
 
-        int angle_flag;
-        angle_flag = 0;
-        if (angle_correction.pitch >= 10)
-        {
-            if (angle_flag < 1)
-            {
-                climb_flag++;
-            }
-            angle_flag++;
-        }
-        else
-        {
-            angle_flag = 0;
-        }
-        OLED_ShowChar(0, 40, climb_flag, 8, 1);
-        OLED_Refresh();
+        // int angle_flag;
+        // angle_flag = 0;
+        // if (angle_correction.pitch >= 10)
+        // {
+        //     if (angle_flag < 1)
+        //     {
+        //         climb_flag++;
+        //     }
+        //     angle_flag++;
+        // }
+        // else
+        // {
+        //     angle_flag = 0;
+        // }
+        // OLED_ShowChar(0, 40, climb_flag, 8, 1);
+        // OLED_Refresh();
 
         u8 direction;
-
         direction = grayScale_detect();
         if (g_flag == 1)
         {
@@ -110,7 +109,7 @@ int main(void)
             delay_ms(5000);
             g_flag = 2;
         }
-        if (g_flag == 2)
+        else if (g_flag == 2)
         {
             Servo_Init();
             delay_ms(3000);
@@ -121,7 +120,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
             OLED_Refresh();
 
-            turn_left(20);
+            turn_left(40);
         }
         else if (direction == 'r')
         {
@@ -129,7 +128,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
             OLED_Refresh();
 
-            turn_right(20);
+            turn_right(40);
         }
         if (direction == 'L')
         {
@@ -137,7 +136,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"turn left ", 8, 1);
             OLED_Refresh();
 
-            turn_left(40);
+            turn_left(80);
         }
         else if (direction == 'R')
         {
@@ -145,7 +144,7 @@ int main(void)
             OLED_ShowString(0, 20, (unsigned char *)"turn right", 8, 1);
             OLED_Refresh();
 
-            turn_right(40);
+            turn_right(80);
         }
         else
         {
