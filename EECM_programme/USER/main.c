@@ -66,18 +66,8 @@ int main(void)
     // forward(40);
     // delay_ms(50);
 
-    // while (1)
-    // {
-    //     forward(30);
-    // }
-
     while (1)
     {
-        // jy901s_angleData angle_correction;
-        // angle_correction.pitch = g_angleDatas.pitch - base_pitch;
-        // angle_correction.roll = g_angleDatas.roll - base_roll;
-        // angle_correction.yaw = g_angleDatas.yaw - base_yaw;
-
         // float pitch_max = 0;
         // u8 climb_flag = 0;
         // if (angle_correction.pitch >= pitch_max)
@@ -85,15 +75,22 @@ int main(void)
         //     pitch_max = angle_correction.pitch;
         // }
         // OLED_ShowNum(0, 30, (int32_t)pitch_max, 4, 8, 1);
-        // OLED_Refresh();
 
         // int angle_flag;
         // angle_flag = 0;
-        // if (angle_correction.pitch >= 10)
+        // if (angle_correction.pitch >= 5.00)
         // {
-        //     if (angle_flag < 1)
+        //     if (angle_flag == 0)
         //     {
         //         climb_flag++;
+        //     }
+        //     angle_flag++;
+        // }
+        // else if (angle_correction.pitch <= -5.00)
+        // {
+        //     if (angle_flag == 0)
+        //     {
+        //         climb_flag--;
         //     }
         //     angle_flag++;
         // }
@@ -102,52 +99,51 @@ int main(void)
         //     angle_flag = 0;
         // }
         // OLED_ShowChar(0, 40, climb_flag, 8, 1);
-        // OLED_Refresh();
+
+        // if (g_flag == 1)
+        // {
+        //     stop();
+        //     Servo_Action();
+        //     delay_ms(1500);
+        //     Servo_Reset();
+        //     delay_ms(1000);
+        //     g_flag = 2;
+        // }
+        // else if (g_flag == 2)
+        // {
+        //     Servo_Init();
+        //     delay_ms(3000);
+        // }
 
         u8 direction;
         direction = grayScale_detect();
-
-        if (g_flag == 1)
-        {
-            stop();
-            Servo_Action();
-            delay_ms(1500);
-            Servo_Reset();
-            delay_ms(1000);
-            g_flag = 2;
-        }
-        else if (g_flag == 2)
-        {
-            Servo_Init();
-            delay_ms(3000);
-        }
         if (direction == 'l')
         {
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn left       ", 8, 1);
 
-            turn_left(40, 10);
+            turn_left(55, 5);
         }
         else if (direction == 'r')
         {
             // turn right
             OLED_ShowString(0, 20, (unsigned char *)"turn right      ", 8, 1);
 
-            turn_right(40, 10);
+            turn_right(55, 5);
         }
-        if (direction == 'L')
+        else if (direction == 'L')
         {
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn large left ", 8, 1);
 
-            turn_left(70, 20);
+            turn_left(80, 10);
         }
         else if (direction == 'R')
         {
             // turn right
             OLED_ShowString(0, 20, (unsigned char *)"turn large right", 8, 1);
 
-            turn_right(70, 20);
+            turn_right(80, 10);
         }
         else
         {
@@ -244,11 +240,7 @@ void TIM6_DAC_IRQHandler(void)
         PID_apply();
 
         jy901s_getData(&g_angleDatas);
-        float pitch_max = 0;
-        if (g_angleDatas.pitch >= pitch_max)
-        {
-            pitch_max = g_angleDatas.pitch;
-        }
+
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update); // 清除中断标志位
     }
 }
