@@ -7,7 +7,7 @@
 #include "servo_control.h"
 #include "servo_apply.h"
 
-float   g_Vertical_Kp=0.9, g_Vertical_Ki=0.005, g_Vertical_D =-3; 
+float   g_Vertical_Kp=0.9, g_Vertical_Ki=0.005, g_Vertical_D =-2; 
 int16_t g_Vertical_PWM;
 jy901s_angleData g_angleData;           //结构体名字
 
@@ -47,7 +47,7 @@ void Servo_Limit(void)
 void Servo_accomplish(void)
 {
 	    jy901s_getData(&g_angleData);
-        g_Vertical_PWM = Vertical(g_angleData.roll,0)*2.973 + 405;
+        g_Vertical_PWM = Vertical(g_angleData.roll,0)*2.973 + 425;
 	    Servo_Limit();
 		Servo_SetAngle_Vertical(g_Vertical_PWM); 
 
