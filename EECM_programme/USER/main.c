@@ -19,9 +19,11 @@
 #include "servo_apply.h"
 #include "drive.h"
 #include "motor_encoder.h"
+#include "servo_control.h"
 
 u8 g_Serial_RxPacket[5] = { '0', '0', '0', '0', '0' };
 u8 g_flag = 0;
+ int g_jy901s_stop = 0;
 /**
  * @brief 小车姿态数据
  *
@@ -100,20 +102,23 @@ int main(void)
         // }
         // OLED_ShowChar(0, 40, climb_flag, 8, 1);
 
-        // if (g_flag == 1)
-        // {
-        //     stop();
-        //     Servo_Action();
-        //     delay_ms(1500);
-        //     Servo_Reset();
-        //     delay_ms(1000);
-        //     g_flag = 2;
-        // }
-        // else if (g_flag == 2)
-        // {
-        //     Servo_Init();
-        //     delay_ms(3000);
-        // }
+        if (g_flag == 1)
+        {
+            g_jy901s_stop = 1;
+            stop();
+            Servo_Action();
+            delay_ms(1500);
+            Servo_Reset();
+            delay_ms(1000);
+            g_flag = 2;
+            g_jy901s_stop = 0;
+
+        }
+        else if (g_flag == 2)
+        {
+            Servo_Init();
+            delay_ms(3000);
+        }
 
         u8 direction;
         direction = grayScale_detect();
@@ -240,6 +245,11 @@ void TIM6_DAC_IRQHandler(void)
         output3 = ASR3.Out;
         output4 = ASR4.Out;
         PID_apply();
+        if( g_jy901s_stop == 0)
+        { 
+            Servo_accomplish();
+        }
+       
 
         jy901s_getData(&g_angleDatas);
 
