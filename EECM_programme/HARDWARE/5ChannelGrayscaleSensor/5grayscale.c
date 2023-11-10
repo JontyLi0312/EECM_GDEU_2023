@@ -13,7 +13,7 @@ void grayscale_init(void)
     GPIO_grayscale_initStructure.GPIO_Mode = GPIO_Mode_IN;
     GPIO_grayscale_initStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_grayscale_initStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12 |
-                                            GPIO_Pin_13 | GPIO_Pin_15;
+        GPIO_Pin_13 | GPIO_Pin_15;
     GPIO_grayscale_initStructure.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_grayscale_initStructure.GPIO_Speed = GPIO_Fast_Speed;
     GPIO_Init(GPIOB, &GPIO_grayscale_initStructure);
@@ -47,8 +47,10 @@ u8 grayScale_detect(void)
     backward = sensor_mid_left || sensor_mid_right || sensor_mid_right;
     left = sensor_mid_right || !sensor_mid || !sensor_mid_left;
     right = sensor_mid_left || !sensor_mid || !sensor_mid_right;
-    large_right = sensor_mid_left || sensor_mid || !sensor_mid_right;
-    large_left = sensor_mid_right || sensor_mid || !sensor_mid_left;
+    large_right = (sensor_mid_left || sensor_mid || !sensor_mid_right) &&
+        (!sensor_left || sensor_mid_left || sensor_mid_left || sensor_mid_right || sensor_right);
+    large_left = (sensor_mid_right || sensor_mid || !sensor_mid_left) &&
+        (sensor_left || sensor_mid_left || sensor_mid_left || sensor_mid_right || !sensor_right);
 
     if (stop == 0)
     {

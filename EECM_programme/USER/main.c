@@ -127,34 +127,34 @@ int main(void)
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn left       ", 8, 1);
 
-            turn_left(55, 5);
+            turn_left(30, 5);
         }
         else if (direction == 'r')
         {
             // turn right
             OLED_ShowString(0, 20, (unsigned char *)"turn right      ", 8, 1);
 
-            turn_right(55, 5);
+            turn_right(30, 5);
         }
         else if (direction == 'L')
         {
             // turn left
             OLED_ShowString(0, 20, (unsigned char *)"turn large left ", 8, 1);
 
-            turn_left(80, 10);
+            turn_left(60, 10);
         }
         else if (direction == 'R')
         {
             // turn right
             OLED_ShowString(0, 20, (unsigned char *)"turn large right", 8, 1);
 
-            turn_right(80, 10);
+            turn_right(60, 10);
         }
         else
         {
             OLED_ShowString(0, 20, (unsigned char *)"forward         ", 8, 1);
 
-            forward(35);
+            forward(30);
         }
         OLED_Refresh();
     }
