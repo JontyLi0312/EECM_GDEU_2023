@@ -48,9 +48,9 @@ u8 grayScale_detect(void)
     left = sensor_mid_right || !sensor_mid || !sensor_mid_left;
     right = sensor_mid_left || !sensor_mid || !sensor_mid_right;
     large_right = (sensor_mid_left || sensor_mid || !sensor_mid_right) &&
-        (!sensor_left || sensor_mid_left || sensor_mid_left || sensor_mid_right || sensor_right);
-    large_left = (sensor_mid_right || sensor_mid || !sensor_mid_left) &&
         (sensor_left || sensor_mid_left || sensor_mid_left || sensor_mid_right || !sensor_right);
+    large_left = (sensor_mid_right || sensor_mid || !sensor_mid_left) &&
+        (!sensor_left || sensor_mid_left || sensor_mid_left || sensor_mid_right || sensor_right);
 
     if (stop == 0)
     {

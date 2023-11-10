@@ -20,7 +20,7 @@
 #include "drive.h"
 #include "motor_encoder.h"
 
-u8 g_Serial_RxPacket[5] = {'0', '0', '0', '0', '0'};
+u8 g_Serial_RxPacket[5] = { '0', '0', '0', '0', '0' };
 u8 g_flag = 0;
 /**
  * @brief 小车姿态数据
@@ -56,7 +56,7 @@ int main(void)
     base_yaw = g_angleDatas.yaw;
 
     OLED_Clear();
-    OLED_ShowString(0, 0, (unsigned char *)"Status: WORKING", 8, 1);
+    OLED_ShowString(0, 0, (unsigned char*)"Status: WORKING", 8, 1);
     OLED_Refresh();
     Servo_Reset();
 
@@ -125,38 +125,40 @@ int main(void)
         if (direction == 'l')
         {
             // turn left
-            OLED_ShowString(0, 20, (unsigned char *)"turn left       ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)"turn left       ", 8, 1);
 
-            turn_left(30, 5);
+            turn_left(35, 0);
         }
         else if (direction == 'r')
         {
             // turn right
-            OLED_ShowString(0, 20, (unsigned char *)"turn right      ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)"turn right      ", 8, 1);
 
-            turn_right(30, 5);
+            turn_right(35, 0);
         }
         else if (direction == 'L')
         {
             // turn left
-            OLED_ShowString(0, 20, (unsigned char *)"turn large left ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)"turn large left ", 8, 1);
 
             turn_left(60, 10);
         }
         else if (direction == 'R')
         {
             // turn right
-            OLED_ShowString(0, 20, (unsigned char *)"turn large right", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)"turn large right", 8, 1);
 
             turn_right(60, 10);
         }
         else
         {
-            OLED_ShowString(0, 20, (unsigned char *)"forward         ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)"forward         ", 8, 1);
 
-            forward(30);
+            forward(35);
         }
         OLED_Refresh();
+
+        delay_ms(10);
     }
 
     return 0;
