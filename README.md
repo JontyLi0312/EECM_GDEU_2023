@@ -143,6 +143,12 @@ mid_right -> PE13
 
 right -> PB15
 
+### stop button
+
+**GPIO**
+
+stop -> PG14
+
 ## Code Description
 
 ### Hardware
