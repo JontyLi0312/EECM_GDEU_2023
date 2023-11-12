@@ -17,8 +17,8 @@ void Servo_Init(void)
 void Servo_Reset(void)
 {
 	
-	Servo_SetAngle_Level(355);      
-	Servo_SetAngle_Vertical(445); 
+	Servo_SetAngle_Level(370);      
+	Servo_SetAngle_Vertical(455); 
 
 }
 
