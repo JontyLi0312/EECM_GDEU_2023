@@ -148,6 +148,12 @@ int main(void)
             downhill_flag = 0;
         }
 
+        OLED_ShowChar(0, 40, horizontal_flag, 8, 1);
+        OLED_ShowChar(15, 40, upslope_flag, 8, 1);
+        OLED_ShowChar(30, 40, downhill_flag, 8, 1);
+        OLED_ShowChar(45, 40, restart_flag, 8, 1);
+        OLED_ShowChar(60, 40, lowSpeed_flag, 8, 1);
+
         // if (g_flag == 1)
         // {
         //     stop();
