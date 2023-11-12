@@ -47,58 +47,98 @@ int main(void)
 
     Servo_Reset();
 
+    /**
+     * @brief 获取小车基准姿态
+     *
+     */
     jy901s_getData(&g_angleDatas);
-    float base_roll;
-    float base_pitch;
-    float base_yaw;
+    /**
+     * @brief 小车基准姿态数据
+     *
+     */
+    float base_roll, base_pitch, base_yaw;
     base_roll = g_angleDatas.roll;
     base_pitch = g_angleDatas.pitch;
     base_yaw = g_angleDatas.yaw;
+    /**
+     * @brief 小车姿态数据相对值
+     * 
+     */
+    jy901s_angleData angle_correction;
 
     forward(40);
     delay_ms(50);
 
+    /**
+     * @brief 小车在(min, max)内则认为小车水平
+     *
+     */
     float horizontal_pitch_max, horizontal_pitch_min;
     horizontal_pitch_max = 5.00;
     horizontal_pitch_min = -5.00;
 
     while (1)
     {
-        jy901s_angleData angle_correction;
+        /**
+         * @brief 得到小车相对值姿态数据
+         *
+         */
         angle_correction.pitch = g_angleDatas.pitch - base_pitch;
         angle_correction.roll = g_angleDatas.roll - base_roll;
         angle_correction.yaw = g_angleDatas.yaw - base_yaw;
 
         float pitch_max = 0;
-        u8 climb_flag = 0;
         if (angle_correction.pitch >= pitch_max)
-
         {
             pitch_max = angle_correction.pitch;
         }
         OLED_ShowNum(0, 30, (int32_t)pitch_max, 4, 8, 1);
 
-        int angle_flag;
-        angle_flag = 0;
+        /**
+         * @brief 爬坡标志位，水平标志位，下坡标志位
+         *
+         */
+        u8 upslope_flag, horizontal_flag, downhill_flag;
+        upslope_flag = 0;
+        horizontal_flag = 0;
+        downhill_flag = 0;
+
         if (angle_correction.pitch >= horizontal_pitch_max)
         {
-            if (angle_flag == 0)
-            {
-                climb_flag++;
-            }
-            angle_flag++;
+            upslope_flag++;
+        }
+        else if (angle_correction.pitch <= horizontal_pitch_min)
+        {
+            downhill_flag++;
         }
         else
         {
-            angle_flag = 0;
+            if(upslope_flag || downhill_flag)
+            {
+                horizontal_flag++;
+            }
         }
-        OLED_ShowChar(0, 40, climb_flag, 8, 1);
 
-        //test
-        if (climb_flag > 0)
+        /**
+         * @brief 冷启动标志位
+         * 
+         */
+        u8 restart_flag;
+        restart_flag = 0;
+        if (horizontal_flag > 1)
         {
-            stop();
-            delay_ms(300);
+            if (upslope_flag > 1)
+            {
+                restart_flag++;
+            }
+            else if (downhill_flag > 1)
+            {
+                restart_flag--;
+            }
+
+            horizontal_flag = 0;
+            upslope_flag = 0;
+            downhill_flag = 0;
         }
 
         // if (g_flag == 1)
@@ -150,7 +190,14 @@ int main(void)
         {
             OLED_ShowString(0, 20, (unsigned char*)"forward         ", 8, 1);
 
-            forward(34);
+            if (restart_flag > 0)
+            {
+                forward(10);
+            }
+            else
+            {
+                forward(34);
+            }
         }
         OLED_Refresh();
 
