@@ -88,11 +88,17 @@ int main(void)
         angle_correction.yaw = g_angleDatas.yaw - base_yaw;
 
         float pitch_max = 0;
+        float pitch_min = 0;
         if (angle_correction.pitch >= pitch_max)
         {
             pitch_max = angle_correction.pitch;
         }
+        if (angle_correction.pitch <= pitch_min)
+        {
+            pitch_min = angle_correction.pitch;
+        }
         OLED_ShowNum(0, 30, (int32_t)pitch_max, 4, 8, 1);
+        OLED_ShowNum(30, 30, (int32_t)pitch_min, 4, 8, 1);
 
         /**
          * @brief 爬坡标志位，水平标志位，下坡标志位
