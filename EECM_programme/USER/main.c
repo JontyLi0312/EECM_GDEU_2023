@@ -62,7 +62,7 @@ int main(void)
     base_yaw = g_angleDatas.yaw;
     /**
      * @brief 小车姿态数据相对值
-     * 
+     *
      */
     jy901s_angleData angle_correction;
 
@@ -113,7 +113,7 @@ int main(void)
         }
         else
         {
-            if(upslope_flag || downhill_flag)
+            if (upslope_flag || downhill_flag)
             {
                 horizontal_flag++;
             }
@@ -121,9 +121,10 @@ int main(void)
 
         /**
          * @brief 冷启动标志位
-         * 
+         *
          */
-        u8 restart_flag;
+        u8 lowSpeed_flag, restart_flag;
+        lowSpeed_flag = 0;
         restart_flag = 0;
         if (horizontal_flag > 1)
         {
@@ -133,7 +134,7 @@ int main(void)
             }
             else if (downhill_flag > 1)
             {
-                restart_flag--;
+                lowSpeed_flag++;
             }
 
             horizontal_flag = 0;
@@ -190,9 +191,17 @@ int main(void)
         {
             OLED_ShowString(0, 20, (unsigned char*)"forward         ", 8, 1);
 
-            if (restart_flag > 0)
+            if (lowSpeed_flag > 1)
             {
                 forward(10);
+            }
+            else if (restart_flag > 0)
+            {
+                stop();
+                delay_ms(100);
+                forward(34);
+
+                restart_flag = 0;
             }
             else
             {
