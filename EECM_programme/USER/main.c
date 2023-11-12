@@ -22,7 +22,7 @@
 #include "servo_control.h"
 
 u8 g_Serial_RxPacket[5] = { '0', '0', '0', '0', '0' };
-u8 g_flag = 0;
+u8 g_servo_start = 0;
  int g_jy901s_stop = 0;
 /**
  * @brief 小车姿态数据
@@ -150,7 +150,7 @@ int main(void)
             downhill_flag = 0;
         }
 
-        if (g_flag == 1)
+        if (g_servo_start == 1)
         {
             g_jy901s_stop = 1;
             stop();
@@ -158,11 +158,11 @@ int main(void)
             delay_ms(1500);
             Servo_Reset();
             delay_ms(1000);
-            g_flag = 2;
+            g_servo_start = 2;
             g_jy901s_stop = 0;
 
         }
-        else if (g_flag == 2)
+        else if (g_servo_start == 2)
         {
             Servo_Init();
             delay_ms(3000);
@@ -267,7 +267,7 @@ void UART5_IRQHandler(void)
         }
         if (g_Serial_RxPacket[0] == '4')
         {
-            g_flag = 1;
+            g_servo_start = 1;
 
             // OLED_ShowString(0, 0, (unsigned char *)"fo   ", 8, 1);
             // delay_ms(1500);
