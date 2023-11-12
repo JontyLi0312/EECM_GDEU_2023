@@ -197,17 +197,15 @@ int main(void)
         {
             OLED_ShowString(0, 20, (unsigned char*)"forward         ", 8, 1);
 
-            if (lowSpeed_flag > 1)
+            if ((lowSpeed_flag > 0) && (lowSpeed_flag < 3) && (restart_flag == 3))
             {
                 forward(10);
             }
-            else if (restart_flag > 0)
+            else if (restart_flag == 2)
             {
                 stop();
                 delay_ms(100);
                 forward(34);
-
-                restart_flag = 0;
             }
             else
             {
