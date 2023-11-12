@@ -41,7 +41,11 @@ int main(void)
     TIM6_Init();
     Servo_Init();
 
-    jy901s_angleData g_angleDatas;
+    OLED_Clear();
+    OLED_ShowString(0, 0, (unsigned char*)"Status: WORKING", 8, 1);
+    OLED_Refresh();
+
+    Servo_Reset();
 
     jy901s_getData(&g_angleDatas);
     float base_roll;
@@ -51,16 +55,12 @@ int main(void)
     base_pitch = g_angleDatas.pitch;
     base_yaw = g_angleDatas.yaw;
 
-    OLED_Clear();
-    OLED_ShowString(0, 0, (unsigned char*)"Status: WORKING", 8, 1);
-    OLED_Refresh();
-    Servo_Reset();
-
     forward(40);
     delay_ms(50);
 
-    // forward(40);
-    // delay_ms(50);
+    float horizontal_pitch_max, horizontal_pitch_min;
+    horizontal_pitch_max = 5.00;
+    horizontal_pitch_min = -5.00;
 
     while (1)
     {
@@ -80,19 +80,11 @@ int main(void)
 
         int angle_flag;
         angle_flag = 0;
-        if (angle_correction.pitch >= 5.00)
+        if (angle_correction.pitch >= horizontal_pitch_max)
         {
             if (angle_flag == 0)
             {
                 climb_flag++;
-            }
-            angle_flag++;
-        }
-        else if (angle_correction.pitch <= -5.00)
-        {
-            if (angle_flag == 0)
-            {
-                climb_flag--;
             }
             angle_flag++;
         }
@@ -101,6 +93,13 @@ int main(void)
             angle_flag = 0;
         }
         OLED_ShowChar(0, 40, climb_flag, 8, 1);
+
+        //test
+        if (climb_flag > 0)
+        {
+            stop();
+            delay_ms(300);
+        }
 
         // if (g_flag == 1)
         // {
