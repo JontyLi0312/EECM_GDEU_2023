@@ -86,6 +86,15 @@ int main(void)
         angle_correction.pitch = g_angleDatas.pitch - base_pitch;
         angle_correction.roll = g_angleDatas.roll - base_roll;
         angle_correction.yaw = g_angleDatas.yaw - base_yaw;
+        while (1)
+        {
+            angle_correction.pitch = g_angleDatas.pitch - base_pitch;
+            angle_correction.roll = g_angleDatas.roll - base_roll;
+            angle_correction.yaw = g_angleDatas.yaw - base_yaw;
+            OLED_ShowNum(0, 20, angle_correction.pitch, 5, 8, 1);
+            OLED_Refresh();
+        }
+
 
         // float pitch_max = 0;
 
@@ -191,14 +200,14 @@ int main(void)
             // turn left
             OLED_ShowString(0, 20, (unsigned char*)"turn large left ", 8, 1);
 
-            turn_left(40, 15);
+            turn_left(45, 10);
         }
         else if (direction == 'R')
         {
             // turn right
             OLED_ShowString(0, 20, (unsigned char*)"turn large right", 8, 1);
 
-            turn_right(40, 15);
+            turn_right(45, 10);
         }
         else
         {
@@ -214,6 +223,7 @@ int main(void)
             //     delay_ms(100);
             //     forward(34);
             // }
+
             // else
             // {
             //     forward(34);
