@@ -69,6 +69,11 @@ int main(void)
     forward(34);
     delay_ms(50);
 
+    while (1)
+    {
+        forward(11);
+    }
+
     /**
      * @brief 小车在(min, max)内则认为小车水平
      *
@@ -141,7 +146,7 @@ int main(void)
         OLED_ShowNum(30, 40, downhill_flag, 1, 8, 1);
         OLED_ShowNum(45, 40, restart_flag, 1, 8, 1);
         OLED_ShowNum(60, 40, lowSpeed_flag, 1, 8, 1);
-        
+
 
         // if (g_flag == 1)
         // {
