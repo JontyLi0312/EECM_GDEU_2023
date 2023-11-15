@@ -306,10 +306,10 @@ void TIM6_DAC_IRQHandler(void)
         output3 = ASR3.Out;
         output4 = ASR4.Out;
         PID_apply();
-        if( g_jy901s_stop == 0)
-        { 
-            Servo_accomplish();
-        }
+        // if( g_jy901s_stop == 0)
+        // { 
+        //     Servo_accomplish();
+        // }
        
 
         jy901s_getData(&g_angleDatas);
