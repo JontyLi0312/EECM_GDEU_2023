@@ -76,10 +76,6 @@ int main(void)
     float horizontal_pitch_max, horizontal_pitch_min;
     horizontal_pitch_max = 10.00;
     horizontal_pitch_min = -10.00;
-
-    float pitch_max = 0;
-    float pitch_min = 0;
-
     /**
     * @brief 爬坡标志位，水平标志位，下坡标志位
     *
@@ -88,7 +84,6 @@ int main(void)
     upslope_flag = 0;
     horizontal_flag = 0;
     downhill_flag = 0;
-
     /**
     * @brief 暂停启动标志位,低速行驶标志位
     *
@@ -96,6 +91,8 @@ int main(void)
     u8 lowSpeed_flag, restart_flag;
     lowSpeed_flag = 0;
     restart_flag = 0;
+
+    u8 direction;
 
     while (1)
     {
@@ -123,7 +120,6 @@ int main(void)
             }
         }
 
-
         if (horizontal_flag > 1)
         {
             if (upslope_flag > 1)
@@ -145,6 +141,7 @@ int main(void)
         OLED_ShowNum(30, 40, downhill_flag, 1, 8, 1);
         OLED_ShowNum(45, 40, restart_flag, 1, 8, 1);
         OLED_ShowNum(60, 40, lowSpeed_flag, 1, 8, 1);
+        
 
         // if (g_flag == 1)
         // {
@@ -161,9 +158,8 @@ int main(void)
         //     delay_ms(3000);
         // }
 
-        u8 direction;
+
         direction = grayScale_detect();
-        direction = 'l';
         if (direction == 'l')
         {
             // turn left
