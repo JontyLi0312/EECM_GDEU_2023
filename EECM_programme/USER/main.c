@@ -25,19 +25,76 @@ u8 g_Serial_RxPacket[5] = { '0', '0', '0', '0', '0' };
 u8 g_servo_start = 0;
  int g_jy901s_stop = 0;
 /**
- * @brief 小车姿态数据
+ * @brief 小车绝对姿态数据
  *
  */
 jy901s_angleData g_angleDatas;
-/**
-* @brief 小车基准姿态数据
-*
-*/
-float g_base_roll, g_base_pitch, g_base_yaw;
+
 
 
 int main(void)
 {
+    struct datas {
+        /**
+         * @brief 小车基准姿态数据
+         *
+         */
+        float base_roll;
+        float base_pitch;
+        float base_yaw;
+
+        /**
+         * @brief 小车在(min, max)内则认为小车水平
+         *
+         */
+        float pitch_max;
+        float pitch_min;
+
+        /**
+         * @brief 正常速度以及下阶梯速度
+         *
+         */
+        int16_t normal_speed;
+        int16_t low_speed;
+    }baseDatas;
+    baseDatas.normal_speed = 38;
+    baseDatas.low_speed = 13;
+    baseDatas.pitch_max = 5.00;
+    baseDatas.pitch_min = -10.00;
+
+    struct flag
+    {
+        /**
+        * @brief 爬坡标志位，水平标志位，下坡标志位
+        *
+        */
+        u8 upslope;
+        u8 horizontal;
+        u8 downhill;
+
+        /**
+        * @brief 暂停再启动标志位,低速行驶标志位
+        *
+        */
+        u8 lowSpeed;
+        u8 restart;
+
+        /**
+         * @brief 爬坡标志位
+         *
+         */
+        u8 climb_stop;
+    }flag;
+    flag.downhill = 0;
+    flag.horizontal = 0;
+    flag.upslope = 0;
+    flag.lowSpeed = 0;
+    flag.restart = 0;
+    flag.climb_stop = 0;
+
+    u8 direction;
+    jy901s_angleData angle_correction;
+
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     delay_init(168);
     OLED_Init();
@@ -48,55 +105,20 @@ int main(void)
     Uart5_init();
     TIM6_Init();
     Servo_Init();
+    Servo_Reset();
 
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char*)"Status: WORKING", 8, 1);
-    OLED_Refresh();
-
-    Servo_Reset();
+    
 
     /**
      * @brief 获取小车基准姿态
      *
      */
     jy901s_getData(&g_angleDatas);
-    g_base_roll = g_angleDatas.roll;
-    g_base_pitch = g_angleDatas.pitch;
-    g_base_yaw = g_angleDatas.yaw;
-
-    /**
-     * @brief 小车姿态数据相对值
-     *
-     */
-    jy901s_angleData angle_correction;
-
-    /**
-     * @brief 小车在(min, max)内则认为小车水平
-     *
-     */
-    float horizontal_pitch_max, horizontal_pitch_min;
-    horizontal_pitch_max = 5.00;
-    horizontal_pitch_min = -10.00;
-    /**
-    * @brief 爬坡标志位，水平标志位，下坡标志位
-    *
-    */
-    u8 upslope_flag, horizontal_flag, downhill_flag;
-    upslope_flag = 0;
-    horizontal_flag = 0;
-    downhill_flag = 0;
-    /**
-    * @brief 暂停启动标志位,低速行驶标志位
-    *
-    */
-    u8 lowSpeed_flag = 0, restart_flag = 0;
-
-    u8 climb_stop_flag = 0;
-
-    u8 direction;
-
-    int16_t normal_speed = 38;
-
+    baseDatas.base_pitch = g_angleDatas.pitch;
+    baseDatas.base_roll = g_angleDatas.roll;
+    baseDatas.base_yaw = g_angleDatas.yaw;
 
     while (1)
     {
@@ -104,42 +126,41 @@ int main(void)
          * @brief 得到小车相对值姿态数据
          *
          */
-        angle_correction.pitch = g_angleDatas.pitch - g_base_pitch;
+        angle_correction.pitch = g_angleDatas.pitch - baseDatas.base_pitch;
 
-        if (angle_correction.pitch >= horizontal_pitch_max)
+        if (angle_correction.pitch >= baseDatas.pitch_max)
         {
-            upslope_flag++;
+            flag.upslope++;
         }
-        else if (angle_correction.pitch <= horizontal_pitch_min)
+        else if (angle_correction.pitch <= baseDatas.pitch_min)
         {
-            downhill_flag++;
+            flag.downhill++;
         }
         else
         {
-            if ((upslope_flag != 0) || (downhill_flag != 0))
+            if ((flag.upslope != 0) || (flag.downhill != 0))
             {
-                horizontal_flag++;
+                flag.horizontal++;
             }
         }
 
-        if (horizontal_flag > 1)
+        if (flag.horizontal > 1)
         {
-            if (upslope_flag > 1)
+            if (flag.upslope > 1)
             {
-                restart_flag++;
+                flag.restart++;
             }
-            else if (downhill_flag > 1)
+            else if (flag.downhill > 1)
             {
-                lowSpeed_flag++;
+                flag.lowSpeed++;
             }
 
-            horizontal_flag = 0;
-            upslope_flag = 0;
-            downhill_flag = 0;
+            flag.horizontal = 0;
+            flag.upslope = 0;
+            flag.downhill = 0;
         }
-        OLED_ShowNum(0, 40, restart_flag, 1, 8, 1);
-        OLED_ShowNum(20, 40, lowSpeed_flag, 1, 8, 1);
-
+        OLED_ShowNum(0, 40, flag.restart, 1, 8, 1);
+        OLED_ShowNum(20, 40, flag.lowSpeed, 1, 8, 1);
 
         if (g_servo_start == 1)
         {
@@ -192,33 +213,33 @@ int main(void)
         {
             OLED_ShowString(0, 20, (unsigned char*)" GO ", 8, 1);
 
-            if ((lowSpeed_flag > 0) && (lowSpeed_flag < 3) && (restart_flag == 3))
+            if ((flag.lowSpeed > 0) && (flag.lowSpeed < 3) && (flag.restart == 3))
             {
-                if (climb_stop_flag > 0)
+                if (flag.climb_stop > 0)
                 {
                     stop();
                     delay_ms(2000);
-                    climb_stop_flag = 0;
+                    flag.climb_stop = 0;
                 }
-                forward(13);
+                forward(baseDatas.low_speed);
                 delay_ms(50);
                 stop();
                 delay_ms(100);
             }
-            else if (restart_flag == 2)
+            else if (flag.restart == 2)
             {
-                if (climb_stop_flag == 0)
+                if (flag.climb_stop == 0)
                 {
                     stop();
                     delay_ms(2000);
-                    climb_stop_flag++;
+                    flag.climb_stop++;
                 }
 
-                forward(normal_speed);
+                forward(baseDatas.normal_speed);
             }
             else
             {
-                forward(normal_speed);
+                forward(baseDatas.normal_speed);
             }
         }
         OLED_Refresh();
