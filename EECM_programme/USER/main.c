@@ -162,11 +162,6 @@ int main(void)
             g_jy901s_stop = 0;
 
         }
-        else if (g_flag == 2)
-        {
-            Servo_Init();
-            delay_ms(3000);
-        }
 
         u8 direction;
         direction = grayScale_detect();
@@ -210,11 +205,11 @@ int main(void)
             {
                 stop();
                 delay_ms(100);
-                forward(34);
+                forward(44);
             }
             else
             {
-                forward(34);
+                forward(44);
             }
         }
         OLED_Refresh();
