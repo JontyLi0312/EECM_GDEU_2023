@@ -68,7 +68,7 @@ int main(void)
      */
     jy901s_angleData angle_correction;
 
-    forward(47);
+    forward(46);
     delay_ms(50);
 
     /**
@@ -155,9 +155,9 @@ int main(void)
             g_jy901s_stop = 1;
             stop();
             Servo_Action();
-            delay_ms(1500);
+            delay_ms(700);
             Servo_Reset();
-            delay_ms(1000);
+            
             g_flag = 2;
             g_jy901s_stop = 0;
 
@@ -205,11 +205,11 @@ int main(void)
             {
                 stop();
                 delay_ms(100);
-                forward(47);
+                forward(46);
             }
             else
             {
-                forward(47);
+                forward(46);
             }
         }
         OLED_Refresh();
