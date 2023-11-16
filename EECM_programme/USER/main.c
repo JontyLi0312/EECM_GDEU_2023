@@ -73,8 +73,8 @@ int main(void)
      *
      */
     float horizontal_pitch_max, horizontal_pitch_min;
-    horizontal_pitch_max = 15.00;
-    horizontal_pitch_min = -15.00;
+    horizontal_pitch_max = 5.00;
+    horizontal_pitch_min = -10.00;
     /**
     * @brief 爬坡标志位，水平标志位，下坡标志位
     *
@@ -189,17 +189,23 @@ int main(void)
 
             if ((lowSpeed_flag > 0) && (lowSpeed_flag < 3) && (restart_flag == 3))
             {
+                if (climb_stop_flag > 0)
+                {
+                    stop();
+                    delay_ms(2000);
+                    climb_stop_flag = 0;
+                }
                 forward(13);
                 delay_ms(50);
                 stop();
-                delay_ms(40);
+                delay_ms(100);
             }
             else if (restart_flag == 2)
             {
                 if (climb_stop_flag == 0)
                 {
                     stop();
-                    delay_ms(5000);
+                    delay_ms(2000);
                     climb_stop_flag++;
                 }
 
