@@ -27,6 +27,12 @@ u8 g_flag = 0;
  *
  */
 jy901s_angleData g_angleDatas;
+/**
+* @brief 小车基准姿态数据
+*
+*/
+float g_base_roll, g_base_pitch, g_base_yaw;
+
 
 int main(void)
 {
@@ -52,27 +58,18 @@ int main(void)
      *
      */
     jy901s_getData(&g_angleDatas);
-    /**
-     * @brief 小车基准姿态数据
-     *
-     */
-    float base_roll, base_pitch, base_yaw;
-    base_roll = g_angleDatas.roll;
-    base_pitch = g_angleDatas.pitch;
-    base_yaw = g_angleDatas.yaw;
+    g_base_roll = g_angleDatas.roll;
+    g_base_pitch = g_angleDatas.pitch;
+    g_base_yaw = g_angleDatas.yaw;
+
     /**
      * @brief 小车姿态数据相对值
      *
      */
     jy901s_angleData angle_correction;
 
-    forward(34);
-    delay_ms(50);
-
-    while (1)
-    {
-        forward(11);
-    }
+    // forward(34);
+    // delay_ms(50);
 
     /**
      * @brief 小车在(min, max)内则认为小车水平
@@ -99,15 +96,22 @@ int main(void)
 
     u8 direction;
 
+    int16_t normal_speed = 42;
+
+    while (1)
+    {
+        forward(normal_speed);
+    }
+
     while (1)
     {
         /**
          * @brief 得到小车相对值姿态数据
          *
          */
-        angle_correction.pitch = g_angleDatas.pitch - base_pitch;
-        angle_correction.roll = g_angleDatas.roll - base_roll;
-        angle_correction.yaw = g_angleDatas.yaw - base_yaw;
+        angle_correction.pitch = g_angleDatas.pitch - g_base_pitch;
+        // angle_correction.roll = g_angleDatas.roll - g_base_roll;
+        // angle_correction.yaw = g_angleDatas.yaw - g_base_yaw;
 
         if (angle_correction.pitch >= horizontal_pitch_max)
         {
@@ -163,7 +167,6 @@ int main(void)
         //     delay_ms(3000);
         // }
 
-
         direction = grayScale_detect();
         if (direction == 'l')
         {
@@ -199,12 +202,15 @@ int main(void)
 
             if ((lowSpeed_flag > 0) && (lowSpeed_flag < 3) && (restart_flag == 3))
             {
-                forward(10);
+                forward(13);
+                delay_ms(30);
+                stop();
             }
             else if (restart_flag == 2)
             {
+                delay_ms(50);
                 stop();
-                delay_ms(10);
+                delay_ms(100);
                 forward(34);
             }
             else
@@ -220,7 +226,7 @@ int main(void)
 }
 
 /**
- * @brief openmv色块识别
+ * @brief openmv color recognition
  *
  */
 void UART5_IRQHandler(void)
@@ -272,7 +278,7 @@ void UART5_IRQHandler(void)
 }
 
 /**
- * @brief TIM6中断函数
+ * @brief TIM6 interruption: motor PID & servo PID
  *
  */
 void TIM6_DAC_IRQHandler(void)
