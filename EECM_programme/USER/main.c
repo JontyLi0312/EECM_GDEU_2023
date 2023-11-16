@@ -68,16 +68,13 @@ int main(void)
      */
     jy901s_angleData angle_correction;
 
-    // forward(34);
-    // delay_ms(50);
-
     /**
      * @brief 小车在(min, max)内则认为小车水平
      *
      */
     float horizontal_pitch_max, horizontal_pitch_min;
-    horizontal_pitch_max = 10.00;
-    horizontal_pitch_min = -10.00;
+    horizontal_pitch_max = 15.00;
+    horizontal_pitch_min = -15.00;
     /**
     * @brief 爬坡标志位，水平标志位，下坡标志位
     *
@@ -90,18 +87,14 @@ int main(void)
     * @brief 暂停启动标志位,低速行驶标志位
     *
     */
-    u8 lowSpeed_flag, restart_flag;
-    lowSpeed_flag = 0;
-    restart_flag = 0;
+    u8 lowSpeed_flag = 0, restart_flag = 0;
+
+    u8 climb_stop_flag = 0;
 
     u8 direction;
 
-    int16_t normal_speed = 42;
+    int16_t normal_speed = 38;
 
-    while (1)
-    {
-        forward(normal_speed);
-    }
 
     while (1)
     {
@@ -110,8 +103,6 @@ int main(void)
          *
          */
         angle_correction.pitch = g_angleDatas.pitch - g_base_pitch;
-        // angle_correction.roll = g_angleDatas.roll - g_base_roll;
-        // angle_correction.yaw = g_angleDatas.yaw - g_base_yaw;
 
         if (angle_correction.pitch >= horizontal_pitch_max)
         {
@@ -144,12 +135,8 @@ int main(void)
             upslope_flag = 0;
             downhill_flag = 0;
         }
-
-        OLED_ShowNum(0, 40, horizontal_flag, 1, 8, 1);
-        OLED_ShowNum(15, 40, upslope_flag, 1, 8, 1);
-        OLED_ShowNum(30, 40, downhill_flag, 1, 8, 1);
-        OLED_ShowNum(45, 40, restart_flag, 1, 8, 1);
-        OLED_ShowNum(60, 40, lowSpeed_flag, 1, 8, 1);
+        OLED_ShowNum(0, 40, restart_flag, 1, 8, 1);
+        OLED_ShowNum(20, 40, lowSpeed_flag, 1, 8, 1);
 
 
         // if (g_flag == 1)
@@ -171,53 +158,57 @@ int main(void)
         if (direction == 'l')
         {
             // turn left
-            OLED_ShowString(0, 20, (unsigned char*)"turn left       ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)" <- ", 8, 1);
 
             turn_left(30, 0);
         }
         else if (direction == 'r')
         {
             // turn right
-            OLED_ShowString(0, 20, (unsigned char*)"turn right      ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)" -> ", 8, 1);
 
             turn_right(30, 0);
         }
         else if (direction == 'L')
         {
             // turn left
-            OLED_ShowString(0, 20, (unsigned char*)"turn large left ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)"<<--", 8, 1);
 
             turn_left(45, 10);
         }
         else if (direction == 'R')
         {
             // turn right
-            OLED_ShowString(0, 20, (unsigned char*)"turn large right", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)"-->>", 8, 1);
 
             turn_right(45, 10);
         }
         else
         {
-            OLED_ShowString(0, 20, (unsigned char*)"forward         ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)" GO ", 8, 1);
 
             if ((lowSpeed_flag > 0) && (lowSpeed_flag < 3) && (restart_flag == 3))
             {
                 forward(13);
-                delay_ms(30);
+                delay_ms(50);
                 stop();
+                delay_ms(40);
             }
             else if (restart_flag == 2)
             {
-                delay_ms(50);
-                stop();
-                delay_ms(100);
-                forward(34);
+                if (climb_stop_flag == 0)
+                {
+                    stop();
+                    delay_ms(5000);
+                    climb_stop_flag++;
+                }
+
+                forward(normal_speed);
             }
             else
             {
-                forward(34);
+                forward(normal_speed);
             }
-            //forward(34);
         }
         OLED_Refresh();
     }
