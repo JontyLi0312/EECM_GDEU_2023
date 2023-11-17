@@ -28,8 +28,6 @@ u8 g_flag = 0;
  */
 jy901s_angleData g_angleDatas;
 
-
-
 int main(void)
 {
     struct datas {
