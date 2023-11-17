@@ -61,7 +61,7 @@ int main(void)
         int16_t normal_speed;
         int16_t low_speed;
     }baseDatas;
-    baseDatas.normal_speed = 35;
+    baseDatas.normal_speed = 30;
     baseDatas.low_speed = 13;
     baseDatas.up_pitch = 10.00;
     baseDatas.down_pitch = -10.00;
@@ -219,13 +219,13 @@ int main(void)
                 if (flag.climb_stop > 1)
                 {
                     stop();
-                    delay_ms(1000);
+                    delay_ms(2000);
                     flag.climb_stop = 0;
                 }
                 stop();
-                delay_ms(100);
+                delay_ms(60);
                 forward(baseDatas.low_speed, baseDatas.low_speed);
-                delay_ms(50);
+                delay_ms(30);
             }
             else if (flag.restart == 2)
             {
@@ -236,12 +236,16 @@ int main(void)
                     flag.climb_stop++;
                 }
 
-                forward(baseDatas.normal_speed, baseDatas.normal_speed + 3);
+                forward(baseDatas.normal_speed, baseDatas.normal_speed + 8);
                 flag.climb_stop++;
             }
-            else if ((flag.lowSpeed == 1) && (flag.climb_stop == 0))
+            else if ((flag.lowSpeed == 1) && (flag.upslope > 0))
             {
-                forward(baseDatas.normal_speed, baseDatas.normal_speed + 3);
+                forward(baseDatas.normal_speed, baseDatas.normal_speed + 10);
+            }
+            else if ((flag.restart == 0) && (flag.lowSpeed == 0))
+            {
+                forward(baseDatas.normal_speed + 8, baseDatas.normal_speed + 8);
             }
             else
             {
