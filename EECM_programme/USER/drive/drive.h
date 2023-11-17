@@ -4,7 +4,7 @@
 
 void turn_left(int16_t f_speed, int16_t b_speed);
 void turn_right(int16_t f_speed, int16_t b_speed);
-void forward(int16_t speed);
+void forward(int16_t front_speed, int16_t back_speed);
 void backward(int16_t speed);
 void stop(void);
 

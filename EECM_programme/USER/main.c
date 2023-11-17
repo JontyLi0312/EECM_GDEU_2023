@@ -47,8 +47,14 @@ int main(void)
          * @brief 小车在(min, max)内则认为小车水平
          *
          */
-        float pitch_max;
-        float pitch_min;
+        float horizontal_pitch_max;
+        float horizontal_pitch_min;
+        /**
+         * @brief 小车角度>up_pitch则认为在爬升，小车角度<down_pitch则认为在向下
+         *
+         */
+        float up_pitch;
+        float down_pitch;
 
         /**
          * @brief 正常速度以及下阶梯速度
@@ -57,19 +63,20 @@ int main(void)
         int16_t normal_speed;
         int16_t low_speed;
     }baseDatas;
-    baseDatas.normal_speed = 38;
+    baseDatas.normal_speed = 30;
     baseDatas.low_speed = 13;
-    baseDatas.pitch_max = 5.00;
-    baseDatas.pitch_min = -10.00;
+    baseDatas.up_pitch = 10.00;
+    baseDatas.down_pitch = -10.00;
+    baseDatas.horizontal_pitch_max = 4.00;
+    baseDatas.horizontal_pitch_min = -4.00;
 
     struct flag
     {
         /**
-        * @brief 爬坡标志位，水平标志位，下坡标志位
+        * @brief 爬坡标志位,下坡标志位
         *
         */
         u8 upslope;
-        u8 horizontal;
         u8 downhill;
 
         /**
@@ -86,7 +93,6 @@ int main(void)
         u8 climb_stop;
     }flag;
     flag.downhill = 0;
-    flag.horizontal = 0;
     flag.upslope = 0;
     flag.lowSpeed = 0;
     flag.restart = 0;
@@ -109,7 +115,6 @@ int main(void)
 
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char*)"Status: WORKING", 8, 1);
-    
 
     /**
      * @brief 获取小车基准姿态
@@ -128,37 +133,38 @@ int main(void)
          */
         angle_correction.pitch = g_angleDatas.pitch - baseDatas.base_pitch;
 
-        if (angle_correction.pitch >= baseDatas.pitch_max)
+        if (angle_correction.pitch >= baseDatas.up_pitch)
         {
             flag.upslope++;
         }
-        else if (angle_correction.pitch <= baseDatas.pitch_min)
+        else if (angle_correction.pitch <= baseDatas.down_pitch)
         {
             flag.downhill++;
         }
-        else
+        else if ((angle_correction.pitch < baseDatas.horizontal_pitch_max) &&
+            (angle_correction.pitch > baseDatas.horizontal_pitch_min))
         {
             if ((flag.upslope != 0) || (flag.downhill != 0))
             {
-                flag.horizontal++;
+                if (flag.upslope)
+                {
+                    flag.restart++;
+                }
+                else if (flag.downhill)
+                {
+                    flag.lowSpeed++;
+                }
+                flag.upslope = 0;
+                flag.downhill = 0;
             }
         }
 
-        if (flag.horizontal > 1)
+        if (flag.lowSpeed == 3)
         {
-            if (flag.upslope > 1)
-            {
-                flag.restart++;
-            }
-            else if (flag.downhill > 1)
-            {
-                flag.lowSpeed++;
-            }
-
-            flag.horizontal = 0;
-            flag.upslope = 0;
-            flag.downhill = 0;
+            flag.lowSpeed = 0;
+            flag.restart = 0;
         }
+
         OLED_ShowNum(0, 40, flag.restart, 1, 8, 1);
         OLED_ShowNum(20, 40, flag.lowSpeed, 1, 8, 1);
 
@@ -215,31 +221,40 @@ int main(void)
 
             if ((flag.lowSpeed > 0) && (flag.lowSpeed < 3) && (flag.restart == 3))
             {
-                if (flag.climb_stop > 0)
+                if (flag.climb_stop > 1)
                 {
                     stop();
                     delay_ms(2000);
                     flag.climb_stop = 0;
                 }
-                forward(baseDatas.low_speed);
-                delay_ms(50);
                 stop();
-                delay_ms(100);
+                delay_ms(60);
+                forward(baseDatas.low_speed, baseDatas.low_speed);
+                delay_ms(30);
             }
             else if (flag.restart == 2)
             {
-                if (flag.climb_stop == 0)
+                if (!flag.climb_stop)
                 {
                     stop();
-                    delay_ms(2000);
+                    delay_ms(1000);
                     flag.climb_stop++;
                 }
 
-                forward(baseDatas.normal_speed);
+                forward(baseDatas.normal_speed, baseDatas.normal_speed + 8);
+                flag.climb_stop++;
+            }
+            else if ((flag.lowSpeed == 1) && (flag.upslope > 0))
+            {
+                forward(baseDatas.normal_speed, baseDatas.normal_speed + 10);
+            }
+            else if ((flag.restart == 0) && (flag.lowSpeed == 0))
+            {
+                forward(baseDatas.normal_speed + 8, baseDatas.normal_speed + 8);
             }
             else
             {
-                forward(baseDatas.normal_speed);
+                forward(baseDatas.normal_speed, baseDatas.normal_speed);
             }
         }
         OLED_Refresh();
