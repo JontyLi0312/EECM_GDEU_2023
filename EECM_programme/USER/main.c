@@ -23,7 +23,7 @@
 
 u8 g_Serial_RxPacket[5] = { '0', '0', '0', '0', '0' };
 u8 g_servo_start = 0;
- int g_jy901s_stop = 0;
+int g_jy901s_stop = 0;
 /**
  * @brief 小车绝对姿态数据
  *
@@ -342,11 +342,10 @@ void TIM6_DAC_IRQHandler(void)
         output3 = ASR3.Out;
         output4 = ASR4.Out;
         PID_apply();
-        if( g_jy901s_stop == 0)
-        { 
+        if (g_jy901s_stop == 0)
+        {
             Servo_accomplish();
         }
-       
 
         jy901s_getData(&g_angleDatas);
 
