@@ -153,69 +153,58 @@ stop -> PG14
 
 ### Hardware
 
--   OLED
+- OLED
 
-    -   OLED 显示
+  - OLED 显示
+- 5ChannelGrayScaleSensor
 
--   5ChannelGrayScaleSensor
+  - 五路灰度扫描循迹并返回方向
+- jy901s
 
-    -   五路灰度扫描循迹并返回方向
+  - 获取小车姿态
+  - 私有通信协议
+- motor
 
--   jy901s
+  - 编码器初始化
+  - 电机控制
+  - PID 算法
+- OPENMV
 
-    -   获取小车姿态
-    -   私有通信协议
+  - 颜色识别
+- servo
 
--   motor
-
-    -   编码器初始化
-    -   电机控制
-    -   PID 算法
-
--   OPENMV
-
-    -   颜色识别
-
--   servo
-
-    -   舵机 PWM
-    -   舵机控制
+  - 舵机 PWM
+  - 舵机控制
 
 ### System
 
--   Delay
+- Delay
 
-    -   延时
+  - 延时
+- motor_PWM
 
--   motor_PWM
+  - 电机 PWM
+- sys
 
-    -   电机 PWM
+  - 头文件
+- Timer
 
--   sys
+  - 定时中断初始化
+- uart5
 
-    -   头文件
+  - 串口 5 初始化
+- usart
 
--   Timer
+  - 串口 1 初始化
+  - printf 函数重定义
+- usart2
 
-    -   定时中断初始化
-
--   uart5
-
-    -   串口 5 初始化
-
--   usart
-
-    -   串口 1 初始化
-    -   printf 函数重定义
-
--   usart2
-
-    -   串口 2 初始化
+  - 串口 2 初始化
 
 ### User
 
--   main
-    -   主程序
+- main
+  - 主程序
 
 ## Usage
 
@@ -251,3 +240,5 @@ version 0.8.0：增加五路灰度传感器获取方向信息
 version 0.9.0：电机 PID
 
 version 0.10.0：OPENMV 颜色识别
+
+version 0.11.0：根据小车姿态数据调整速度
