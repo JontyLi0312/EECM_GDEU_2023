@@ -298,17 +298,16 @@ void UART5_IRQHandler(void)
             {
                 RxState = 0;
                 g_Serial_RxPacket[pRxPacket] = '\0';
-                // Serial_RxFlag = 1;
+                
             }
         }
         if (g_Serial_RxPacket[0] == '4')
         {
             g_servo_start = 1;
 
-            // OLED_ShowString(0, 0, (unsigned char *)"fo   ", 8, 1);
-            // delay_ms(1500);
+            
         }
-        // OLED_ShowString(0, 40, (unsigned char *)"forward   ", 8, 1);
+        
         USART_ClearITPendingBit(UART5, USART_IT_RXNE);
     }
 }
