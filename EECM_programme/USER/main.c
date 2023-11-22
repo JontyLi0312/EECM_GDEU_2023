@@ -23,15 +23,82 @@
 
 u8 g_Serial_RxPacket[5] = { '0', '0', '0', '0', '0' };
 u8 g_servo_start = 0;
- int g_jy901s_stop = 0;
+int g_jy901s_stop = 0;
 /**
- * @brief 小车姿态数据
+ * @brief 小车绝对姿态数据
  *
  */
 jy901s_angleData g_angleDatas;
 
 int main(void)
 {
+    struct datas {
+        /**
+         * @brief 小车基准姿态数据
+         *
+         */
+        float base_roll;
+        float base_pitch;
+        float base_yaw;
+
+        /**
+         * @brief 小车在(min, max)内则认为小车水平
+         *
+         */
+        float horizontal_pitch_max;
+        float horizontal_pitch_min;
+        /**
+         * @brief 小车角度>up_pitch则认为在爬升，小车角度<down_pitch则认为在向下
+         *
+         */
+        float up_pitch;
+        float down_pitch;
+
+        /**
+         * @brief 正常速度以及下阶梯速度
+         *
+         */
+        int16_t normal_speed;
+        int16_t low_speed;
+    }baseDatas;
+    baseDatas.normal_speed = 30;
+    baseDatas.low_speed = 13;
+    baseDatas.up_pitch = 10.00;
+    baseDatas.down_pitch = -10.00;
+    baseDatas.horizontal_pitch_max = 4.00;
+    baseDatas.horizontal_pitch_min = -4.00;
+
+    struct flag
+    {
+        /**
+        * @brief 爬坡标志位,下坡标志位
+        *
+        */
+        u8 upslope;
+        u8 downhill;
+
+        /**
+        * @brief 暂停再启动标志位,低速行驶标志位
+        *
+        */
+        u8 lowSpeed;
+        u8 restart;
+
+        /**
+         * @brief 爬坡标志位
+         *
+         */
+        u8 climb_stop;
+    }flag;
+    flag.downhill = 0;
+    flag.upslope = 0;
+    flag.lowSpeed = 0;
+    flag.restart = 0;
+    flag.climb_stop = 0;
+
+    u8 direction;
+    jy901s_angleData angle_correction;
+
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     delay_init(168);
     OLED_Init();
@@ -42,42 +109,19 @@ int main(void)
     Uart5_init();
     TIM6_Init();
     Servo_Init();
+    Servo_Reset();
 
     OLED_Clear();
     OLED_ShowString(0, 0, (unsigned char*)"Status: WORKING", 8, 1);
-    OLED_Refresh();
-
-    Servo_Reset();
 
     /**
      * @brief 获取小车基准姿态
      *
      */
     jy901s_getData(&g_angleDatas);
-    /**
-     * @brief 小车基准姿态数据
-     *
-     */
-    float base_roll, base_pitch, base_yaw;
-    base_roll = g_angleDatas.roll;
-    base_pitch = g_angleDatas.pitch;
-    base_yaw = g_angleDatas.yaw;
-    /**
-     * @brief 小车姿态数据相对值
-     *
-     */
-    jy901s_angleData angle_correction;
-
-    forward(40);
-    delay_ms(50);
-
-    /**
-     * @brief 小车在(min, max)内则认为小车水平
-     *
-     */
-    float horizontal_pitch_max, horizontal_pitch_min;
-    horizontal_pitch_max = 5.00;
-    horizontal_pitch_min = -5.00;
+    baseDatas.base_pitch = g_angleDatas.pitch;
+    baseDatas.base_roll = g_angleDatas.roll;
+    baseDatas.base_yaw = g_angleDatas.yaw;
 
     while (1)
     {
@@ -85,70 +129,42 @@ int main(void)
          * @brief 得到小车相对值姿态数据
          *
          */
-        angle_correction.pitch = g_angleDatas.pitch - base_pitch;
-        angle_correction.roll = g_angleDatas.roll - base_roll;
-        angle_correction.yaw = g_angleDatas.yaw - base_yaw;
+        angle_correction.pitch = g_angleDatas.pitch - baseDatas.base_pitch;
 
-        float pitch_max = 0;
-        float pitch_min = 0;
-        if (angle_correction.pitch >= pitch_max)
+        if (angle_correction.pitch >= baseDatas.up_pitch)
         {
-            pitch_max = angle_correction.pitch;
+            flag.upslope++;
         }
-        if (angle_correction.pitch <= pitch_min)
+        else if (angle_correction.pitch <= baseDatas.down_pitch)
         {
-            pitch_min = angle_correction.pitch;
+            flag.downhill++;
         }
-        OLED_ShowNum(0, 30, (int32_t)pitch_max, 4, 8, 1);
-        OLED_ShowNum(30, 30, (int32_t)pitch_min, 4, 8, 1);
-
-        /**
-         * @brief 爬坡标志位，水平标志位，下坡标志位
-         *
-         */
-        u8 upslope_flag, horizontal_flag, downhill_flag;
-        upslope_flag = 0;
-        horizontal_flag = 0;
-        downhill_flag = 0;
-
-        if (angle_correction.pitch >= horizontal_pitch_max)
+        else if ((angle_correction.pitch < baseDatas.horizontal_pitch_max) &&
+            (angle_correction.pitch > baseDatas.horizontal_pitch_min))
         {
-            upslope_flag++;
-        }
-        else if (angle_correction.pitch <= horizontal_pitch_min)
-        {
-            downhill_flag++;
-        }
-        else
-        {
-            if (upslope_flag || downhill_flag)
+            if ((flag.upslope != 0) || (flag.downhill != 0))
             {
-                horizontal_flag++;
+                if (flag.upslope)
+                {
+                    flag.restart++;
+                }
+                else if (flag.downhill)
+                {
+                    flag.lowSpeed++;
+                }
+                flag.upslope = 0;
+                flag.downhill = 0;
             }
         }
 
-        /**
-         * @brief 冷启动标志位
-         *
-         */
-        u8 lowSpeed_flag, restart_flag;
-        lowSpeed_flag = 0;
-        restart_flag = 0;
-        if (horizontal_flag > 1)
+        if (flag.lowSpeed == 3)
         {
-            if (upslope_flag > 1)
-            {
-                restart_flag++;
-            }
-            else if (downhill_flag > 1)
-            {
-                lowSpeed_flag++;
-            }
-
-            horizontal_flag = 0;
-            upslope_flag = 0;
-            downhill_flag = 0;
+            flag.lowSpeed = 0;
+            flag.restart = 0;
         }
+
+        OLED_ShowNum(0, 40, flag.restart, 1, 8, 1);
+        OLED_ShowNum(20, 40, flag.lowSpeed, 1, 8, 1);
 
         if (g_servo_start == 1)
         {
@@ -168,65 +184,85 @@ int main(void)
             delay_ms(3000);
         }
 
-        u8 direction;
         direction = grayScale_detect();
         if (direction == 'l')
         {
             // turn left
-            OLED_ShowString(0, 20, (unsigned char*)"turn left       ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)" <- ", 8, 1);
 
-            turn_left(25, 5);
+            turn_left(30, 0);
         }
         else if (direction == 'r')
         {
             // turn right
-            OLED_ShowString(0, 20, (unsigned char*)"turn right      ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)" -> ", 8, 1);
 
-            turn_right(25, 5);
+            turn_right(30, 0);
         }
         else if (direction == 'L')
         {
             // turn left
-            OLED_ShowString(0, 20, (unsigned char*)"turn large left ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)"<<--", 8, 1);
 
-            turn_left(50, 10);
+            turn_left(45, 10);
         }
         else if (direction == 'R')
         {
             // turn right
-            OLED_ShowString(0, 20, (unsigned char*)"turn large right", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)"-->>", 8, 1);
 
-            turn_right(50, 10);
+            turn_right(45, 10);
         }
         else
         {
-            OLED_ShowString(0, 20, (unsigned char*)"forward         ", 8, 1);
+            OLED_ShowString(0, 20, (unsigned char*)" GO ", 8, 1);
 
-            if ((lowSpeed_flag > 0) && (lowSpeed_flag < 3) && (restart_flag == 3))
+            if ((flag.lowSpeed > 0) && (flag.lowSpeed < 3) && (flag.restart == 3))
             {
-                forward(10);
-            }
-            else if (restart_flag == 2)
-            {
+                if (flag.climb_stop > 1)
+                {
+                    stop();
+                    delay_ms(2000);
+                    flag.climb_stop = 0;
+                }
                 stop();
-                delay_ms(100);
-                forward(34);
+                delay_ms(60);
+                forward(baseDatas.low_speed, baseDatas.low_speed);
+                delay_ms(30);
+            }
+            else if (flag.restart == 2)
+            {
+                if (!flag.climb_stop)
+                {
+                    stop();
+                    delay_ms(1000);
+                    flag.climb_stop++;
+                }
+
+                forward(baseDatas.normal_speed, baseDatas.normal_speed + 8);
+                flag.climb_stop++;
+            }
+            else if ((flag.lowSpeed == 1) && (flag.upslope > 0))
+            {
+                forward(baseDatas.normal_speed, baseDatas.normal_speed + 10);
+            }
+            else if ((flag.restart == 0) && (flag.lowSpeed == 0))
+            {
+                forward(baseDatas.normal_speed + 8, baseDatas.normal_speed + 8);
             }
             else
             {
-                forward(34);
+                forward(baseDatas.normal_speed, baseDatas.normal_speed);
             }
         }
         OLED_Refresh();
-
-        delay_ms(10);
     }
 
     return 0;
 }
 
 /**
- * @brief openmv色块识别
+ * @brief openmv color recognition
  *
  */
 void UART5_IRQHandler(void)
@@ -262,23 +298,22 @@ void UART5_IRQHandler(void)
             {
                 RxState = 0;
                 g_Serial_RxPacket[pRxPacket] = '\0';
-                // Serial_RxFlag = 1;
+                
             }
         }
         if (g_Serial_RxPacket[0] == '4')
         {
             g_servo_start = 1;
 
-            // OLED_ShowString(0, 0, (unsigned char *)"fo   ", 8, 1);
-            // delay_ms(1500);
+            
         }
-        // OLED_ShowString(0, 40, (unsigned char *)"forward   ", 8, 1);
+        
         USART_ClearITPendingBit(UART5, USART_IT_RXNE);
     }
 }
 
 /**
- * @brief TIM6中断函数
+ * @brief TIM6 interruption: motor PID & servo PID
  *
  */
 void TIM6_DAC_IRQHandler(void)
@@ -306,11 +341,10 @@ void TIM6_DAC_IRQHandler(void)
         output3 = ASR3.Out;
         output4 = ASR4.Out;
         PID_apply();
-        if( g_jy901s_stop == 0)
-        { 
+        if (g_jy901s_stop == 0)
+        {
             Servo_accomplish();
         }
-       
 
         jy901s_getData(&g_angleDatas);
 

@@ -26,8 +26,10 @@ void grayscale_init(void)
  * @brief 获取方向
  *
  * @return u8 direction
- *          @arg 'L' turn left
- *          @arg 'R' turn right
+ *          @arg 'L' turn large left
+ *          @arg 'R' turn large right
+ *          @arg 'l' turn left
+ *          @arg 'r' turn right
  *          @arg 'S' stop
  *          @arg 'F' forward
  */
@@ -52,11 +54,11 @@ u8 grayScale_detect(void)
     large_left = (sensor_mid_right || sensor_mid || !sensor_mid_left) &&
         (!sensor_left || sensor_mid_left || sensor_mid_left || sensor_mid_right || sensor_right);
 
-    if (stop == 0)
-    {
-        direction = 'S';
-    }
-    else if (right == 0)
+    // if (stop == 0)
+    // {
+    //     direction = 'S';
+    // }
+    if (right == 0)
     {
         direction = 'r';
     }

@@ -4,7 +4,7 @@
 
 void turn_left(int16_t f_speed, int16_t b_speed);
 void turn_right(int16_t f_speed, int16_t b_speed);
-void forward(int16_t speed);
+void forward(int16_t font_speed, int16_t back_speed);
 void backward(int16_t speed);
 void stop(void);
 
@@ -49,16 +49,16 @@ void turn_right(int16_t f_speed, int16_t b_speed)
  *
  * @param speed 前进速度
  */
-void forward(int16_t speed)
+void forward(int16_t front_speed, int16_t back_speed)
 {
     motor1_control(1);
-    PID_Move(speed, 1);
+    PID_Move(front_speed, 1);
     motor2_control(1);
-    PID_Move(speed, 2);
+    PID_Move(back_speed, 2);
     motor3_control(1);
-    PID_Move(speed, 3);
+    PID_Move(back_speed, 3);
     motor4_control(1);
-    PID_Move(speed, 4);
+    PID_Move(front_speed, 4);
 }
 
 /**
