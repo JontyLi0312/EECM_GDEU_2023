@@ -1,4 +1,7 @@
 .Objects/
+报名/
+报销文件/
+report/
 .vscode/
 .Listings/
 *.o
